@@ -2,10 +2,13 @@ package dev.fnc314.aijobtracker.frontend.features.settings.ui
 
 import dev.fnc314.aijobtracker.frontend.core.data.model.AuthState
 import dev.fnc314.aijobtracker.frontend.core.data.model.UserAccount
+import dev.fnc314.aijobtracker.frontend.core.data.model.DeviceRegistrationStatus
 import dev.fnc314.aijobtracker.frontend.core.data.settings.AppSettings
 import dev.fnc314.aijobtracker.frontend.core.data.settings.UiMode
 import dev.fnc314.aijobtracker.frontend.features.settings.domain.repository.SettingsRepository
+import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.DeregisterDeviceNotificationsUseCase
 import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.ObserveSettingsUseCase
+import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.RegisterDeviceNotificationsUseCase
 import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.UpdateSettingsUseCase
 import dev.fnc314.aijobtracker.frontend.features.signin.data.repository.AuthRepository
 import kotlinx.coroutines.Dispatchers
@@ -64,6 +67,8 @@ internal class SettingsViewModelTest {
             observeSettingsUseCase = ObserveSettingsUseCase { repo.settings },
             updateSettingsUseCase = UpdateSettingsUseCase { repo.updateSettings(it) },
             authRepository = authRepo,
+            deregisterDeviceNotificationsUseCase = DeregisterDeviceNotificationsUseCase { true },
+            registerDeviceNotificationsUseCase = RegisterDeviceNotificationsUseCase { true },
         )
 
         val state = viewModel.uiState.first { it is SettingsUiState.Content }
@@ -81,6 +86,8 @@ internal class SettingsViewModelTest {
             observeSettingsUseCase = ObserveSettingsUseCase { repo.settings },
             updateSettingsUseCase = UpdateSettingsUseCase { repo.updateSettings(it) },
             authRepository = authRepo,
+            deregisterDeviceNotificationsUseCase = DeregisterDeviceNotificationsUseCase { true },
+            registerDeviceNotificationsUseCase = RegisterDeviceNotificationsUseCase { true },
         )
 
         viewModel.onIntent(SettingsUiIntent.ChangeUiMode(UiMode.DARK))
@@ -100,6 +107,8 @@ internal class SettingsViewModelTest {
             observeSettingsUseCase = ObserveSettingsUseCase { repo.settings },
             updateSettingsUseCase = UpdateSettingsUseCase { repo.updateSettings(it) },
             authRepository = authRepo,
+            deregisterDeviceNotificationsUseCase = DeregisterDeviceNotificationsUseCase { true },
+            registerDeviceNotificationsUseCase = RegisterDeviceNotificationsUseCase { true },
         )
 
         viewModel.onIntent(SettingsUiIntent.ChangeSeedColor(hex = "#FF5722"))
@@ -118,6 +127,8 @@ internal class SettingsViewModelTest {
             observeSettingsUseCase = ObserveSettingsUseCase { repo.settings },
             updateSettingsUseCase = UpdateSettingsUseCase { repo.updateSettings(it) },
             authRepository = authRepo,
+            deregisterDeviceNotificationsUseCase = DeregisterDeviceNotificationsUseCase { true },
+            registerDeviceNotificationsUseCase = RegisterDeviceNotificationsUseCase { true },
         )
 
         viewModel.onIntent(SettingsUiIntent.ClickBack)
@@ -125,5 +136,57 @@ internal class SettingsViewModelTest {
 
         val state = viewModel.uiState.first { it is SettingsUiState.NavigateBack }
         assertEquals(SettingsUiState.NavigateBack, state)
+    }
+
+    @Test
+    fun testIntent_RegisterNotificationsUpdatesState() = runTest(testDispatcher) {
+        val repo = FakeSettingsRepository()
+        val authRepo = FakeAuthRepository()
+        val viewModel = SettingsViewModel(
+            observeSettingsUseCase = ObserveSettingsUseCase { repo.settings },
+            updateSettingsUseCase = UpdateSettingsUseCase { repo.updateSettings(it) },
+            authRepository = authRepo,
+            deregisterDeviceNotificationsUseCase = DeregisterDeviceNotificationsUseCase { true },
+            registerDeviceNotificationsUseCase = RegisterDeviceNotificationsUseCase { true },
+        )
+
+        viewModel.onIntent(SettingsUiIntent.RegisterNotifications)
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.first {
+            it is SettingsUiState.Content &&
+            it.model.notificationStatus == DeviceNotificationUiState.Settled(DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_ACTIVE)
+        }
+        assertIs<SettingsUiState.Content>(state)
+        assertEquals(
+            DeviceNotificationUiState.Settled(DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_ACTIVE),
+            state.model.notificationStatus
+        )
+    }
+
+    @Test
+    fun testIntent_DeregisterNotificationsUpdatesState() = runTest(testDispatcher) {
+        val repo = FakeSettingsRepository()
+        val authRepo = FakeAuthRepository()
+        val viewModel = SettingsViewModel(
+            observeSettingsUseCase = ObserveSettingsUseCase { repo.settings },
+            updateSettingsUseCase = UpdateSettingsUseCase { repo.updateSettings(it) },
+            authRepository = authRepo,
+            deregisterDeviceNotificationsUseCase = DeregisterDeviceNotificationsUseCase { true },
+            registerDeviceNotificationsUseCase = RegisterDeviceNotificationsUseCase { true },
+        )
+
+        viewModel.onIntent(SettingsUiIntent.DeregisterNotifications)
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.first {
+            it is SettingsUiState.Content &&
+            it.model.notificationStatus == DeviceNotificationUiState.Settled(DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_DEREGISTERED)
+        }
+        assertIs<SettingsUiState.Content>(state)
+        assertEquals(
+            DeviceNotificationUiState.Settled(DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_DEREGISTERED),
+            state.model.notificationStatus
+        )
     }
 }

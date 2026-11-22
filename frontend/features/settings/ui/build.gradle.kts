@@ -23,3 +23,8 @@ kotlin {
         }
     }
 }
+
+dependencies {
+    androidMainImplementation(libs.androidx.activity.compose)
+}
+

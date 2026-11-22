@@ -1,6 +1,7 @@
 package dev.fnc314.aijobtracker.frontend.features.settings.ui
 
 import androidx.compose.runtime.Immutable
+import dev.fnc314.aijobtracker.frontend.core.data.model.DeviceRegistrationStatus
 import dev.fnc314.aijobtracker.frontend.core.data.platform.PlatformCapabilities
 import dev.fnc314.aijobtracker.frontend.core.data.settings.UiMode
 
@@ -28,6 +29,35 @@ public sealed interface SettingsUiIntent {
 
     /** Deregisters the active device from receiving push notifications. */
     public data object DeregisterNotifications : SettingsUiIntent
+
+    /** Registers or updates the active device to receive push notifications. */
+    public data object RegisterNotifications : SettingsUiIntent
+
+    /** User denied system notification permission request. */
+    public data object NotificationPermissionDenied : SettingsUiIntent
+}
+
+/**
+ * Presentation state representing device push notification status, bridging canonical
+ * [DeviceRegistrationStatus] with in-flight UI operation feedback.
+ */
+public sealed interface DeviceNotificationUiState {
+    /**
+     * Canonical state synced with backend/Firestore.
+     */
+    public data class Settled(public val status: DeviceRegistrationStatus) : DeviceNotificationUiState
+
+    /** In-flight registration operation. */
+    public data object Registering : DeviceNotificationUiState
+
+    /** In-flight deregistration operation. */
+    public data object Deregistering : DeviceNotificationUiState
+
+    /** Permission denied by user. */
+    public data object PermissionDenied : DeviceNotificationUiState
+
+    /** Registration or deregistration operation failed. */
+    public data class Failed(public val error: String? = null) : DeviceNotificationUiState
 }
 
 /**
@@ -48,5 +78,5 @@ public data class SettingsUiModel(
     public val showInAppTextViewerSetting: Boolean = PlatformCapabilities.supportsInAppTextViewerToggle,
     public val inAppTextViewerEnabled: Boolean = false,
     public val supportsPushNotifications: Boolean = PlatformCapabilities.supportsPushNotifications,
-    public val notificationsDeregistered: Boolean = false,
+    public val notificationStatus: DeviceNotificationUiState = DeviceNotificationUiState.Settled(DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_UNSPECIFIED),
 )

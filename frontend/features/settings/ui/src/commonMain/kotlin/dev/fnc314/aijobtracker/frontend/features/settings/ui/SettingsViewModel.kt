@@ -2,10 +2,12 @@ package dev.fnc314.aijobtracker.frontend.features.settings.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.fnc314.aijobtracker.frontend.core.data.model.DeviceRegistrationStatus
 import dev.fnc314.aijobtracker.frontend.core.data.settings.AppSettings
 import dev.fnc314.aijobtracker.frontend.core.data.settings.UiMode
 import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.DeregisterDeviceNotificationsUseCase
 import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.ObserveSettingsUseCase
+import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.RegisterDeviceNotificationsUseCase
 import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.UpdateSettingsUseCase
 import dev.fnc314.aijobtracker.frontend.features.signin.data.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,11 +25,13 @@ public class SettingsViewModel(
   private val updateSettingsUseCase: UpdateSettingsUseCase,
   private val authRepository: AuthRepository,
   private val deregisterDeviceNotificationsUseCase: DeregisterDeviceNotificationsUseCase,
+  private val registerDeviceNotificationsUseCase: RegisterDeviceNotificationsUseCase,
 ) : ViewModel() {
 
   private val _isNavigatingBack: MutableStateFlow<Boolean> = MutableStateFlow(false)
   private val _isSigningOut: MutableStateFlow<Boolean> = MutableStateFlow(false)
-  private val _notificationsDeregistered: MutableStateFlow<Boolean> = MutableStateFlow(false)
+  private val _notificationStatus: MutableStateFlow<DeviceNotificationUiState> =
+    MutableStateFlow(DeviceNotificationUiState.Settled(DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_UNSPECIFIED))
 
   private val seedSuggestions: List<String> = listOf(
     "#2F5597", // Professional Blue
@@ -45,8 +49,8 @@ public class SettingsViewModel(
     observeSettingsUseCase(),
     _isNavigatingBack,
     _isSigningOut,
-    _notificationsDeregistered,
-  ) { settings: AppSettings, isNavigatingBack: Boolean, isSigningOut: Boolean, notificationsDeregistered: Boolean ->
+    _notificationStatus,
+  ) { settings: AppSettings, isNavigatingBack: Boolean, isSigningOut: Boolean, notificationStatus: DeviceNotificationUiState ->
     when {
       isNavigatingBack -> SettingsUiState.NavigateBack
       isSigningOut -> SettingsUiState.NavigateToSignIn
@@ -58,7 +62,7 @@ public class SettingsViewModel(
           randomSeedSuggestions = seedSuggestions,
           kmpInspectorEnabled = settings.enableKmpInspector,
           inAppTextViewerEnabled = settings.renderMarkdownInternally,
-          notificationsDeregistered = notificationsDeregistered,
+          notificationStatus = notificationStatus,
         ),
       )
     }
@@ -80,6 +84,8 @@ public class SettingsViewModel(
       is SettingsUiIntent.ToggleKmpInspector -> handleKmpInspectorToggle(intent.enabled)
       is SettingsUiIntent.ToggleInAppTextViewer -> handleInAppTextViewerToggle(intent.enabled)
       SettingsUiIntent.DeregisterNotifications -> handleDeregisterNotifications()
+      SettingsUiIntent.RegisterNotifications -> handleRegisterNotifications()
+      SettingsUiIntent.NotificationPermissionDenied -> handleNotificationPermissionDenied()
       SettingsUiIntent.ClickSignOut -> handleSignOut()
       SettingsUiIntent.ClickBack -> handleClickBack()
     }
@@ -115,9 +121,30 @@ public class SettingsViewModel(
 
   private fun handleDeregisterNotifications() {
     viewModelScope.launch {
-      deregisterDeviceNotificationsUseCase()
-      _notificationsDeregistered.value = true
+      _notificationStatus.value = DeviceNotificationUiState.Deregistering
+      val success = deregisterDeviceNotificationsUseCase()
+      _notificationStatus.value = if (success) {
+        DeviceNotificationUiState.Settled(DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_DEREGISTERED)
+      } else {
+        DeviceNotificationUiState.Failed("Deregistration failed")
+      }
     }
+  }
+
+  private fun handleRegisterNotifications() {
+    viewModelScope.launch {
+      _notificationStatus.value = DeviceNotificationUiState.Registering
+      val success = registerDeviceNotificationsUseCase()
+      _notificationStatus.value = if (success) {
+        DeviceNotificationUiState.Settled(DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_ACTIVE)
+      } else {
+        DeviceNotificationUiState.Failed("Registration failed")
+      }
+    }
+  }
+
+  private fun handleNotificationPermissionDenied() {
+    _notificationStatus.value = DeviceNotificationUiState.PermissionDenied
   }
 
   private fun handleSignOut(): Unit {

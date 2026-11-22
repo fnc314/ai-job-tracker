@@ -10,6 +10,6 @@ internal class DeregisterDeviceNotificationsUseCaseImpl(
 ) : DeregisterDeviceNotificationsUseCase {
     override suspend fun invoke(): Boolean {
         val deviceInfo = platformDeviceInfoProvider.getDeviceInfo()
-        return notificationRemoteDataSource.deregisterDevice(deviceInfo.deviceId)
+        return notificationRemoteDataSource.deregisterDevice(deviceInfo.installationId)
     }
 }

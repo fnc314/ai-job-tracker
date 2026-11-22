@@ -23,6 +23,21 @@
   <string name="settings_in_app_text_viewer_enabled">In-app viewer is enabled</string>
   <string name="settings_in_app_text_viewer_disabled">In-app viewer is disabled (uses external apps)</string>
   <string name="settings_section_notifications">Notifications</string>
+  <string name="settings_notifications_register_button">Register Device for Notifications</string>
+  <string name="settings_notifications_registered_status">Device is registered for push notifications.</string>
+  <string name="settings_notifications_registering_status">Registering device for push notifications…</string>
   <string name="settings_notifications_deregister_button">Deregister Device from Notifications</string>
+  <string name="settings_notifications_deregistering_status">Deregistering device from push notifications…</string>
   <string name="settings_notifications_deregistered_status">Device has been deregistered from push notifications.</string>
+  <string name="settings_notifications_permission_denied_status">Notification permission was denied. Please allow notifications in device settings.</string>
+  <string name="settings_notifications_permission_rationale_text">Notifications alert you when an interview is scheduled, an application status changes, or a new job opportunity is matched. Enable notifications to never miss urgent hiring events.</string>
+  <string name="settings_notifications_enable_button">Enable</string>
+  <string name="settings_notifications_open_settings_button">Open Settings</string>
+  <string name="settings_notifications_permission_denied_prefix">Please grant Notifications permission in </string>
+  <string name="settings_notifications_permission_denied_link">Settings</string>
+  <string name="settings_notifications_failed_status">Failed to update notification registration.</string>
+  <string name="settings_notifications_deregister_dialog_title">Deregister Device?</string>
+  <string name="settings_notifications_deregister_dialog_message">Are you sure you want to stop receiving push notifications on this device? You can re-register at any time.</string>
+  <string name="settings_notifications_deregister_dialog_confirm">Deregister</string>
+  <string name="settings_notifications_deregister_dialog_cancel">Cancel</string>
 </resources>

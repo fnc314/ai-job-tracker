@@ -8,6 +8,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.coreData)
+            implementation(projects.coreLogging)
             implementation(libs.kotlinx.coroutines.core)
         }
         commonTest.dependencies {

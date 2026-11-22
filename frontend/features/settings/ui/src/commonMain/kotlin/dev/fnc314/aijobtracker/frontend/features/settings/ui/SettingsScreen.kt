@@ -51,6 +51,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import dev.fnc314.aijobtracker.frontend.core.data.model.DeviceRegistrationStatus
 import dev.fnc314.aijobtracker.frontend.core.data.settings.UiMode
 import dev.fnc314.aijobtracker.frontend.core.designsystem.componentSizes
 import dev.fnc314.aijobtracker.frontend.core.designsystem.SeedColors
@@ -79,6 +80,12 @@ import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources
 import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources.settings_section_notifications
 import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources.settings_notifications_deregister_button
 import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources.settings_notifications_deregistered_status
+import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources.settings_notifications_deregistering_status
+import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources.settings_notifications_failed_status
+import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources.settings_notifications_permission_denied_status
+import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources.settings_notifications_register_button
+import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources.settings_notifications_registered_status
+import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources.settings_notifications_registering_status
 import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources.settings_theme_dark
 import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources.settings_theme_light
 import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources.settings_theme_system
@@ -466,21 +473,78 @@ internal fun SettingsContent(
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.primary,
                         )
-                        if (model.notificationsDeregistered) {
-                            Text(
-                                text = stringResource(Res.string.settings_notifications_deregistered_status),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.tertiary,
-                            )
-                        } else {
-                            OutlinedButton(
-                                shape = MaterialTheme.shapes.medium,
-                                onClick = { onIntent(SettingsUiIntent.DeregisterNotifications) },
-                                modifier = Modifier.fillMaxWidth(),
-                            ) {
-                                Text(stringResource(Res.string.settings_notifications_deregister_button))
+                        when (val status = model.notificationStatus) {
+                            is DeviceNotificationUiState.Settled -> {
+                                when (status.status) {
+                                    DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_ACTIVE -> {
+                                        Text(
+                                            text = stringResource(Res.string.settings_notifications_registered_status),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            color = MaterialTheme.colorScheme.primary,
+                                        )
+                                    }
+                                    DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_DEREGISTERED -> {
+                                        Text(
+                                            text = stringResource(Res.string.settings_notifications_deregistered_status),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            color = MaterialTheme.colorScheme.tertiary,
+                                        )
+                                    }
+                                    DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_BANNED,
+                                    DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_BLOCKED -> {
+                                        Text(
+                                            text = stringResource(Res.string.settings_notifications_failed_status),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            color = MaterialTheme.colorScheme.error,
+                                        )
+                                    }
+                                    DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_UNSPECIFIED -> {
+                                        // Initial or unqueried state
+                                    }
+                                }
+                            }
+                            is DeviceNotificationUiState.Registering -> {
+                                Text(
+                                    text = stringResource(Res.string.settings_notifications_registering_status),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                )
+                            }
+                            is DeviceNotificationUiState.Deregistering -> {
+                                Text(
+                                    text = stringResource(Res.string.settings_notifications_deregistering_status),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                )
+                            }
+                            is DeviceNotificationUiState.PermissionDenied -> {
+                                Text(
+                                    text = stringResource(Res.string.settings_notifications_permission_denied_status),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.error,
+                                )
+                            }
+                            is DeviceNotificationUiState.Failed -> {
+                                Text(
+                                    text = stringResource(Res.string.settings_notifications_failed_status),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.error,
+                                )
                             }
                         }
+
+                        val isRegistered = when (val status = model.notificationStatus) {
+                            is DeviceNotificationUiState.Settled ->
+                                status.status == DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_ACTIVE
+                            else -> false
+                        }
+
+                        PermissionNotificationControl(
+                            isRegistered = isRegistered,
+                            onRegisterRequested = { onIntent(SettingsUiIntent.RegisterNotifications) },
+                            onDeregisterRequested = { onIntent(SettingsUiIntent.DeregisterNotifications) },
+                            modifier = Modifier.fillMaxWidth(),
+                        )
                     }
                 }
             }
