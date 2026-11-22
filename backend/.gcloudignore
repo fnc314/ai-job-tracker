@@ -1,4 +1,12 @@
 .gcloudignore
 .git
 .gitignore
-!build/install/backend/**
+service/build/classes/**
+service/build/reports/**
+service/build/test-results/**
+service/build/tmp/**
+ai-client/build/**
+artifact-compilation/build/**
+job-post-ranking/build/**
+job-post-scraping/build/**
+oauth/build/**

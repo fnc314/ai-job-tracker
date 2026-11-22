@@ -100,6 +100,27 @@ rules_version = '2';
 // Collection: emails
 // Document ID: [messageId]
 //
+// Collection: installations
+// Document ID: [installationId]
+// Fields:
+//   - installationId: string (required, 1..200 chars)
+//   - token: string (required, 1..4096 chars)
+//   - platform: string (required, 1..100 chars, e.g. DEVICE_PLATFORM_ANDROID)
+//   - status: string (optional, 1..100 chars, e.g. DEVICE_REGISTRATION_STATUS_ACTIVE)
+//   - updatedAt: timestamp or string (optional)
+//   - lastInteractedAt: timestamp or string (optional)
+//
+// Subcollection: installations/{installationId}/heartbeats
+// Document ID: [heartbeatId]
+// Fields:
+//   - installationId: string (required, 1..200 chars)
+//   - make: string (optional, 0..200 chars)
+//   - model: string (optional, 0..200 chars)
+//   - osVersion: string (optional, 0..100 chars)
+//   - appVersion: string (optional, 0..100 chars)
+//   - targetProposalId: string (optional, 0..200 chars)
+//   - timestamp: timestamp or string (optional)
+//
 // Collection: artifact_jobs
 // Document ID: [jobId]
 // Fields:
@@ -377,6 +398,25 @@ service cloud.firestore {
              validOptionalTimestampOrString(data, 'updatedAt');
     }
 
+    function isValidInstallation(data) {
+      return validStringLength(data, 'installationId', 1, 200) &&
+             validStringLength(data, 'token', 1, 4096) &&
+             validStringLength(data, 'platform', 1, 100) &&
+             validOptionalString(data, 'status', 1, 100) &&
+             validOptionalTimestampOrString(data, 'updatedAt') &&
+             validOptionalTimestampOrString(data, 'lastInteractedAt');
+    }
+
+    function isValidHeartbeat(data) {
+      return validStringLength(data, 'installationId', 1, 200) &&
+             validOptionalString(data, 'make', 0, 200) &&
+             validOptionalString(data, 'model', 0, 200) &&
+             validOptionalString(data, 'osVersion', 0, 100) &&
+             validOptionalString(data, 'appVersion', 0, 100) &&
+             validOptionalString(data, 'targetProposalId', 0, 200) &&
+             validOptionalTimestampOrString(data, 'timestamp');
+    }
+
     // ===============================================================
     // Collection Match Rules
     // ===============================================================
@@ -494,6 +534,28 @@ service cloud.firestore {
       allow update: if isCandidateUser() &&
                        isValidArtifactJob(request.resource.data);
       allow delete: if isCandidateUser();
+    }
+
+    // Flattened Root Installations Collection (push notification registrations)
+    match /installations/{installationId} {
+      allow read: if isCandidateUser();
+      allow create: if isCandidateUser() &&
+                       isValidInstallation(request.resource.data);
+      allow update: if isCandidateUser() &&
+                       isValidInstallation(request.resource.data);
+      allow delete: if isCandidateUser();
+
+      // Nested Installation Heartbeats Subcollection
+      match /heartbeats/{heartbeatId} {
+        allow read: if isCandidateUser();
+        allow create: if isCandidateUser() &&
+                         isValidHeartbeat(request.resource.data) &&
+                         request.resource.data.installationId == installationId;
+        allow update: if isCandidateUser() &&
+                         isValidHeartbeat(request.resource.data) &&
+                         areImmutableFieldsUnchanged(['installationId']);
+        allow delete: if isCandidateUser();
+      }
     }
 
     // Default Deny: Deny all reads and writes to unmapped collections or paths

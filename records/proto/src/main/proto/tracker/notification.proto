@@ -26,15 +26,24 @@ enum DevicePlatform {
   DEVICE_PLATFORM_WEB = 4;
 }
 
+enum DeviceRegistrationStatus {
+  DEVICE_REGISTRATION_STATUS_UNSPECIFIED = 0;
+  DEVICE_REGISTRATION_STATUS_ACTIVE = 1;
+  DEVICE_REGISTRATION_STATUS_DEREGISTERED = 2;
+  DEVICE_REGISTRATION_STATUS_BANNED = 3;
+  DEVICE_REGISTRATION_STATUS_BLOCKED = 4;
+}
+
 message DeviceRegistration {
-  string deviceId = 1;
+  string installationId = 1;
   string token = 2;
   DevicePlatform platform = 3;
-  google.protobuf.Timestamp updatedAt = 4;
+  DeviceRegistrationStatus status = 4;
+  google.protobuf.Timestamp updatedAt = 5;
 }
 
 message DeviceHeartbeat {
-  string deviceId = 1;
+  string installationId = 1;
   DevicePlatform platform = 2;
   string make = 3;                  // e.g. "Google", "Apple"
   string model = 4;                 // e.g. "Pixel 8 Pro", "MacBookPro"

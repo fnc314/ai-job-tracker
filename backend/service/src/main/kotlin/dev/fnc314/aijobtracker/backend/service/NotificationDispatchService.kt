@@ -15,33 +15,27 @@ import java.time.Instant
 public object NotificationDispatchService {
 
     /**
-     * Dispatches a push notification to all registered devices of a given user (or all users when userId is null).
+     * Dispatches a push notification to all active registered devices.
      *
      * @param payload The structured notification payload.
-     * @param targetUserId Optional target user ID; if null, dispatches to all users with active devices.
      * @return Count of successfully dispatched notifications.
      */
     public fun dispatch(
         payload: TrackerNotificationPayload,
-        targetUserId: String? = null
     ): Int {
         val db = BackendService.remoteDatabase
         var successfulDispatches = 0
 
         try {
-            val userDocs = if (targetUserId != null) {
-                listOfNotNull(db.collection("users").document(targetUserId).get().get())
-            } else {
-                db.collection("users").get().get().documents
-            }
+            val installations = db.collection("installations").get().get().documents
 
-            for (userDoc in userDocs) {
-                val devices = userDoc.reference.collection("devices").get().get().documents
-                for (device in devices) {
-                    val token = device.getString("token")
-                    if (token.isNullOrBlank()) continue
+            for (installation in installations) {
+                val token = installation.getString("token")
+                val status = installation.getString("status")
+                if (token.isNullOrBlank()) continue
+                if (status != null && status != "DEVICE_REGISTRATION_STATUS_ACTIVE") continue
 
-                    try {
+                try {
                         val messageBuilder = Message.builder()
                             .setToken(token)
                             .setNotification(
@@ -57,15 +51,14 @@ public object NotificationDispatchService {
                             .putData("click_action", "FLUTTER_NOTIFICATION_CLICK")
 
                         val response = FirebaseMessaging.getInstance().send(messageBuilder.build())
-                        println("Successfully sent FCM notification to device ${device.id}: $response")
+                        println("Successfully sent FCM notification to installation ${installation.id}: $response")
                         successfulDispatches++
                     } catch (e: Exception) {
-                        System.err.println("Failed to send FCM to device ${device.id} (${device.getString("token")}): ${e.message}")
+                        System.err.println("Failed to send FCM to installation ${installation.id} (${installation.getString("token")}): ${e.message}")
                     }
-                }
             }
         } catch (e: Exception) {
-            System.err.println("Error querying devices for FCM notification: ${e.message}")
+            System.err.println("Error querying installations for FCM notification: ${e.message}")
         }
 
         return successfulDispatches

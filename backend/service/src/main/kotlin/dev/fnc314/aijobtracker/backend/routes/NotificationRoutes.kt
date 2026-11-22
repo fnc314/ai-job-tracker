@@ -8,6 +8,7 @@ import dev.fnc314.aijobtracker.backend.BackendService
 import dev.fnc314.aijobtracker.records.DeviceHeartbeat
 import dev.fnc314.aijobtracker.records.DevicePlatform
 import dev.fnc314.aijobtracker.records.DeviceRegistration
+import dev.fnc314.aijobtracker.records.DeviceRegistrationStatus
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
@@ -58,13 +59,14 @@ public fun Route.notificationRoutes(): Unit {
         try {
             val bodyText = call.receiveText()
             val json = Json.parseToJsonElement(bodyText).jsonObject
-            val deviceId = json["deviceId"]?.jsonPrimitive?.contentOrNull?.trim()
+            val installationId = json["installationId"]?.jsonPrimitive?.contentOrNull?.trim()
+                ?: json["deviceId"]?.jsonPrimitive?.contentOrNull?.trim()
             val token = json["token"]?.jsonPrimitive?.contentOrNull?.trim()
             val platformStr = json["platform"]?.jsonPrimitive?.contentOrNull?.trim() ?: "DEVICE_PLATFORM_ANDROID"
 
-            if (deviceId.isNullOrBlank() || token.isNullOrBlank()) {
+            if (installationId.isNullOrBlank() || token.isNullOrBlank()) {
                 call.respondText(
-                    notificationJson.encodeToString(NotificationApiResponse("ERROR", "deviceId and token are required")),
+                    notificationJson.encodeToString(NotificationApiResponse("ERROR", "installationId and token are required")),
                     ContentType.Application.Json,
                     status = HttpStatusCode.BadRequest
                 )
@@ -75,37 +77,38 @@ public fun Route.notificationRoutes(): Unit {
             val db = BackendService.remoteDatabase
 
             // Enforce max 5 devices invariant: if >= 5 active devices, evict oldest
-            val devicesCollection = db.collection("users").document(uid).collection("devices")
-            val existingDevices = devicesCollection.get().get().documents
-            val isExistingDevice = existingDevices.any { it.id == deviceId }
+            val installationsCollection = db.collection("installations")
+            val existingInstallations = installationsCollection.get().get().documents
+            val isExistingInstallation = existingInstallations.any { it.id == installationId }
 
-            if (!isExistingDevice && existingDevices.size >= 5) {
+            if (!isExistingInstallation && existingInstallations.size >= 5) {
                 // Find oldest / least recently active device
-                val oldestDevice = existingDevices.minByOrNull { doc ->
+                val oldestInstallation = existingInstallations.minByOrNull { doc ->
                     doc.getTimestamp("lastInteractedAt")?.seconds
                         ?: doc.getTimestamp("updatedAt")?.seconds
                         ?: 0L
                 }
-                oldestDevice?.reference?.delete()?.get()
+                oldestInstallation?.reference?.delete()?.get()
             }
 
             val now = Timestamp.now()
             val registrationData = mutableMapOf<String, Any>(
-                "deviceId" to deviceId,
+                "installationId" to installationId,
                 "token" to token,
                 "platform" to platform.name,
+                "status" to DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_ACTIVE.name,
                 "updatedAt" to now,
                 "lastInteractedAt" to now
             )
 
-            devicesCollection.document(deviceId).set(registrationData, SetOptions.merge()).get()
+            installationsCollection.document(installationId).set(registrationData, SetOptions.merge()).get()
 
             call.respondText(
                 notificationJson.encodeToString(
                     NotificationApiResponse(
                         status = "SUCCESS",
-                        message = "Device registered successfully",
-                        details = mapOf("deviceId" to deviceId, "platform" to platform.name)
+                        message = "Installation registered successfully",
+                        details = mapOf("installationId" to installationId, "platform" to platform.name)
                     )
                 ),
                 ContentType.Application.Json,
@@ -130,11 +133,12 @@ public fun Route.notificationRoutes(): Unit {
         try {
             val bodyText = call.receiveText()
             val json = Json.parseToJsonElement(bodyText).jsonObject
-            val deviceId = json["deviceId"]?.jsonPrimitive?.contentOrNull?.trim()
+            val installationId = json["installationId"]?.jsonPrimitive?.contentOrNull?.trim()
+                ?: json["deviceId"]?.jsonPrimitive?.contentOrNull?.trim()
 
-            if (deviceId.isNullOrBlank()) {
+            if (installationId.isNullOrBlank()) {
                 call.respondText(
-                    notificationJson.encodeToString(NotificationApiResponse("ERROR", "deviceId is required")),
+                    notificationJson.encodeToString(NotificationApiResponse("ERROR", "installationId is required")),
                     ContentType.Application.Json,
                     status = HttpStatusCode.BadRequest
                 )
@@ -142,15 +146,20 @@ public fun Route.notificationRoutes(): Unit {
             }
 
             val db = BackendService.remoteDatabase
-            val docRef = db.collection("users").document(uid).collection("devices").document(deviceId)
+            val docRef = db.collection("installations").document(installationId)
+            val deregistrationData = mapOf(
+                "status" to DeviceRegistrationStatus.DEVICE_REGISTRATION_STATUS_DEREGISTERED.name,
+                "updatedAt" to Timestamp.now(),
+            )
+            docRef.set(deregistrationData, SetOptions.merge()).get()
             docRef.delete().get()
 
             call.respondText(
                 notificationJson.encodeToString(
                     NotificationApiResponse(
                         status = "SUCCESS",
-                        message = "Device deregistered successfully",
-                        details = mapOf("deviceId" to deviceId)
+                        message = "Installation deregistered successfully",
+                        details = mapOf("installationId" to installationId)
                     )
                 ),
                 ContentType.Application.Json,
@@ -175,16 +184,17 @@ public fun Route.notificationRoutes(): Unit {
         try {
             val bodyText = call.receiveText()
             val json = Json.parseToJsonElement(bodyText).jsonObject
-            val deviceId = json["deviceId"]?.jsonPrimitive?.contentOrNull?.trim()
+            val installationId = json["installationId"]?.jsonPrimitive?.contentOrNull?.trim()
+                ?: json["deviceId"]?.jsonPrimitive?.contentOrNull?.trim()
             val make = json["make"]?.jsonPrimitive?.contentOrNull?.trim() ?: "unknown"
             val model = json["model"]?.jsonPrimitive?.contentOrNull?.trim() ?: "unknown"
             val osVersion = json["osVersion"]?.jsonPrimitive?.contentOrNull?.trim() ?: "unknown"
             val appVersion = json["appVersion"]?.jsonPrimitive?.contentOrNull?.trim() ?: "unknown"
             val targetProposalId = json["targetProposalId"]?.jsonPrimitive?.contentOrNull?.trim()
 
-            if (deviceId.isNullOrBlank()) {
+            if (installationId.isNullOrBlank()) {
                 call.respondText(
-                    notificationJson.encodeToString(NotificationApiResponse("ERROR", "deviceId is required")),
+                    notificationJson.encodeToString(NotificationApiResponse("ERROR", "installationId is required")),
                     ContentType.Application.Json,
                     status = HttpStatusCode.BadRequest
                 )
@@ -194,14 +204,14 @@ public fun Route.notificationRoutes(): Unit {
             val epochSeconds = Instant.now().epochSecond
             val now = Timestamp.now()
             val db = BackendService.remoteDatabase
-            val deviceDoc = db.collection("users").document(uid).collection("devices").document(deviceId)
+            val installationDoc = db.collection("installations").document(installationId)
 
             // Update parent device lastInteractedAt
-            deviceDoc.set(mapOf("lastInteractedAt" to now), SetOptions.merge()).get()
+            installationDoc.set(mapOf("lastInteractedAt" to now), SetOptions.merge()).get()
 
             // Heartbeat entry
             val heartbeatData = mutableMapOf<String, Any>(
-                "deviceId" to deviceId,
+                "installationId" to installationId,
                 "make" to make,
                 "model" to model,
                 "osVersion" to osVersion,
@@ -212,7 +222,7 @@ public fun Route.notificationRoutes(): Unit {
                 heartbeatData["targetProposalId"] = targetProposalId
             }
 
-            val heartbeatsCol = deviceDoc.collection("heartbeats")
+            val heartbeatsCol = installationDoc.collection("heartbeats")
             heartbeatsCol.document(epochSeconds.toString()).set(heartbeatData).get()
 
             // Retention cap: strictly max 20 entries
@@ -229,7 +239,7 @@ public fun Route.notificationRoutes(): Unit {
                     NotificationApiResponse(
                         status = "SUCCESS",
                         message = "Heartbeat recorded successfully",
-                        details = mapOf("deviceId" to deviceId, "epoch" to epochSeconds.toString())
+                        details = mapOf("installationId" to installationId, "epoch" to epochSeconds.toString())
                     )
                 ),
                 ContentType.Application.Json,
@@ -253,11 +263,13 @@ public fun Route.notificationRoutes(): Unit {
 
         try {
             val db = BackendService.remoteDatabase
-            val devices = db.collection("users").document(uid).collection("devices").get().get().documents
-            val deviceList = devices.map { doc ->
+            val installations = db.collection("installations").get().get().documents
+            val deviceList = installations.map { doc ->
                 mapOf(
+                    "installationId" to doc.id,
                     "deviceId" to doc.id,
                     "platform" to (doc.getString("platform") ?: "UNKNOWN"),
+                    "status" to (doc.getString("status") ?: "UNKNOWN"),
                     "updatedAt" to (doc.getTimestamp("updatedAt")?.toString() ?: ""),
                     "lastInteractedAt" to (doc.getTimestamp("lastInteractedAt")?.toString() ?: "")
                 )
@@ -286,8 +298,8 @@ public fun Route.notificationRoutes(): Unit {
 
         try {
             val db = BackendService.remoteDatabase
-            val devices = db.collection("users").document(uid).collection("devices").get().get().documents
-            for (doc in devices) {
+            val installations = db.collection("installations").get().get().documents
+            for (doc in installations) {
                 doc.reference.delete().get()
             }
 
@@ -295,8 +307,8 @@ public fun Route.notificationRoutes(): Unit {
                 notificationJson.encodeToString(
                     NotificationApiResponse(
                         status = "SUCCESS",
-                        message = "All devices purged for user",
-                        details = mapOf("count" to devices.size.toString())
+                        message = "All installations purged",
+                        details = mapOf("count" to installations.size.toString())
                     )
                 ),
                 ContentType.Application.Json,
@@ -313,6 +325,7 @@ public fun Route.notificationRoutes(): Unit {
 }
 
 private fun extractUid(call: io.ktor.server.application.ApplicationCall): String? {
+    BackendService.initFirebaseApp()
     val authHeader = call.request.headers["Authorization"]?.trim()
     if (authHeader?.startsWith("Bearer ", ignoreCase = true) == true) {
         val token = authHeader.substring(7).trim()

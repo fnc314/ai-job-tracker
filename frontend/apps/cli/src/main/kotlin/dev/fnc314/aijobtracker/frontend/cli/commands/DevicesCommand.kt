@@ -36,18 +36,13 @@ internal class ListDevicesCommand : CliktCommand(name = "list") {
     override fun run() {
         val t = Terminal(nonInteractiveWidth = 200)
         val db = RemoteDataSourceProvider.remote
-        val userDocs = db.collection("users").get().get().documents
+        val installationDocs = db.collection("installations").get().get().documents
 
         val allDevices = mutableListOf<Map<String, Any?>>()
-        for (userDoc in userDocs) {
-            val userId = userDoc.id
-            val deviceDocs = userDoc.reference.collection("devices").get().get().documents
-            for (deviceDoc in deviceDocs) {
-                val data = deviceDoc.data.toMutableMap()
-                data["userId"] = userId
-                data["deviceId"] = deviceDoc.id
-                allDevices.add(data)
-            }
+        for (doc in installationDocs) {
+            val data = doc.data.toMutableMap()
+            data["installationId"] = doc.id
+            allDevices.add(data)
         }
 
         if (jsonOutput) {
@@ -59,23 +54,23 @@ internal class ListDevicesCommand : CliktCommand(name = "list") {
         }
 
         if (allDevices.isEmpty()) {
-            t.println(gray("No devices registered."))
+            t.println(gray("No installations registered."))
             return
         }
 
         t.println(
             table {
                 header {
-                    row("User ID", "Device ID", "Platform", "Updated At", "Token")
+                    row("Installation ID", "Platform", "Status", "Updated At", "Token")
                 }
                 body {
                     allDevices.forEach { dev ->
-                        val uId = (dev["userId"] as? String)?.take(16) ?: "-"
-                        val dId = (dev["deviceId"] as? String)?.take(24) ?: "-"
+                        val instId = (dev["installationId"] as? String)?.take(24) ?: "-"
                         val plat = (dev["platform"] as? String) ?: "-"
+                        val status = (dev["status"] as? String) ?: "-"
                         val updated = (dev["updatedAt"] ?: dev["createdAt"])?.toString()?.take(19) ?: "-"
                         val tok = (dev["token"] as? String)?.take(16)?.plus("...") ?: "-"
-                        row(cyan(uId), dId, plat, updated, gray(tok))
+                        row(cyan(instId), plat, status, updated, gray(tok))
                     }
                 }
             }
@@ -95,17 +90,14 @@ internal class PurgeDevicesCommand : CliktCommand(name = "purge") {
         }
 
         val db = RemoteDataSourceProvider.remote
-        val userDocs = db.collection("users").get().get().documents
+        val installationDocs = db.collection("installations").get().get().documents
         var purgedCount = 0
 
-        for (userDoc in userDocs) {
-            val deviceDocs = userDoc.reference.collection("devices").get().get().documents
-            for (deviceDoc in deviceDocs) {
-                deviceDoc.reference.delete().get()
-                purgedCount++
-            }
+        for (doc in installationDocs) {
+            doc.reference.delete().get()
+            purgedCount++
         }
 
-        t.println(green("✓ Successfully purged $purgedCount registered device(s)."))
+        t.println(green("✓ Successfully purged $purgedCount registered installation(s)."))
     }
 }

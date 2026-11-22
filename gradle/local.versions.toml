@@ -28,6 +28,7 @@
   frontend-apps-android = { module = "dev.fnc314.aijobtracker.frontend:apps-android", version.ref = "version" }
   frontend-apps-web = { module = "dev.fnc314.aijobtracker.frontend:apps-web", version.ref = "version" }
   frontend-core-artifacts = { module = "dev.fnc314.aijobtracker.frontend:core-artifacts", version.ref = "version" }
+  frontend-core-auth = { module = "dev.fnc314.aijobtracker.frontend:core-auth", version.ref = "version" }
   frontend-core-data = { module = "dev.fnc314.aijobtracker.frontend:core-data", version.ref = "version" }
   frontend-core-design-system = { module = "dev.fnc314.aijobtracker.frontend:core-design-system", version.ref = "version" }
   frontend-core-logging = { module = "dev.fnc314.aijobtracker.frontend:core-logging", version.ref = "version" }
@@ -92,6 +93,7 @@
     "frontend-apps-android",
     "frontend-apps-web",
     "frontend-core-artifacts",
+    "frontend-core-auth",
     "frontend-core-data",
     "frontend-core-design-system",
     "frontend-core-logging",

@@ -42,9 +42,9 @@ class NotificationRoutesTest {
             contentType(ContentType.Application.Json)
             setBody("""{"deviceId":""}""")
         }
-        // Since JOB_TRACKER_API_KEY is not set in test environment, extractUid defaults to "default-user"
-        // and returns 400 BadRequest due to missing deviceId/token
+        // Since JOB_TRACKER_API_KEY is not set in test environment, extractUid defaults to "admin-user"
+        // and returns 400 BadRequest due to missing installationId/token
         assertEquals(HttpStatusCode.BadRequest, response.status)
-        assertTrue(response.bodyAsText().contains("deviceId and token are required"))
+        assertTrue(response.bodyAsText().contains("installationId and token are required"))
     }
 }
