@@ -27,14 +27,23 @@ public class JobTrackerFirebaseMessagingService : FirebaseMessagingService() {
     private val notificationRemoteDataSource: NotificationRemoteDataSource by lazy { getKoin().get() }
     private val platformDeviceInfoProvider: PlatformDeviceInfoProvider by lazy { getKoin().get() }
 
-    override fun onNewToken(token: String) {
-        super.onNewToken(token)
+    override fun onRegistered(installationId: String) {
+        super.onRegistered(installationId)
         serviceScope.launch {
             val deviceInfo = platformDeviceInfoProvider.getDeviceInfo()
             notificationRemoteDataSource.registerDevice(
-                token = token,
+                token = installationId,
                 platform = DevicePlatform.DEVICE_PLATFORM_ANDROID,
-                deviceId = deviceInfo.deviceId,
+                installationId = deviceInfo.installationId,
+            )
+        }
+    }
+
+    override fun onUnregistered(installationId: String) {
+        super.onUnregistered(installationId)
+        serviceScope.launch {
+            notificationRemoteDataSource.deregisterDevice(
+                installationId = installationId,
             )
         }
     }

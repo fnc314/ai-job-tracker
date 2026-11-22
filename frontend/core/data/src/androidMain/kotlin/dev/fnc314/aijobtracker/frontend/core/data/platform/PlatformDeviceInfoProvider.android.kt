@@ -9,7 +9,7 @@ import dev.fnc314.aijobtracker.frontend.core.data.model.PlatformDeviceInfo
 internal class AndroidPlatformDeviceInfoProvider : PlatformDeviceInfoProvider {
     override fun getDeviceInfo(): PlatformDeviceInfo {
         val context = ApplicationContextHolder.application
-        val deviceId = try {
+        val installationId = try {
             if (context != null) {
                 Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID) ?: "android-device"
             } else {
@@ -30,7 +30,7 @@ internal class AndroidPlatformDeviceInfoProvider : PlatformDeviceInfoProvider {
         }
 
         return PlatformDeviceInfo(
-            deviceId = deviceId,
+            installationId = installationId,
             platform = DevicePlatform.DEVICE_PLATFORM_ANDROID,
             make = Build.MANUFACTURER ?: "Google",
             model = Build.MODEL ?: "Android Device",

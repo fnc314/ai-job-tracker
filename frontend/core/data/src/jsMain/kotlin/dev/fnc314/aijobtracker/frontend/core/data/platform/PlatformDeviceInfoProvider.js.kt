@@ -6,7 +6,7 @@ import dev.fnc314.aijobtracker.frontend.core.data.model.PlatformDeviceInfo
 internal class JsPlatformDeviceInfoProvider : PlatformDeviceInfoProvider {
     override fun getDeviceInfo(): PlatformDeviceInfo {
         return PlatformDeviceInfo(
-            deviceId = "web-client",
+            installationId = "web-client",
             platform = DevicePlatform.DEVICE_PLATFORM_WEB,
             make = "Web Browser",
             model = "JavaScript",

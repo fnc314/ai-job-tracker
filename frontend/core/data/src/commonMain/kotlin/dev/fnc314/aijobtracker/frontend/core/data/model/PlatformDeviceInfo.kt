@@ -32,10 +32,13 @@ public enum class DevicePlatform {
  */
 @Serializable
 public data class PlatformDeviceInfo(
-    public val deviceId: String,
+    public val installationId: String,
     public val platform: DevicePlatform,
     public val make: String,
     public val model: String,
     public val osVersion: String,
     public val appVersion: String,
-)
+) {
+    @Deprecated("Renamed to installationId to align with Firebase Installations FID", ReplaceWith("installationId"))
+    public val deviceId: String get() = installationId
+}

@@ -1,49 +1,60 @@
 package dev.fnc314.aijobtracker.frontend.core.data.source.impl
 
+import dev.fnc314.aijobtracker.frontend.core.auth.AuthTokenProvider
 import dev.fnc314.aijobtracker.frontend.core.data.model.DevicePlatform
 import dev.fnc314.aijobtracker.frontend.core.data.model.PlatformDeviceInfo
 import dev.fnc314.aijobtracker.frontend.core.data.source.NetworkDataSource
 import dev.fnc314.aijobtracker.frontend.core.data.source.NotificationRemoteDataSource
+import dev.fnc314.aijobtracker.frontend.core.logging.AppLogger
 import dev.fnc314.aijobtracker.frontend.core.network.RemoteNetworkConfig
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 
 internal class NotificationRemoteDataSourceImpl(
     private val networkDataSource: NetworkDataSource,
+    private val authTokenProvider: AuthTokenProvider? = null,
 ) : NotificationRemoteDataSource {
 
-    private fun headers(): Map<String, String> {
-        val apiKey = RemoteNetworkConfig.apiKey
-        return if (!apiKey.isNullOrBlank()) {
-            mapOf(RemoteNetworkConfig.API_KEY_HEADER to apiKey)
+    private suspend fun headers(): Map<String, String> {
+        val result = mutableMapOf<String, String>()
+        val token = authTokenProvider?.getIdToken()
+        if (!token.isNullOrBlank()) {
+            result["Authorization"] = "Bearer $token"
         } else {
-            emptyMap()
+            val apiKey = RemoteNetworkConfig.apiKey
+            if (!apiKey.isNullOrBlank()) {
+                result[RemoteNetworkConfig.API_KEY_HEADER] = apiKey
+            }
         }
+        return result
     }
 
-    override suspend fun registerDevice(token: String, platform: DevicePlatform, deviceId: String): Boolean {
+    override suspend fun registerDevice(token: String, platform: DevicePlatform, installationId: String): Boolean {
         return try {
             val payload = buildJsonObject {
                 put("token", token)
                 put("platform", platform.name)
-                put("deviceId", deviceId)
+                put("installationId", installationId)
             }.toString()
 
-            val url = "${RemoteNetworkConfig.baseUrl.trimEnd('/')}/notifications/device/register"
-            networkDataSource.postJson(url = url, jsonBody = payload, headers = headers())
+            val url = "${RemoteNetworkConfig.baseUrl}/notifications/device/register"
+            AppLogger.d("NotificationRemoteDataSource") { "POST $url payload: $payload" }
+            val response = networkDataSource.postJson(url = url, jsonBody = payload, headers = headers())
+            AppLogger.i("NotificationRemoteDataSource") { "POST $url response: $response" }
             true
-        } catch (_: Throwable) {
+        } catch (t: Throwable) {
+            AppLogger.e("NotificationRemoteDataSource") { "Failed to register device: ${t.message}" }
             false
         }
     }
 
-    override suspend fun deregisterDevice(deviceId: String): Boolean {
+    override suspend fun deregisterDevice(installationId: String): Boolean {
         return try {
             val payload = buildJsonObject {
-                put("deviceId", deviceId)
+                put("installationId", installationId)
             }.toString()
 
-            val url = "${RemoteNetworkConfig.baseUrl.trimEnd('/')}/notifications/device/deregister"
+            val url = "${RemoteNetworkConfig.baseUrl}/notifications/device/deregister"
             networkDataSource.postJson(url = url, jsonBody = payload, headers = headers())
             true
         } catch (_: Throwable) {
@@ -57,7 +68,7 @@ internal class NotificationRemoteDataSourceImpl(
     ): Boolean {
         return try {
             val payload = buildJsonObject {
-                put("deviceId", deviceInfo.deviceId)
+                put("installationId", deviceInfo.installationId)
                 put("platform", deviceInfo.platform.name)
                 put("make", deviceInfo.make)
                 put("model", deviceInfo.model)
@@ -68,7 +79,7 @@ internal class NotificationRemoteDataSourceImpl(
                 }
             }.toString()
 
-            val url = "${RemoteNetworkConfig.baseUrl.trimEnd('/')}/notifications/device/heartbeat"
+            val url = "${RemoteNetworkConfig.baseUrl}/notifications/device/heartbeat"
             networkDataSource.postJson(url = url, jsonBody = payload, headers = headers())
             true
         } catch (_: Throwable) {

@@ -10,12 +10,12 @@ public interface NotificationRemoteDataSource {
     /**
      * Registers or updates a device push token with the backend.
      */
-    public suspend fun registerDevice(token: String, platform: DevicePlatform, deviceId: String): Boolean
+    public suspend fun registerDevice(token: String, platform: DevicePlatform, installationId: String): Boolean
 
     /**
      * Deregisters a device push token from the backend.
      */
-    public suspend fun deregisterDevice(deviceId: String): Boolean
+    public suspend fun deregisterDevice(installationId: String): Boolean
 
     /**
      * Sends an interactive heartbeat upon user tap of a notification.

@@ -6,7 +6,7 @@ import dev.fnc314.aijobtracker.frontend.core.data.model.PlatformDeviceInfo
 internal class WasmJsPlatformDeviceInfoProvider : PlatformDeviceInfoProvider {
     override fun getDeviceInfo(): PlatformDeviceInfo {
         return PlatformDeviceInfo(
-            deviceId = "wasm-client",
+            installationId = "wasm-client",
             platform = DevicePlatform.DEVICE_PLATFORM_WEB,
             make = "Web Browser",
             model = "WebAssembly",

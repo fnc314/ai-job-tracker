@@ -15,6 +15,8 @@ import dev.fnc314.aijobtracker.frontend.core.data.source.impl.LocalDataSourceImp
 import dev.fnc314.aijobtracker.frontend.core.data.source.impl.NetworkDataSourceImpl
 import dev.fnc314.aijobtracker.frontend.core.data.platform.PlatformDeviceInfoProvider
 import dev.fnc314.aijobtracker.frontend.core.data.platform.createPlatformDeviceInfoProvider
+import dev.fnc314.aijobtracker.frontend.core.data.platform.PlatformPushTokenProvider
+import dev.fnc314.aijobtracker.frontend.core.data.platform.createPlatformPushTokenProvider
 import dev.fnc314.aijobtracker.frontend.core.data.source.NotificationRemoteDataSource
 import dev.fnc314.aijobtracker.frontend.core.data.source.impl.NotificationRemoteDataSourceImpl
 import kotlinx.serialization.json.Json
@@ -42,7 +44,8 @@ public val coreDataModule: Module = module {
     single { DatabaseHolder(createLocalDatabase()) }
     single<LocalDataSource> { LocalDataSourceImpl(get()) }
     single<NetworkDataSource> { NetworkDataSourceImpl(get()) }
-    single<NotificationRemoteDataSource> { NotificationRemoteDataSourceImpl(get()) }
+    single<NotificationRemoteDataSource> { NotificationRemoteDataSourceImpl(get(), getOrNull()) }
     single<PlatformDeviceInfoProvider> { createPlatformDeviceInfoProvider() }
+    single<PlatformPushTokenProvider> { createPlatformPushTokenProvider() }
     single<RemoteDataSource> { createRemoteDataSource() }
 }

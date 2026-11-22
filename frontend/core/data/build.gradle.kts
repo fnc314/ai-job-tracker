@@ -12,6 +12,8 @@ plugins {
 kotlin {
   sourceSets {
     commonMain.dependencies {
+      implementation(projects.coreAuth)
+      implementation(projects.coreLogging)
       implementation(projects.coreNetwork)
       implementation(libs.kotlinx.coroutines.core)
       implementation(libs.kotlinx.datetime)
@@ -42,6 +44,7 @@ kotlin {
 dependencies {
   androidMainImplementation(libs.bundles.ktor.client.android)
   androidMainImplementation(libs.kotlinx.coroutinesPlayServices)
+  androidMainImplementation(libs.firebase.messaging)
   androidMainImplementation(libs.kmp.inspector)
   androidMainImplementation(libs.kmp.inspector.room)
 }

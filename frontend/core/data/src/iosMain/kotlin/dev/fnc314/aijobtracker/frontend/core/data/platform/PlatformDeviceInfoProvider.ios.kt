@@ -6,7 +6,7 @@ import dev.fnc314.aijobtracker.frontend.core.data.model.PlatformDeviceInfo
 internal class IosPlatformDeviceInfoProvider : PlatformDeviceInfoProvider {
     override fun getDeviceInfo(): PlatformDeviceInfo {
         return PlatformDeviceInfo(
-            deviceId = "ios-device",
+            installationId = "ios-device",
             platform = DevicePlatform.DEVICE_PLATFORM_IOS,
             make = "Apple",
             model = "iPhone/iPad",

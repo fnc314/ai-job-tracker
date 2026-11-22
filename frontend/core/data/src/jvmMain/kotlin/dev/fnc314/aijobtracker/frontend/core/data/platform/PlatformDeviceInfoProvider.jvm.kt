@@ -16,7 +16,7 @@ internal class JvmPlatformDeviceInfoProvider : PlatformDeviceInfoProvider {
         val osArch = System.getProperty("os.arch") ?: ""
 
         return PlatformDeviceInfo(
-            deviceId = "desktop-$hostName".lowercase().replace(Regex("[^a-z0-9_-]"), "-"),
+            installationId = "desktop-$hostName".lowercase().replace(Regex("[^a-z0-9_-]"), "-"),
             platform = DevicePlatform.DEVICE_PLATFORM_DESKTOP,
             make = if (osName.contains("Mac", ignoreCase = true)) "Apple" else "Desktop",
             model = osArch,
