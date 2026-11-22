@@ -15,9 +15,12 @@ public object RemoteNetworkConfig {
     public const val API_KEY_HEADER: String = "X-Api-Key"
 
     /**
-     * Active backend base URL.
+     * Active backend base URL. Always normalized without trailing slashes.
      */
     public var baseUrl: String = DEFAULT_REMOTE_BACKEND_URL
+        set(value) {
+            field = value.trimEnd('/')
+        }
 
     /**
      * Active API key passed with requests.

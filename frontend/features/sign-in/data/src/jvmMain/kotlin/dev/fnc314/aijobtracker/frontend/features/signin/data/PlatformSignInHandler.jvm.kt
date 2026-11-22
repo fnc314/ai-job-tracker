@@ -92,7 +92,7 @@ internal actual class PlatformSignInHandler {
             }
 
             // Exchange with backend service
-            val backendBaseUrl = RemoteNetworkConfig.baseUrl.trimEnd('/')
+            val backendBaseUrl = RemoteNetworkConfig.baseUrl
             val endpoint = "$backendBaseUrl/api/auth/sign-in"
             val requestPayload = AuthExchangePayload(
                 provider = "google",

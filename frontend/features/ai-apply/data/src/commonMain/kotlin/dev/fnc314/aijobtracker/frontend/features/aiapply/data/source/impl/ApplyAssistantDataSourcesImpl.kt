@@ -782,7 +782,7 @@ internal class NetworkApplyAssistantDataSourceImpl(
 
     private suspend fun postJson(path: String, reqBody: String): JsonObject? {
         val client = httpClient ?: return null
-        val baseUrl = RemoteNetworkConfig.baseUrl.trimEnd('/')
+        val baseUrl = RemoteNetworkConfig.baseUrl
         if (baseUrl.isBlank()) return null
         return runCatching {
             val response = client.post("$baseUrl$path") {
@@ -850,7 +850,7 @@ internal class NetworkApplyAssistantDataSourceImpl(
     override suspend fun getArtifactJob(jobId: String): ApplyArtifactJobState? {
         localFallbackJobs[jobId]?.let { return it }
         val client = httpClient
-        val baseUrl = RemoteNetworkConfig.baseUrl.trimEnd('/')
+        val baseUrl = RemoteNetworkConfig.baseUrl
         if (client == null || baseUrl.isBlank()) return localFallbackJobs[jobId]
         val fetched = runCatching {
             val response = client.get("$baseUrl/artifacts/jobs/$jobId") {

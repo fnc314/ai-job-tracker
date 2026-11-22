@@ -1,6 +1,7 @@
 package dev.fnc314.aijobtracker.frontend.app.core.di
 
 import dev.fnc314.aijobtracker.frontend.core.artifacts.di.coreArtifactsModule
+import dev.fnc314.aijobtracker.frontend.core.auth.di.coreAuthModule
 import dev.fnc314.aijobtracker.frontend.core.data.di.coreDataModule
 import dev.fnc314.aijobtracker.frontend.core.logging.di.coreLoggingModule
 import dev.fnc314.aijobtracker.frontend.core.network.di.coreNetworkModule
@@ -38,6 +39,7 @@ public class MainApplication
 public val appModule: KoinModule = module {
   includes(
     coreArtifactsModule,
+    coreAuthModule,
     coreDataModule,
     coreLoggingModule,
     coreNetworkModule,

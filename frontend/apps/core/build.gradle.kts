@@ -19,6 +19,7 @@ kotlin {
   sourceSets {
     commonMain.dependencies {
       implementation(projects.coreLogging)
+      implementation(projects.coreAuth)
       implementation(projects.coreArtifacts)
       implementation(projects.coreData)
       implementation(projects.coreNetwork)
