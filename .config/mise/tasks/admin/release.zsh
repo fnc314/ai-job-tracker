@@ -1,24 +1,28 @@
 #!/usr/bin/env zsh
-#MISE description="Automate semantic version tag creation (version/X.Y.Z) and release publishing"
+#MISE description="Bump version in gradle/local.versions.toml, create git tag (version/X.Y.Z), and prompt to push"
 #MISE alias="release"
 #USAGE arg "[version]" help="Semantic version to release (e.g. 1.0.0)"
-#USAGE flag "-p --push" help="Push the commit and created version tag to origin"
+#USAGE flag "-p --push" help="Push the commit and created version tag to origin without prompt"
 
 set -euo pipefail
 
+TOML_FILE="gradle/local.versions.toml"
 VERSION="${1:-}"
-PUSH=false
+AUTO_PUSH=false
 
 for arg in "$@"; do
     if [[ "$arg" == "-p" || "$arg" == "--push" ]]; then
-        PUSH=true
+        AUTO_PUSH=true
     fi
 done
 
+CURRENT_TOML_VERSION=$(sed -n -E 's/^[[:space:]]*version[[:space:]]*=[[:space:]]*"([^"]+)"/\1/p' "$TOML_FILE" | head -n1)
+LATEST_GIT_TAG=$(git tag -l "version/*" | sort -V | tail -n1 | sed 's|^version/||')
+
 if [[ -z "$VERSION" || "$VERSION" == "-p" || "$VERSION" == "--push" ]]; then
-    CURRENT=$(git tag -l "version/*" | sort -V | tail -n1 | sed 's|^version/||')
-    echo "Current highest version: ${CURRENT:-None}"
-    read -r -p "Enter new version to release (e.g. 1.0.0): " VERSION
+    echo "Current toml version: ${CURRENT_TOML_VERSION:-None}"
+    echo "Current highest git tag: ${LATEST_GIT_TAG:-None}"
+    read -r -p "Enter new version to release (e.g. 3.3.0): " VERSION
 fi
 
 VERSION="${VERSION#version/}"
@@ -36,10 +40,25 @@ if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
     exit 1
 fi
 
-if [[ -n $(git status --porcelain) ]]; then
-    echo "⚠️ Warning: Working tree has uncommitted changes:" >&2
+# Ensure working tree is clean, or only gradle/local.versions.toml is dirty
+UNCOMMITTED=$(git status --porcelain | grep -v "$TOML_FILE" || true)
+if [[ -n "$UNCOMMITTED" ]]; then
+    echo "⚠️ Warning: Working tree has uncommitted changes outside of $TOML_FILE:" >&2
     git status -s >&2
     echo "Please commit or stash your changes before tagging a release." >&2
+    exit 1
+fi
+
+# Update gradle/local.versions.toml
+if [[ -f "$TOML_FILE" ]]; then
+    echo "📝 Updating $TOML_FILE to version = \"$VERSION\"..."
+    # macOS-safe sed in-place
+    sed -i '' -E "s/^[[:space:]]*version[[:space:]]*=[[:space:]]*\"[^\"]+\"/  version = \"$VERSION\"/" "$TOML_FILE"
+    git add "$TOML_FILE"
+    git commit -m "chore(release): bump version to $VERSION"
+    echo "✓ Committed $TOML_FILE bump."
+else
+    echo "❌ Error: $TOML_FILE not found." >&2
     exit 1
 fi
 
@@ -48,13 +67,26 @@ echo "🚀 Creating git tag '$TAG_NAME' on branch '$BRANCH'..."
 git tag -a "$TAG_NAME" -m "Release version $VERSION"
 echo "✓ Created annotated tag: $TAG_NAME"
 
-if [[ "$PUSH" == true ]]; then
+DO_PUSH=false
+if [[ "$AUTO_PUSH" == true ]]; then
+    DO_PUSH=true
+else
+    echo ""
+    read -r -p "Do you want to push branch '$BRANCH' and tag '$TAG_NAME' to origin now? [y/N] " CONFIRM_PUSH
+    if [[ "$CONFIRM_PUSH" =~ ^[Yy]$ ]]; then
+        DO_PUSH=true
+    fi
+fi
+
+if [[ "$DO_PUSH" == true ]]; then
     echo "Pushing '$BRANCH' and '$TAG_NAME' to origin..."
     git push origin "$BRANCH"
     git push origin "$TAG_NAME"
-    echo "✓ Pushed to remote."
+    echo "✓ Pushed commit and tag to remote origin."
 else
+    echo ""
     echo "Tag created locally. When ready to publish:"
     echo "   git push origin $BRANCH"
     echo "   git push origin $TAG_NAME"
 fi
+
