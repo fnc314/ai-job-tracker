@@ -70,11 +70,11 @@ jobs:
         shell: zsh {0}
 
       - name: Generate Dokka API Documentation
-        run: mise run docs:generate
+        run: mise run --skip-tools docs:generate
         shell: zsh {0}
 
       - name: Generate Mise Task Documentation
-        run: mise run docs:tasks
+        run: mise run --skip-tools docs:tasks
         shell: zsh {0}
 
       - name: Assemble Public Documentation Site

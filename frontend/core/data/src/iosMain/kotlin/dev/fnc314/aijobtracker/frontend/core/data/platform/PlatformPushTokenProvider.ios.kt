@@ -1,11 +1,11 @@
 package dev.fnc314.aijobtracker.frontend.core.data.platform
 
+import kotlinx.coroutines.suspendCancellableCoroutine
 import platform.UserNotifications.UNAuthorizationOptionAlert
 import platform.UserNotifications.UNAuthorizationOptionBadge
 import platform.UserNotifications.UNAuthorizationOptionSound
 import platform.UserNotifications.UNUserNotificationCenter
 import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCancellableCoroutine
 
 internal class IosPlatformPushTokenProvider : PlatformPushTokenProvider {
     override suspend fun getPushToken(): String? {
