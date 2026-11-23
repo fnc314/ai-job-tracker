@@ -8,6 +8,7 @@ This directory contains design and implementation plans for the `frontend` proje
 ---
 
 ## Plan Invariants (MANDATORY)
+
 1. **Target-Derived Location**: Subsystem plans specific to `frontend` live here. Cross-subsystem plans belong in root `.agents/plans/`.
 2. **Date Subdirectory**: Plans must be saved in a `YYYY-MM-DD/` folder matching creation date.
 3. **24-Hour Timestamp Prefix**: Filenames must be formatted as `HHMMSS_<plan-name>.md` using a 24-hour clock (`00`-`23` for `HH`).
@@ -20,6 +21,7 @@ This directory contains design and implementation plans for the `frontend` proje
 
 | Plan | Status | Scope / Focus Area |
 | :--- | :--- | :--- |
+| [`112000_ai-apply-pipeline-isolation-and-agent-embedding-plan.md`](./2026-11-23/112000_ai-apply-pipeline-isolation-and-agent-embedding-plan.md) | Draft / Proposed | Architectural assessment of why client-side Firebase AI is rejected in `frontend/features/ai-apply` and feasibility analysis of embedding `.agents` configurations within multiplatform `frontend/apps` |
 | [`145500_frontend-fcm-and-proposal-override-ui.md`](./2026-11-20/145500_frontend-fcm-and-proposal-override-ui.md) | Completed | Frontend FCM device token registration, push notification deep linking to `JobApplicationEditsRoute`, and inline transition override modal in `TrackerEditsScreen` |
 | [`054440_universal_text_selection_and_hyperlinks.md`](./2026-11-20/054440_universal_text_selection_and_hyperlinks.md) | Completed | Universal text selection and copiable text with accessible clickable hyperlink text components across Compose UI |
 | [`015319_desktop-jvm-google-signin-oauth-loopback.md`](./2026-11-20/015319_desktop-jvm-google-signin-oauth-loopback.md) | Draft | Google Sign-In via Browser Loopback OAuth 2.0 with PKCE on Desktop (JVM) to unlock Compose desktop app |

@@ -1,4 +1,4 @@
-package dev.fnc314.aijobtracker.architecture
+package dev.fnc314.aijobtracker.standards
 
 import com.lemonappdev.konsist.api.verify.assertTrue
 import kotlin.test.Test
@@ -8,6 +8,7 @@ import com.lemonappdev.konsist.api.provider.modifier.KoOverrideModifierProvider
 
 import com.lemonappdev.konsist.api.provider.modifier.KoActualModifierProvider
 import com.lemonappdev.konsist.api.provider.modifier.KoExpectModifierProvider
+import dev.fnc314.aijobtracker.testing.common.BaseArchitectureTest
 
 /**
  * Repository-wide architectural tests enforcing explicit visibility modifiers (aligning with `explicitApi`)

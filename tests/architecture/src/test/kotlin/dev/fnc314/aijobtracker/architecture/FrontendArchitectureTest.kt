@@ -1,6 +1,7 @@
 package dev.fnc314.aijobtracker.architecture
 
 import com.lemonappdev.konsist.api.verify.assertTrue
+import dev.fnc314.aijobtracker.testing.common.BaseArchitectureTest
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertTrue as kotlinAssertTrue

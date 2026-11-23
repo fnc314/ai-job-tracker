@@ -1,16 +1,8 @@
-plugins {
-  alias(libs.plugins.kotlinJvm)
-}
+// Root project for tests subsystem aggregating all test subprojects
 
-kotlin {
-  jvmToolchain(libs.versions.jvm.toolchain.get().toInt())
-}
-
-dependencies {
-  testImplementation(libs.konsist)
-  testImplementation(libs.kotlin.test)
-}
-
-tasks.test {
-  useJUnitPlatform()
+tasks.register("test") {
+  group = "verification"
+  description = "Runs all test suites across tests subprojects"
+  dependsOn(gradle.includedBuild("tests").task(":architecture:test"))
+  dependsOn(gradle.includedBuild("tests").task(":standards:test"))
 }

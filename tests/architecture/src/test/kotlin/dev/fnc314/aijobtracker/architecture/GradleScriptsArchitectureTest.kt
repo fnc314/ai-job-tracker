@@ -2,6 +2,7 @@ package dev.fnc314.aijobtracker.architecture
 
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.verify.assertTrue
+import dev.fnc314.aijobtracker.testing.common.BaseArchitectureTest
 import kotlin.test.Test
 
 /**
