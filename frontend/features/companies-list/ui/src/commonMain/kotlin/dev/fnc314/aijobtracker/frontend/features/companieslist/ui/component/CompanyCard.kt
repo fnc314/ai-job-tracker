@@ -293,7 +293,7 @@ private fun CompanyWideMetadataSection(
                     overflow = TextOverflow.Ellipsis,
                 )
             } else {
-                Spacer(modifier = Modifier.height(1.dp))
+                Spacer(modifier = Modifier.height(MaterialTheme.spacing.hairline))
             }
 
             if (model.primaryChannelDisplay.isNotBlank()) {
@@ -305,7 +305,7 @@ private fun CompanyWideMetadataSection(
                     overflow = TextOverflow.Ellipsis,
                 )
             } else {
-                Spacer(modifier = Modifier.height(1.dp))
+                Spacer(modifier = Modifier.height(MaterialTheme.spacing.hairline))
             }
 
             if (model.locationsText.isNotBlank()) {

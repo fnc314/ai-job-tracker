@@ -6,11 +6,41 @@ import com.lemonappdev.konsist.api.declaration.KoInterfaceDeclaration
 import com.lemonappdev.konsist.api.provider.KoContainingDeclarationProvider
 import com.lemonappdev.konsist.api.provider.modifier.KoOverrideModifierProvider
 
+import com.lemonappdev.konsist.api.provider.modifier.KoActualModifierProvider
+import com.lemonappdev.konsist.api.provider.modifier.KoExpectModifierProvider
+
 /**
  * Repository-wide architectural tests enforcing explicit visibility modifiers (aligning with `explicitApi`)
  * and KDoc documentation priorities.
  */
 class VisibilityAndKDocRulesTest : BaseArchitectureTest() {
+
+    @Test
+    fun `all public declarations and interfaces across repository have KDoc including expect declarations`() {
+        val allScopes = listOf(recordsScope, backendScope, gradleToolsScope, frontendScope)
+
+        for (scope in allScopes) {
+            val decls = scope.classes() +
+                scope.interfaces() +
+                scope.objects() +
+                scope.functions() +
+                scope.properties()
+
+            decls
+                .filter { it.hasPublicModifier || (it is KoInterfaceDeclaration && it.hasPublicModifier) }
+                .filterNot {
+                    it.containingFile.path.contains("/test/") ||
+                        it.containingFile.path.contains("/jvmTest/") ||
+                        it.containingFile.path.contains("/androidTest/") ||
+                        it.containingFile.path.contains("/commonTest/") ||
+                        it.containingFile.path.contains("/build/") ||
+                        it.containingFile.path.contains("/bin/")
+                }
+                .filterNot { (it as? KoActualModifierProvider)?.hasActualModifier == true }
+                .filterNot { (it as? KoOverrideModifierProvider)?.hasOverrideModifier == true }
+                .assertTrue { it.hasKDoc }
+        }
+    }
 
     @Test
     fun `all declarations in records have explicit visibility modifiers`() {

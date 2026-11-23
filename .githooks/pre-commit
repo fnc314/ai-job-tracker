@@ -1,9 +1,19 @@
 #!/usr/bin/env zsh
+# shellcheck disable=SC1071
 STAGED="$(git diff-index --cached --name-only -z HEAD | xargs -0)"
 export STAGED
 export MISE_PRE_COMMIT=1
 mise run mise:docs:tasks
 mise run completions:generate
+
+# Format changed Markdown files using markdownlint
+STAGED_MD=(${(0)"$(git diff --name-only -z --cached --diff-filter=d -- '*.md')"})
+if (( ${#STAGED_MD[@]} > 0 )); then
+    if command -v npx >/dev/null 2>&1; then
+        npx --yes markdownlint-cli --fix "${STAGED_MD[@]}" 2>/dev/null || true
+        git add "${STAGED_MD[@]}"
+    fi
+fi
 
 # Sync any local application artifacts modified in job-applications/
 # if [[ -d "job-applications" ]]; then

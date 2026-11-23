@@ -56,6 +56,9 @@ public object BackendService {
         FirestoreClient.getFirestore(FirebaseApp.getInstance())
     }
 
+    /**
+     * Explicitly initializes the underlying Firebase application instance using available credentials.
+     */
     public fun initFirebaseApp(): Unit {
         initFirebase()
     }

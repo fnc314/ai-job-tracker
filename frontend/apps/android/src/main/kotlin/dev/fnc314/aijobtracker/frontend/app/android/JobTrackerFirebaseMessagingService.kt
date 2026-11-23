@@ -110,8 +110,18 @@ public class JobTrackerFirebaseMessagingService : FirebaseMessagingService() {
         notificationManager.notify(System.currentTimeMillis().toInt(), notification)
     }
 
+    /**
+     * Intent extra constants for notification routing.
+     */
     public companion object {
+        /**
+         * Key for targeting a specific frontend destination route from a notification click.
+         */
         public const val EXTRA_NOTIFICATION_ROUTE: String = "extra_notification_route"
+
+        /**
+         * Key for passing a proposal identifier from a notification click.
+         */
         public const val EXTRA_PROPOSAL_ID: String = "extra_proposal_id"
     }
 }

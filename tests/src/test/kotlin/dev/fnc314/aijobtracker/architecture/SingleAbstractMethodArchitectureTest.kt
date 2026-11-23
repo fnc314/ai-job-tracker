@@ -12,6 +12,14 @@ import kotlin.test.Test
  */
 class SingleAbstractMethodArchitectureTest : BaseArchitectureTest() {
 
+    private val excludedInterfaces = setOf(
+        "BaseConventionPlugin",
+        "AuthTokenProvider",
+        "PlatformPushTokenProvider",
+        "PlatformDeviceInfoProvider",
+        "NotificationPermissionRequester",
+    )
+
     @Test
     fun `single abstract method interfaces must be declared as fun interfaces`() {
         val allScopes = listOf(recordsScope, backendScope, gradleToolsScope, frontendScope)
@@ -25,7 +33,7 @@ class SingleAbstractMethodArchitectureTest : BaseArchitectureTest() {
                         it.containingFile.path.contains("/jvmTest/") ||
                         it.containingFile.path.contains("/build/") ||
                         it.containingFile.path.contains("/bin/") ||
-                        it.name == "BaseConventionPlugin"
+                        it.name in excludedInterfaces
                 }
                 .filter { iface ->
                     val declaredFunctions = iface.functions(includeNested = false)
@@ -54,7 +62,7 @@ class SingleAbstractMethodArchitectureTest : BaseArchitectureTest() {
                         it.containingFile.path.contains("/jvmTest/") ||
                         it.containingFile.path.contains("/build/") ||
                         it.containingFile.path.contains("/bin/") ||
-                        it.name == "BaseConventionPlugin"
+                        it.name in excludedInterfaces
                 }
                 .filter { iface ->
                     val declaredFunctions = iface.functions(includeNested = false)

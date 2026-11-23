@@ -35,6 +35,7 @@ graph TD
 ```
 
 ### Module Breakdown
+
 - **`core/data`**: Shared domain models (`JobApplication`, `TrackerEvent`, etc.), self-contained enums, centralized `Factory`, repository contracts, Firestore & Ktor storage implementations.
 - **`core/design-system`**: Material 3 styling tokens, dynamic color schemes, seed colors, typography, shapes, spacing, and window size classes. **Contains ZERO composable widgets.**
 - **`core/widgets`**: Universal, reusable UI components (`StatusBadge`, `FitBadge`, `NotesWidget`, `TooltipIconButton`). Exports `core:design-system` via `api(projects.coreDesignSystem)` to serve as the unified UI foundation for features.
@@ -48,40 +49,55 @@ graph TD
 ## 2. Invariants & Rules for AI Agents (MANDATORY)
 
 ### Rule 1: Synchronize Module `README.md` Files
+
 Every contributing module under `core/` and `features/` maintains a root `README.md` (e.g. `core/data/README.md`, `features/sign-in/README.md`).
+
 - **Mandate**: Whenever you add, modify, or delete public APIs, use cases, navigation routes, dependencies, or architectural responsibilities in any module, you **MUST** update the corresponding module `README.md` within the same batch of changes.
 - **Verification**: Run `mise run frontend:readmes` to ensure all module documentation exists and is up to date.
 
-### Rule 2: Strict Kotlin Explicit API Mode
+### Rule 2: Strict Kotlin Explicit API Mode & Mandatory KDoc
+
 All modules enforce explicit API mode (`explicitApi()` or `explicitApiWarning()`):
+
 - **Visibility**: Every declaration (class, interface, fun, val, var) must be marked `public`, `internal`, or `private`.
 - **Return Types**: Every function and property must explicitly specify its return type.
 - **Least Privilege**: Only items intended to be consumed across module boundaries deserve `public` visibility. Screen components, internal dialogs, and platform helper classes must remain `internal`.
+- **Mandatory KDoc on Public Declarations**: All `public` declarations—including `expect` and `actual` declarations, `interface` definitions, and API-exposed methods/properties—must have comprehensive KDoc. This is strictly verified by Konsist architecture tests (`FrontendArchitectureTest` and `VisibilityAndKDocRulesTest`).
 
-### Rule 3: Zero Rogue `Color()` Calls
+### Rule 3: Zero Rogue `Color()` Calls & Centralized Design Tokens in `Modifier` Chains
+
 - The `Color(...)` constructor must **NEVER** be called outside `core/design-system/src/commonMain/kotlin/dev/fnc314/tools/jobtracker/core/designsystem/Color.kt`.
 - Hex parsing (`String.toColorOrNull()`) and hex formatting (`Color.toHexString()`) are provided by `core/design-system`.
 - In Compose UI, colors must be referenced through `MaterialTheme.colorScheme.*` or canonical `SeedColors` / `AppColors`.
+- **No Literal Dimensions in Modifiers**: Never hardcode dimension literals (e.g. `16.dp`, `20.dp`, `24.dp`) inside `Modifier` padding, size, or layout arrangement chains. All dimensions must be bound to semantic tokens: `MaterialTheme.spacing.*`, `MaterialTheme.iconSizes.*`, or `MaterialTheme.componentSizes.*`.
+- **Compose Signatures**: Composable functions must accept `modifier: Modifier = Modifier` as the first optional parameter (on `expect fun` in KMP, without default on `actual fun`), and adhere to 2-space indentation per `.editorconfig`.
 
 ### Rule 4: Clean UI Dependency Decoupling (Option A)
+
 - `core/widgets` exports `core:design-system` via `api(projects.coreDesignSystem)`.
 - Feature modules (`features/*/ui`) must depend on `projects.coreWidgets` and **not** directly on `projects.coreDesignSystem`.
 - `core/design-system` must remain strictly token- and theme-only; no widgets may be introduced into it.
 
 ### Rule 6: Single Abstract Method (SAM) & Functional Interface Standard
+
 Every Kotlin `interface` in `frontend` (domain use cases, data sources, repositories, listeners) with exactly 1 abstract method must be declared as a `[public|internal] fun interface`:
+
 - **Method Signature:** The method must be `operator fun invoke(...)`.
 - **Calling Convention:** Invoked directly via operator call syntax: `useCase(params)`.
 - **UseCase Extension:** All domain use cases extending `UseCase<Params, Result>` without additional abstract methods must be declared as `public fun interface ... : UseCase<Params, Result>`.
 
 ### Rule 5: Convention Plugins Standard
+
 Build scripts must apply the local convention plugins declared in `gradle/libs.versions.toml`:
+
 - Functional plugins: `local.kotlin.multiplatform`, `local.android.kmp.library`, `local.compose`.
 - Concern plugins: `local.dependencies.compose`, `local.dependencies.koin`, `local.dependencies.ktor`, `local.dependencies.serialization`.
 - Do not configure target SDKs, compiler options, or toolchains manually in module build scripts.
 
 ### Rule 6: Architecture & Design Plans in `.agents/plans/` (MANDATORY)
+
 All technical architecture, design, and migration plans for `frontend` must adhere to these rules:
+
 - **Location**: Technical architecture and design plans oriented specifically to `frontend` must be housed in `frontend/.agents/plans/` and indexed in `frontend/.agents/plans/README.md`. Any plan that spans across multiple subsystems (e.g. `records` + `frontend`) belongs in root `.agents/plans/`.
 - **Date Subdirectory & 24-Hour Timestamp Filename**: Plans must **NEVER** be stored as flat files. Each plan must be placed in a `YYYY-MM-DD/` folder based on its creation date and prefixed with a 24-hour clock timestamp: `HHMMSS_<plan-name>.md` (using `00`-`23` for `HH`).
 - **Registry Synchronization**: Upon creating or updating any plan, the agent must immediately update `frontend/.agents/plans/README.md` with the link (`./YYYY-MM-DD/HHMMSS_<plan-name>.md`), status, and scope description.
@@ -89,18 +105,21 @@ All technical architecture, design, and migration plans for `frontend` must adhe
 - **Repository Root Execution**: Always execute `git` and `mise` commands from the repository root (`/Users/fnc314/Work/Search/ai-job-tracker`) so pre-commit hooks and `mise.toml` task sources resolve properly.
 
 ### Rule 7: Zero-Warning Compilation & Clean Build Logs
+
 - Build logs must remain clean of compiler warnings and deprecations.
 - Always use non-deprecated Material 3 APIs (e.g. `menuAnchor(type = ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled = true)` and `TooltipDefaults.rememberTooltipPositionProvider(positioning = TooltipAnchorPosition.Above)`).
 - Ensure all public interfaces, data classes, and properties in domain modules declare explicit visibility and explicit return types.
 - Pre-packaged vendor native binaries that lack NDK symbols must be excluded from stripping via `packaging.jniLibs.keepDebugSymbols` rather than emitting packaging warnings.
 
 ### Rule 8: Unified Top-Level Card (`TopLevelCard`), `CompanyLogoImage`, & File-Level `@OptIn`
+
 - **File-Level Opt-Ins**: Always declare `@file:OptIn(ExperimentalGridApi::class)` and `@file:OptIn(ExperimentalMaterial3Api::class)` at the top of the Kotlin file rather than per-function.
 - **Top-Level Cards**: All top-level list cards (`JobApplicationCard`, `CompanyCard`, `EditCard`) must build upon `TopLevelCard` in `:frontend:core-widgets`, using its `Grid`-based slot layout, `TopLevelCardAction` equalized action buttons, and `TopLevelCardSurfaceVariant` elevation/surface treatments.
 - **Company Logos**: All company logo rendering must use `CompanyLogoImage` with `CompanyLogoSize` (`Small`, `Medium`, `Large`). Never construct ad-hoc `Box` + `JobApplicationTrackerImage` wrappers in feature screens.
 - **Canonical Company Slugs**: Always derive `companyId` via `DocumentIdGenerator.slug()` (or `canonicalCompanySlug` in KMP `commonMain`) so employer variants (`"Meta Platforms"` vs `"Meta"`, `"Ford Motor Company"` vs `"Ford"`) never create duplicate company cards.
 
 ### Rule 9: Interface-First Naming (MANDATORY)
+
 Every `public` declaration (explicit API mode makes this exact) is named for its role, never its tool. Data sources are `Remote*` / `Network*` / `Local*` (Firestore → Remote, raw HTTP → Network, Room/filesystem → Local); enum persistence conversion is `toRemote()` / `fromRemote()`. Tool names (Firestore, Firebase, GCS, Gmail, Room, Ktor, Kermit, JPype) are allowed only in `internal`/`private` code or `impl/` packages, plus `KmpInspector` and direct `koin` calls. Existing violations are baselined in `../docs/interface-naming-baseline.md` (shrink only) and enforced by `KonsistArchitectureTest`, Detekt `ForbiddenClassName`, and `mise run dev:guards`. See the root `AGENTS.md` and `docs/interface-naming-exceptions.md`.
 
 ---

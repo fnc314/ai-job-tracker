@@ -12,6 +12,9 @@ public enum class TopLevelDestination {
     Edits,
     Settings;
 
+    /**
+     * Factory and resolution utilities for [TopLevelDestination].
+     */
     public companion object {
         /**
          * Resolves the UI destination enum from the shared proto enum name or string key.

@@ -7,6 +7,7 @@ This document defines architecture invariants, development workflows, and mandat
 ## 1. Workspace Architecture Map
 
 The `records` project provides the canonical protobuf schema contracts and JVM parsing engines for job search records:
+
 - **`records-proto`**: Protobuf schema contracts (`src/main/proto/tracker/application.proto`) compiled to Java/Kotlin models.
 - **`records-parser`**: Multiplatform parsing utilities, timestamp conversions, status normalizers, JPype Python bridge, and legacy row projectors.
 
@@ -15,18 +16,23 @@ The `records` project provides the canonical protobuf schema contracts and JVM p
 ## 2. Invariants & Rules for AI Agents (MANDATORY)
 
 ### Rule 1: Architecture & Design Plans in `.agents/plans/` (MANDATORY)
+
 All technical architecture, design, and migration plans for `records` must adhere to these rules:
+
 - **Location**: Technical architecture and design plans oriented specifically to `records` must be housed in `records/.agents/plans/` and indexed in `records/.agents/plans/README.md`. Any plan that spans across multiple subsystems (e.g. `records` + `frontend` or root tracker CLI) belongs in root `.agents/plans/`.
 - **Date Subdirectory & 24-Hour Timestamp Filename**: Plans must **NEVER** be stored as flat files. Each plan must be placed in a `YYYY-MM-DD/` folder based on its creation date and prefixed with a 24-hour clock timestamp: `HHMMSS_<plan-name>.md` (using `00`-`23` for `HH`).
 - **Registry Synchronization**: Upon creating or updating any plan, the agent must immediately update `records/.agents/plans/README.md` with the link (`./YYYY-MM-DD/HHMMSS_<plan-name>.md`), status, and scope description.
 - **Mandatory Opening Frontmatter**: Every plan must start from the canonical template [`.agents/plans/TEMPLATE.md`](../.agents/plans/TEMPLATE.md): an H1 `# <Type> Plan: <Title>`, then `**Status:**`, `**Date:**`, `**Target:**` (plus optional `Evaluates` / `Schema Authority` / `Depends On` / `Supersedes`), then `---`. No YAML `sessionId` blocks.
 - **Repository Root Execution**: Always execute `git` and `mise` commands from the repository root (`/Users/fnc314/Work/Search/ai-job-search`) so pre-commit hooks and `mise.toml` task sources resolve properly.
 
-### Rule 2: Strict Kotlin Explicit API Mode
-All declarations in `records-parser` must enforce explicit visibility (`public`, `internal`, `private`) and explicit return types on all functions and properties.
+### Rule 2: Strict Kotlin Explicit API Mode & Mandatory KDoc
+
+All declarations in `records-parser` must enforce explicit visibility (`public`, `internal`, `private`) and explicit return types on all functions and properties. All `public` declarations, interfaces, and API contracts must include full KDoc documentation, enforced by repository Konsist tests and Detekt.
 
 ### Rule 3: Zero Fabrication & Factual Grounding
+
 Every change to parsing rules, status normalizers, or protobuf schemas must adhere strictly to verified data contracts in `tracker.schema.json` and Firestore schema v7 specifications.
 
 ### Rule 4: Interface-First Naming (MANDATORY)
+
 `records-parser` is deployable, so its `public` API is named for the role, never the tool: `toRemote()` / `fromRemote()`, `PythonBridge`, never `toFirestore()` / `JPypeBridge`. Tool names are allowed only in `internal`/`private`/`impl/` code. Legacy violations are baselined in `../docs/interface-naming-baseline.md` (shrink only) and enforced by `mise run dev:guards`. See the root `AGENTS.md`.

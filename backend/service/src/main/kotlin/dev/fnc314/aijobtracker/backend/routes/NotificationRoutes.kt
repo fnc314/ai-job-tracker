@@ -33,6 +33,13 @@ private val notificationJson = Json {
     encodeDefaults = true
 }
 
+/**
+ * API response envelope for notification operations.
+ *
+ * @property status Operation status code or descriptor.
+ * @property message Detailed human-readable status explanation.
+ * @property details Optional map of additional diagnostic metadata.
+ */
 @Serializable
 public data class NotificationApiResponse(
     public val status: String,

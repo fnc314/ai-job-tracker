@@ -34,7 +34,13 @@ public val BearerAuthPlugin: io.ktor.client.plugins.api.ClientPlugin<BearerAuthC
     }
   }
 
+/**
+ * Configuration options for bearer token based authentication.
+ */
 public class BearerAuthConfig {
+  /**
+   * Optional provider supplying bearer tokens on HTTP requests.
+   */
   public var tokenProvider: AuthTokenProvider? = null
 }
 

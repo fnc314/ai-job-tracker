@@ -13,7 +13,13 @@ public enum class DevicePlatform {
     DEVICE_PLATFORM_DESKTOP,
     DEVICE_PLATFORM_WEB;
 
+    /**
+     * String deserialization utilities for [DevicePlatform].
+     */
     public companion object {
+        /**
+         * Parses a string representation into a [DevicePlatform] enum value.
+         */
         public fun fromString(value: String?): DevicePlatform {
             return when (value?.uppercase()) {
                 "ANDROID", "DEVICE_PLATFORM_ANDROID" -> DEVICE_PLATFORM_ANDROID
@@ -39,6 +45,9 @@ public data class PlatformDeviceInfo(
     public val osVersion: String,
     public val appVersion: String,
 ) {
+    /**
+     * Unique client identifier, mirroring [installationId].
+     */
     @Deprecated("Renamed to installationId to align with Firebase Installations FID", ReplaceWith("installationId"))
     public val deviceId: String get() = installationId
 }

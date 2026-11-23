@@ -21,6 +21,12 @@ private val authJson = Json {
     encodeDefaults = true
 }
 
+/**
+ * Error payload returned for authentication exchange failures.
+ *
+ * @property status Status code indicating an error state.
+ * @property message Descriptive failure message.
+ */
 @Serializable
 public data class AuthErrorResponse(
     public val status: String = "ERROR",

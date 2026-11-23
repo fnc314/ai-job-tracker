@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import dev.fnc314.aijobtracker.frontend.core.designsystem.LocalWindowSizeClass
 import dev.fnc314.aijobtracker.frontend.core.designsystem.WindowWidthSizeClass
 import dev.fnc314.aijobtracker.frontend.core.designsystem.componentSizes
+import dev.fnc314.aijobtracker.frontend.core.designsystem.iconSizes
 import dev.fnc314.aijobtracker.frontend.core.designsystem.spacing
 import dev.fnc314.aijobtracker.frontend.core.navigation.LocalTopBarTitleSummarySlot
 import dev.fnc314.aijobtracker.frontend.core.widgets.EmptyStateWidget
@@ -195,7 +196,7 @@ internal fun CompaniesListContent(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = null,
-                        modifier = Modifier.size(20.dp),
+                        modifier = Modifier.size(MaterialTheme.iconSizes.standard),
                     )
                 },
                 trailingIcon = {
@@ -204,7 +205,7 @@ internal fun CompaniesListContent(
                             Icon(
                                 imageVector = Icons.Default.Clear,
                                 contentDescription = "Clear search",
-                                modifier = Modifier.size(20.dp),
+                                modifier = Modifier.size(MaterialTheme.iconSizes.standard),
                             )
                         }
                     }

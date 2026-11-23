@@ -13,7 +13,13 @@ public enum class DeviceRegistrationStatus {
     DEVICE_REGISTRATION_STATUS_BANNED,
     DEVICE_REGISTRATION_STATUS_BLOCKED;
 
+    /**
+     * String deserialization utilities for [DeviceRegistrationStatus].
+     */
     public companion object {
+        /**
+         * Parses a string representation into a [DeviceRegistrationStatus] enum value.
+         */
         public fun fromString(value: String?): DeviceRegistrationStatus {
             return when (value?.uppercase()) {
                 "ACTIVE", "DEVICE_REGISTRATION_STATUS_ACTIVE" -> DEVICE_REGISTRATION_STATUS_ACTIVE

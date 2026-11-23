@@ -40,13 +40,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          fetch-depth: 0
       - name: Install Zsh
         run: |
           sudo apt-get update
           sudo apt-get install -y zsh
-      - uses: jdx/mise-action@v2
-        with:
-          fetch-depth: 0
       - uses: jdx/mise-action@v2
       - run: mise run lint
         shell: zsh {0}

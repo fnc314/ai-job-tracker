@@ -59,6 +59,7 @@ import dev.fnc314.aijobtracker.frontend.core.data.model.DeviceRegistrationStatus
 import dev.fnc314.aijobtracker.frontend.core.data.settings.UiMode
 import dev.fnc314.aijobtracker.frontend.core.designsystem.componentSizes
 import dev.fnc314.aijobtracker.frontend.core.designsystem.SeedColors
+import dev.fnc314.aijobtracker.frontend.core.designsystem.iconSizes
 import dev.fnc314.aijobtracker.frontend.core.designsystem.spacing
 import dev.fnc314.aijobtracker.frontend.core.designsystem.toColor
 import dev.fnc314.aijobtracker.frontend.core.designsystem.toColorOrNull
@@ -895,7 +896,7 @@ private fun HexChannelRow(
     Text(
       text = label,
       style = MaterialTheme.typography.labelLarge,
-      modifier = Modifier.widthIn(24.dp),
+      modifier = Modifier.widthIn(MaterialTheme.iconSizes.default),
     )
     HexDigitDropdown(
       selected = highDigit,
