@@ -15,8 +15,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -51,250 +50,254 @@ import dev.fnc314.aijobtracker.frontend.features_settings_ui.generated.resources
 import org.jetbrains.compose.resources.stringResource
 
 private fun Context.findActivity(): Activity? {
-    var current = this
-    while (current is ContextWrapper) {
-        if (current is Activity) return current
-        current = current.baseContext
-    }
-    return null
+  var current = this
+  while (current is ContextWrapper) {
+    if (current is Activity) return current
+    current = current.baseContext
+  }
+  return null
 }
 
 private fun checkNotificationPermission(context: Context): Boolean {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.POST_NOTIFICATIONS,
-        ) == PackageManager.PERMISSION_GRANTED
-    } else {
-        true
-    }
+  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    ContextCompat.checkSelfPermission(
+      context,
+      Manifest.permission.POST_NOTIFICATIONS,
+    ) == PackageManager.PERMISSION_GRANTED
+  } else {
+    true
+  }
 }
 
+/**
+ * Android actual implementation of [PermissionNotificationControl].
+ *
+ * Handles runtime notification permissions (`POST_NOTIFICATIONS` on API 33+),
+ * educational rationale, settings intent redirects on permanent denial,
+ * and registration/deregistration confirmation flows.
+ *
+ * @param isRegistered Whether this device is registered for notifications.
+ * @param onRegisterRequested Callback invoked when the user requests registration.
+ * @param onDeregisterRequested Callback invoked when the user confirms deregistration.
+ * @param modifier Composable layout modifier.
+ */
 @Composable
 public actual fun PermissionNotificationControl(
-    isRegistered: Boolean,
-    onRegisterRequested: () -> Unit,
-    onDeregisterRequested: () -> Unit,
-    modifier: Modifier,
+  isRegistered: Boolean,
+  onRegisterRequested: () -> Unit,
+  onDeregisterRequested: () -> Unit,
+  modifier: Modifier,
 ) {
-    val context = LocalContext.current
-    val appSettingsOpener = remember { PlatformAppSettingsOpener() }
-    var showDeregisterDialog by remember { mutableStateOf(false) }
+  val context = LocalContext.current
+  val appSettingsOpener = remember { PlatformAppSettingsOpener() }
+  var showDeregisterDialog by remember { mutableStateOf(false) }
 
-    var stage by remember {
-        mutableStateOf(
-            if (checkNotificationPermission(context)) PermissionUiStage.GRANTED else PermissionUiStage.INITIAL
+  var stage by remember {
+    mutableStateOf(
+      if (checkNotificationPermission(context)) PermissionUiStage.GRANTED else PermissionUiStage.INITIAL
+    )
+  }
+
+  // Automatically re-query permission state whenever user returns from Settings or foregrounds the app
+  LifecycleResumeEffect(Unit) {
+    val currentlyGranted = checkNotificationPermission(context)
+    if (currentlyGranted) {
+      val wasNotGranted = stage != PermissionUiStage.GRANTED
+      stage = PermissionUiStage.GRANTED
+      if (wasNotGranted && !isRegistered) {
+        onRegisterRequested()
+      }
+    } else if (stage == PermissionUiStage.GRANTED) {
+      // Permission was revoked in settings while app was backgrounded
+      stage = PermissionUiStage.PERMANENTLY_DENIED
+    }
+    onPauseOrDispose {}
+  }
+
+  val launcher = rememberLauncherForActivityResult(
+    contract = ActivityResultContracts.RequestPermission(),
+  ) { granted: Boolean ->
+    if (granted) {
+      stage = PermissionUiStage.GRANTED
+      onRegisterRequested()
+    } else {
+      val activity = context.findActivity()
+      val shouldShowRationale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && activity != null) {
+        ActivityCompat.shouldShowRequestPermissionRationale(
+          activity,
+          Manifest.permission.POST_NOTIFICATIONS,
         )
+      } else {
+        false
+      }
+
+      stage = if (shouldShowRationale) {
+        PermissionUiStage.RATIONALE
+      } else {
+        PermissionUiStage.PERMANENTLY_DENIED
+      }
     }
+  }
 
-    // Automatically re-query permission state whenever user returns from Settings or foregrounds the app
-    LifecycleResumeEffect(Unit) {
-        val currentlyGranted = checkNotificationPermission(context)
-        if (currentlyGranted) {
-            val wasNotGranted = stage != PermissionUiStage.GRANTED
-            stage = PermissionUiStage.GRANTED
-            if (wasNotGranted && !isRegistered) {
-                onRegisterRequested()
-            }
-        } else if (stage == PermissionUiStage.GRANTED) {
-            // Permission was revoked in settings while app was backgrounded
-            stage = PermissionUiStage.PERMANENTLY_DENIED
-        }
-        onPauseOrDispose {}
-    }
-
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-    ) { granted: Boolean ->
-        if (granted) {
-            stage = PermissionUiStage.GRANTED
-            onRegisterRequested()
-        } else {
-            val activity = context.findActivity()
-            val shouldShowRationale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && activity != null) {
-                ActivityCompat.shouldShowRequestPermissionRationale(
-                    activity,
-                    Manifest.permission.POST_NOTIFICATIONS,
-                )
-            } else {
-                false
-            }
-
-            stage = if (shouldShowRationale) {
-                PermissionUiStage.RATIONALE
-            } else {
-                PermissionUiStage.PERMANENTLY_DENIED
-            }
-        }
-    }
-
-    if (showDeregisterDialog) {
-        AlertDialog(
-            onDismissRequest = { showDeregisterDialog = false },
-            title = {
-                Text(
-                    text = stringResource(Res.string.settings_notifications_deregister_dialog_title),
-                    style = MaterialTheme.typography.titleMedium,
-                )
-            },
-            text = {
-                Text(
-                    text = stringResource(Res.string.settings_notifications_deregister_dialog_message),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-            },
-            confirmButton = {
-                ElevatedButton(
-                    onClick = {
-                        showDeregisterDialog = false
-                        onDeregisterRequested()
-                    },
-                    colors = ButtonDefaults.elevatedButtonColors(
-                        containerColor = MaterialTheme.colorScheme.error,
-                        contentColor = MaterialTheme.colorScheme.onError,
-                    ),
-                    shape = MaterialTheme.shapes.medium,
-                ) {
-                    Text(stringResource(Res.string.settings_notifications_deregister_dialog_confirm))
-                }
-            },
-            dismissButton = {
-                OutlinedButton(
-                    onClick = { showDeregisterDialog = false },
-                    shape = MaterialTheme.shapes.medium,
-                ) {
-                    Text(stringResource(Res.string.settings_notifications_deregister_dialog_cancel))
-                }
-            },
+  if (showDeregisterDialog) {
+    AlertDialog(
+      onDismissRequest = { showDeregisterDialog = false },
+      title = {
+        Text(
+          text = stringResource(Res.string.settings_notifications_deregister_dialog_title),
+          style = MaterialTheme.typography.titleMedium,
         )
-    }
-
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
-    ) {
-        when (stage) {
-            PermissionUiStage.RATIONALE -> {
-                Text(
-                    text = stringResource(Res.string.settings_notifications_permission_rationale_text),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.semantics {
-                        liveRegion = LiveRegionMode.Polite
-                    },
-                )
-            }
-
-            PermissionUiStage.PERMANENTLY_DENIED -> {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmall),
-                ) {
-                    Text(
-                        text = stringResource(Res.string.settings_notifications_permission_denied_prefix),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.error,
-                    )
-                    Text(
-                        text = stringResource(Res.string.settings_notifications_permission_denied_link),
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            textDecoration = TextDecoration.Underline,
-                        ),
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.clickable {
-                            appSettingsOpener.openAppSettings()
-                        },
-                    )
-                }
-            }
-
-            PermissionUiStage.INITIAL,
-            PermissionUiStage.GRANTED -> {
-                // No extra banner text
-            }
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+      },
+      text = {
+        Text(
+          text = stringResource(Res.string.settings_notifications_deregister_dialog_message),
+          style = MaterialTheme.typography.bodyMedium,
+        )
+      },
+      confirmButton = {
+        Button(
+          onClick = {
+            showDeregisterDialog = false
+            onDeregisterRequested()
+          },
+          shape = MaterialTheme.shapes.medium,
         ) {
-            when (stage) {
-                PermissionUiStage.INITIAL -> {
-                    if (!isRegistered) {
-                        ElevatedButton(
-                            shape = MaterialTheme.shapes.medium,
-                            onClick = {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                    launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                                } else {
-                                    stage = PermissionUiStage.GRANTED
-                                    onRegisterRequested()
-                                }
-                            },
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Text(stringResource(Res.string.settings_notifications_register_button))
-                        }
-                    }
-                }
-
-                PermissionUiStage.RATIONALE -> {
-                    if (!isRegistered) {
-                        ElevatedButton(
-                            shape = MaterialTheme.shapes.medium,
-                            onClick = {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                    launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                                } else {
-                                    stage = PermissionUiStage.GRANTED
-                                    onRegisterRequested()
-                                }
-                            },
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Text(stringResource(Res.string.settings_notifications_enable_button))
-                        }
-                    }
-                }
-
-                PermissionUiStage.PERMANENTLY_DENIED -> {
-                    ElevatedButton(
-                        shape = MaterialTheme.shapes.medium,
-                        onClick = { appSettingsOpener.openAppSettings() },
-                        modifier = Modifier.weight(1f),
-                    ) {
-                        Text(stringResource(Res.string.settings_notifications_open_settings_button))
-                    }
-                }
-
-                PermissionUiStage.GRANTED -> {
-                    if (!isRegistered) {
-                        ElevatedButton(
-                            shape = MaterialTheme.shapes.medium,
-                            onClick = onRegisterRequested,
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Text(stringResource(Res.string.settings_notifications_register_button))
-                        }
-                    }
-                }
-            }
-
-            if (isRegistered) {
-                ElevatedButton(
-                    shape = MaterialTheme.shapes.medium,
-                    colors = ButtonDefaults.elevatedButtonColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer,
-                        contentColor = MaterialTheme.colorScheme.onErrorContainer,
-                    ),
-                    onClick = { showDeregisterDialog = true },
-                    modifier = Modifier.weight(1f),
-                ) {
-                    Text(stringResource(Res.string.settings_notifications_deregister_button))
-                }
-            }
+          Text(stringResource(Res.string.settings_notifications_deregister_dialog_confirm))
         }
+      },
+      dismissButton = {
+        OutlinedButton(
+          onClick = { showDeregisterDialog = false },
+          shape = MaterialTheme.shapes.medium,
+        ) {
+          Text(stringResource(Res.string.settings_notifications_deregister_dialog_cancel))
+        }
+      },
+    )
+  }
+
+  Column(
+    modifier = modifier.fillMaxWidth(),
+    verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+  ) {
+    when (stage) {
+      PermissionUiStage.RATIONALE -> {
+        Text(
+          text = stringResource(Res.string.settings_notifications_permission_rationale_text),
+          style = MaterialTheme.typography.bodyMedium,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+          modifier = Modifier.semantics {
+            liveRegion = LiveRegionMode.Polite
+          },
+        )
+      }
+
+      PermissionUiStage.PERMANENTLY_DENIED -> {
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmall),
+        ) {
+          Text(
+            text = stringResource(Res.string.settings_notifications_permission_denied_prefix),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.error,
+          )
+          Text(
+            text = stringResource(Res.string.settings_notifications_permission_denied_link),
+            style = MaterialTheme.typography.bodyMedium.copy(
+              textDecoration = TextDecoration.Underline,
+            ),
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.clickable {
+              appSettingsOpener.openAppSettings()
+            },
+          )
+        }
+      }
+
+      PermissionUiStage.INITIAL,
+      PermissionUiStage.GRANTED -> {
+        // No extra banner text
+      }
     }
+
+    Row(
+      modifier = Modifier.fillMaxWidth(),
+      horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+    ) {
+      when (stage) {
+        PermissionUiStage.INITIAL -> {
+          if (!isRegistered) {
+            Button(
+              shape = MaterialTheme.shapes.medium,
+              onClick = {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                  launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                } else {
+                  stage = PermissionUiStage.GRANTED
+                  onRegisterRequested()
+                }
+              },
+              modifier = Modifier.weight(1f),
+            ) {
+              Text(stringResource(Res.string.settings_notifications_register_button))
+            }
+          }
+        }
+
+        PermissionUiStage.RATIONALE -> {
+          if (!isRegistered) {
+            Button(
+              shape = MaterialTheme.shapes.medium,
+              onClick = {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                  launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                } else {
+                  stage = PermissionUiStage.GRANTED
+                  onRegisterRequested()
+                }
+              },
+              modifier = Modifier.weight(1f),
+            ) {
+              Text(stringResource(Res.string.settings_notifications_enable_button))
+            }
+          }
+        }
+
+        PermissionUiStage.PERMANENTLY_DENIED -> {
+          Button(
+            shape = MaterialTheme.shapes.medium,
+            onClick = { appSettingsOpener.openAppSettings() },
+            modifier = Modifier.weight(1f),
+          ) {
+            Text(stringResource(Res.string.settings_notifications_open_settings_button))
+          }
+        }
+
+        PermissionUiStage.GRANTED -> {
+          if (!isRegistered) {
+            Button(
+              shape = MaterialTheme.shapes.medium,
+              onClick = onRegisterRequested,
+              modifier = Modifier.weight(1f),
+            ) {
+              Text(stringResource(Res.string.settings_notifications_register_button))
+            }
+          }
+        }
+      }
+
+      if (isRegistered) {
+        FilledTonalButton(
+          shape = MaterialTheme.shapes.medium,
+          onClick = { showDeregisterDialog = true },
+          modifier = Modifier.weight(1f),
+        ) {
+          Text(stringResource(Res.string.settings_notifications_deregister_button))
+        }
+      }
+    }
+  }
 }
 

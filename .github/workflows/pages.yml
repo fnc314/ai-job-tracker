@@ -36,18 +36,20 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          # Optional: use 'basic' for open-source @actions/cache wrapper, 
+          # or omit to use the default 'enhanced' provider (free for public repos)
+          cache-provider: basic
 
       - name: Set up mise
         uses: jdx/mise-action@v2
         with:
           install: false
           cache: false
-
-      - name: Install required mise tools
-        run: |
-          mise install gradle
-        shell: zsh {0}
 
       - name: Configure Environment and Android SDK
         run: |
