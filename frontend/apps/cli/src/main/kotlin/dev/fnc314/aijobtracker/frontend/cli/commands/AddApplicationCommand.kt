@@ -11,6 +11,7 @@ import com.github.ajalt.mordant.rendering.TextColors.yellow
 import com.github.ajalt.mordant.terminal.Terminal
 import com.google.cloud.Timestamp
 import com.google.cloud.firestore.SetOptions
+import dev.fnc314.aijobtracker.backend.BackendService
 import dev.fnc314.aijobtracker.records.parser.DocumentIdGenerator
 import dev.fnc314.aijobtracker.records.parser.PostingSimilarity
 import dev.fnc314.aijobtracker.records.parser.StatusNormalizer
@@ -128,6 +129,13 @@ internal class AddApplicationCommand : CliktCommand(name = "add") {
                 "statusTo" to status
             )
             eventDoc.set(eventData).get()
+
+            // Recalculate company metrics for the company
+            try {
+                BackendService.recalculateCompanyMetrics(companyId)
+            } catch (e: Exception) {
+                t.println(yellow("Warning: could not recalculate company metrics for $companyId: ${e.message}"))
+            }
 
             t.println(green("✓ Successfully created application: $id ($company - $role) [$status]"))
         } catch (e: ProgramResult) {

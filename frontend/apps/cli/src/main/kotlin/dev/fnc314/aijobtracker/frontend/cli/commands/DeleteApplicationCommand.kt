@@ -11,6 +11,8 @@ import com.github.ajalt.mordant.rendering.TextColors.yellow
 import com.github.ajalt.mordant.terminal.Terminal
 import com.google.cloud.firestore.DocumentSnapshot
 import com.google.cloud.firestore.Firestore
+import dev.fnc314.aijobtracker.backend.BackendService
+import dev.fnc314.aijobtracker.records.parser.DocumentIdGenerator
 import dev.fnc314.aijobtracker.frontend.cli.db.RemoteDataSourceProvider
 
 internal class DeleteApplicationCommand : CliktCommand(name = "delete") {
@@ -101,6 +103,21 @@ internal class DeleteApplicationCommand : CliktCommand(name = "delete") {
         artifactDocs.forEach { it.reference.delete().get() }
         artifactJobRefs.forEach { it.delete().get() }
         docRef.delete().get()
+
+        val rawCompanyId = docSnap.getString("companyId")?.takeIf { it.isNotBlank() }
+        val rawCompanyName = docSnap.getString("company")?.takeIf { it.isNotBlank() }
+        val targetCompanyId = when {
+            rawCompanyId != null -> DocumentIdGenerator.slug(rawCompanyId, fallback = rawCompanyId)
+            rawCompanyName != null -> DocumentIdGenerator.slug(rawCompanyName, fallback = "unknown")
+            else -> null
+        }
+        if (!targetCompanyId.isNullOrBlank() && targetCompanyId != "unknown") {
+            try {
+                BackendService.recalculateCompanyMetrics(targetCompanyId)
+            } catch (e: Exception) {
+                terminal.println(yellow("Warning: could not recalculate company metrics for $targetCompanyId: ${e.message}"))
+            }
+        }
 
         terminal.println(
             green(

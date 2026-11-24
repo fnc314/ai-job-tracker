@@ -3,13 +3,16 @@
 This directory holds architecture, system design, and migration plans for the repository.
 
 ### Subsystem Plan Directories
+
 - **Frontend Multiplatform Workspace:** [`frontend/.agents/plans/`](../../frontend/.agents/plans/README.md) houses all KMP UI, MVI, design system, and multiplatform feature architecture plans.
 - **Records Subsystem Workspace:** [`records/.agents/plans/`](../../records/.agents/plans/README.md) houses all protobuf contract, parsing, and interop plans specific to `records`.
 
 ---
 
 ## Plan Invariants (MANDATORY)
+
 Every architecture plan created by any agent must strictly adhere to these paradigms:
+
 1. **Target-Derived Location**:
    - Multi-module, cross-subsystem, or repository-wide plans -> `.agents/plans/`
    - Subsystem plans -> `<subsystem>/.agents/plans/` (e.g. `frontend/.agents/plans/`, `records/.agents/plans/`)
@@ -24,6 +27,7 @@ Every architecture plan created by any agent must strictly adhere to these parad
 
 | Plan | Status | Scope / Focus Area |
 | :--- | :--- | :--- |
+| [`213643_event-driven-company-metrics-sync.md`](./2026-11-23/213643_event-driven-company-metrics-sync.md) | Completed | Event-driven Firestore CloudEvent receiver in backend/service and client-side CLI hooks to keep company metrics synchronized in real time |
 | [`145500_firebase-push-notifications-and-proposal-override-architecture.md`](./2026-11-20/145500_firebase-push-notifications-and-proposal-override-architecture.md) | Completed | Architecture plan tying together Cloud Run FCM push notifications on staged email sweeps with client deep-linking and inline proposal review overrides in `@frontend/features/tracker-edits/ui` |
 | [`152149_artifact-directory-flatten-migration.md`](./2026-11-20/152149_artifact-directory-flatten-migration.md) | Draft / Proposed | Flatten `job-applications/` directory from `COMPANY/ROLE/YYYY-MM-DD/*` to `COMPANY/ROLE/YYYY-MM-DD_*` by removing the date subdirectory and prefixing filenames with dates |
 | [`114203_funnel-state-alignment-pre-ingestion-deduplication-and-remote-artifacts.md`](./2026-11-20/114203_funnel-state-alignment-pre-ingestion-deduplication-and-remote-artifacts.md) | Completed | Funnel lifecycle state alignment (`UNSPECIFIED` -> `RANKED` -> `DRAFTING` -> `DRAFTED` -> `SUBMITTED`), pre-ingestion deduplication & ambiguity routing gate, remote GCS artifact uploads, and `CompaniesListScreen` toolbar refresh action |
