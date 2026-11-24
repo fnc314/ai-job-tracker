@@ -27,6 +27,7 @@ Every architecture plan created by any agent must strictly adhere to these parad
 
 | Plan | Status | Scope / Focus Area |
 | :--- | :--- | :--- |
+| [`013453_fix-docs-site-markdown-rendering.md`](./2026-11-24/013453_fix-docs-site-markdown-rendering.md) | Completed | Fix docs site markdown and asset rendering in scripts/build_docs_site.py: raw HTML support, badge image links, and assets/ copy |
 | [`214205_deploy-backend.md`](./2026-11-23/214205_deploy-backend.md) | Completed | Build and deploy updated Kotlin backend service to Google Cloud Run via Cloud Build with health and CloudEvent endpoint smoke verification |
 | [`213643_event-driven-company-metrics-sync.md`](./2026-11-23/213643_event-driven-company-metrics-sync.md) | Completed | Event-driven Firestore CloudEvent receiver in backend/service and client-side CLI hooks to keep company metrics synchronized in real time |
 | [`145500_firebase-push-notifications-and-proposal-override-architecture.md`](./2026-11-20/145500_firebase-push-notifications-and-proposal-override-architecture.md) | Completed | Architecture plan tying together Cloud Run FCM push notifications on staged email sweeps with client deep-linking and inline proposal review overrides in `@frontend/features/tracker-edits/ui` |

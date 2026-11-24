@@ -150,6 +150,9 @@ def convert_markdown_to_simple_html(markdown_text: str) -> str:
             html_lines.append(f"<h4>{format_inline_markdown(line[5:])}</h4>")
         elif stripped == "":
             html_lines.append("<br/>")
+        elif stripped.startswith("<p align=") or stripped == "</p>" or stripped.startswith("<img ") or stripped.startswith("<div ") or stripped == "</div>":
+            # Allow raw HTML blocks through without escaping or p wrapping
+            html_lines.append(stripped)
         else:
             html_lines.append(f"<p>{format_inline_markdown(line)}</p>")
 
@@ -167,23 +170,48 @@ def convert_markdown_to_simple_html(markdown_text: str) -> str:
 
 
 def format_inline_markdown(text: str) -> str:
-    """Formats bold, italics, inline code, and links in a line of text."""
-    # Escape basic HTML first
-    escaped = html.escape(text)
+    """Formats bold, italics, inline code, images, and links in a line of text."""
+    # 1. Inline code: `code` (protect code spans first to prevent sub-parsing)
+    code_spans: list[str] = []
 
-    # Inline code: `code`
-    escaped = re.sub(r"`([^`]+)`", r"<code>\1</code>", escaped)
+    def save_code(m: re.Match) -> str:
+        code_spans.append(f"<code>{html.escape(m.group(1))}</code>")
+        return f"__CODE_SPAN_{len(code_spans)-1}__"
 
-    # Bold: **text**
-    escaped = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", escaped)
+    text = re.sub(r"`([^`]+)`", save_code, text)
 
-    # Italics: *text*
-    escaped = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", escaped)
+    # 2. Linked images / badges: [![alt](img_url)](target_url)
+    def repl_linked_img(m: re.Match) -> str:
+        alt = html.escape(m.group(1))
+        img_src = m.group(2)
+        target_url = m.group(3)
+        return f'<a href="{target_url}"><img src="{img_src}" alt="{alt}" style="vertical-align: middle; max-width: 100%;" /></a>'
 
-    # Markdown links: [text](url)
-    escaped = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', escaped)
+    text = re.sub(r"\[!\[([^\]]*)\]\(([^)]+)\)\]\(([^)]+)\)", repl_linked_img, text)
 
-    return escaped
+    # 3. Standalone images: ![alt](img_url)
+    def repl_img(m: re.Match) -> str:
+        alt = html.escape(m.group(1))
+        img_src = m.group(2)
+        return f'<img src="{img_src}" alt="{alt}" style="vertical-align: middle; max-width: 100%;" />'
+
+    text = re.sub(r"!\[([^\]]*)\]\(([^)]+)\)", repl_img, text)
+
+    # 4. Markdown links: [text](url)
+    text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', text)
+
+    # 5. Bold: **text**
+    text = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", text)
+
+    # 6. Italics: *text* or _text_
+    text = re.sub(r"(?<!\*)\*([^*]+)\*(?!\*)", r"<em>\1</em>", text)
+    text = re.sub(r"(?<!\w)_([^_]+)_(?!\w)", r"<em>\1</em>", text)
+
+    # 7. Restore protected code spans
+    for i, span in enumerate(code_spans):
+        text = text.replace(f"__CODE_SPAN_{i}__", span)
+
+    return text
 
 
 def wrap_with_material_layout(
@@ -460,6 +488,8 @@ def build_site(output_dir: Path, domain: str) -> None:
     readme_path = repo_root / "README.md"
     if readme_path.exists():
         readme_md = readme_path.read_text(encoding="utf-8")
+        # In readme/index.html (one directory down), relative assets/ paths need ../assets/
+        readme_md = readme_md.replace('src="assets/', 'src="../assets/')
         readme_html = convert_markdown_to_simple_html(readme_md)
         wrapped_readme = wrap_with_material_layout(
             title="System Architecture & Overview",
@@ -473,7 +503,14 @@ def build_site(output_dir: Path, domain: str) -> None:
         (readme_dest / "index.html").write_text(wrapped_readme, encoding="utf-8")
         print("✓ Rendered readme/index.html")
 
-    # 4. Copy Dokka HTML & Brand Favicons
+    # 4. Copy Assets (Branding, Images, Diagrams)
+    assets_src = repo_root / "assets"
+    if assets_src.exists():
+        assets_dest = output_dir / "assets"
+        shutil.copytree(assets_src, assets_dest, dirs_exist_ok=True)
+        print("✓ Copied assets/ directory to public site")
+
+    # 5. Copy Dokka HTML & Brand Favicons
     dokka_src = repo_root / "dokka"
     if dokka_src.exists() and (dokka_src / "index.html").exists():
         dokka_dest = output_dir / "dokka"
