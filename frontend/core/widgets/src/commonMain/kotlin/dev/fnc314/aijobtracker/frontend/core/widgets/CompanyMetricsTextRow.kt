@@ -3,7 +3,6 @@ package dev.fnc314.aijobtracker.frontend.core.widgets
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlexBox
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -90,11 +89,10 @@ public fun CompanyMetricsTextRow(
     modifier = modifier.fillMaxWidth(),
   ) {
     // Row 1: Label and Count
-    FlexBox(
+    Row(
       modifier = Modifier.fillMaxWidth(),
-      config = {
-        
-      }
+      horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmall, Alignment.CenterHorizontally),
+      verticalAlignment = Alignment.CenterVertically,
     ) {
       for (item in items) {
         Column(
