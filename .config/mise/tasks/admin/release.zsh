@@ -17,12 +17,12 @@ for arg in "$@"; do
 done
 
 CURRENT_TOML_VERSION=$(sed -n -E 's/^[[:space:]]*version[[:space:]]*=[[:space:]]*"([^"]+)"/\1/p' "$TOML_FILE" | head -n1)
-LATEST_GIT_TAG=$(git tag -l "version/*" | sort -V | tail -n1 | sed 's|^version/||')
+LATEST_GIT_TAG=$(git tag -l "version/*" | tr -s '[:space:]' '\n' | sort -V | tail -n1 | sed 's|^version/||')
 
 if [[ -z "$VERSION" || "$VERSION" == "-p" || "$VERSION" == "--push" ]]; then
     echo "Current toml version: ${CURRENT_TOML_VERSION:-None}"
     echo "Current highest git tag: ${LATEST_GIT_TAG:-None}"
-    read -r -p "Enter new version to release (e.g. 3.3.0): " VERSION
+    read -r "VERSION?Enter new version to release (e.g. 3.3.0): "
 fi
 
 VERSION="${VERSION#version/}"
@@ -72,7 +72,7 @@ if [[ "$AUTO_PUSH" == true ]]; then
     DO_PUSH=true
 else
     echo ""
-    read -r -p "Do you want to push branch '$BRANCH' and tag '$TAG_NAME' to origin now? [y/N] " CONFIRM_PUSH
+    read -r "CONFIRM_PUSH?Do you want to push branch '$BRANCH' and tag '$TAG_NAME' to origin now? [y/N] "
     if [[ "$CONFIRM_PUSH" =~ ^[Yy]$ ]]; then
         DO_PUSH=true
     fi
