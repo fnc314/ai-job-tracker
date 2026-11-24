@@ -265,10 +265,11 @@ internal class RemoteJobApplicationDetailsDataSourceImpl(
     } else {
       null
     }
+    val rawType = record.getString("type") ?: record.getString("eventType")
     return Factory.createTrackerEvent(
       id = record.id,
       applicationId = record.getString("applicationId") ?: "",
-      type = TrackerEventType.fromRemote(record.getString("type")),
+      type = TrackerEventType.fromRemote(rawType),
       statusFrom = record.getString("statusFrom")?.let { TrackerStatus.fromRemote(it) },
       statusTo = record.getString("statusTo")?.let { TrackerStatus.fromRemote(it) },
       note = record.getString("note"),

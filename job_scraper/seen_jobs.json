@@ -89,6 +89,15 @@
       "fit": "low",
       "status": "applied",
       "portal": "linkedin-search"
+    },
+    "https://careers.snap.com/job?id=Q426SWEA2": {
+      "title": "Software Engineer, Android, Level 4",
+      "company": "Snap Inc.",
+      "url": "https://careers.snap.com/job?id=Q426SWEA2",
+      "first_seen": "2026-11-23",
+      "fit": "high",
+      "status": "drafted",
+      "portal": "workday"
     }
   }
 }

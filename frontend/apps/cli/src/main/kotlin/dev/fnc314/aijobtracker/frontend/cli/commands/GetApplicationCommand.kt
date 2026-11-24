@@ -66,8 +66,8 @@ internal class GetApplicationCommand : CliktCommand(name = "get") {
                 body {
                     eventsSnap.documents.forEach { eventDoc ->
                         val ev = eventDoc.data
-                        val ts = ev["ts"]?.toString() ?: ""
-                        val type = ev["eventType"]?.toString() ?: ""
+                        val ts = ev["ts"]?.toString() ?: ev["date"]?.toString() ?: ""
+                        val type = ev["eventType"]?.toString() ?: ev["type"]?.toString() ?: ""
                         val actor = ev["actor"]?.toString() ?: ""
                         val emailMsgId = ev["emailMessageId"]?.toString() ?: "-"
                         val note = ev["note"]?.toString() ?: ""

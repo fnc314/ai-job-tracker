@@ -49,43 +49,95 @@ def get_current_git_version(repo_root: Path) -> str:
 
 
 def convert_markdown_to_simple_html(markdown_text: str) -> str:
-    """Converts a subset of markdown (headings, code blocks, lists, links, paragraphs) into valid HTML."""
+    """Converts markdown (headings, code blocks, lists, links, tables, hr, paragraphs) into valid HTML."""
     lines = markdown_text.splitlines()
     html_lines: list[str] = []
     in_code_block = False
     code_lang = ""
     in_list = False
+    in_table = False
 
     for line in lines:
         if line.startswith("```"):
+            if in_table:
+                html_lines.append("</tbody></table></div>")
+                in_table = False
             if in_code_block:
-                html_lines.append("</code></pre>")
+                if code_lang == "mermaid":
+                    html_lines.append("</pre>")
+                else:
+                    html_lines.append("</code></pre>")
                 in_code_block = False
             else:
                 if in_list:
                     html_lines.append("</ul>")
                     in_list = False
-                code_lang = line[3:].strip()
-                html_lines.append(f'<pre><code class="language-{html.escape(code_lang)}">')
+                code_lang = line[3:].strip().lower()
+                if code_lang == "mermaid":
+                    html_lines.append('<pre class="mermaid">')
+                else:
+                    html_lines.append(f'<pre><code class="language-{html.escape(code_lang)}">')
                 in_code_block = True
             continue
 
         if in_code_block:
-            html_lines.append(html.escape(line))
+            if code_lang == "mermaid":
+                html_lines.append(html.escape(line))
+            else:
+                html_lines.append(html.escape(line))
             continue
 
+        stripped = line.strip()
+
+        # Tables (e.g. | col 1 | col 2 |)
+        if stripped.startswith("|") and stripped.endswith("|"):
+            if in_list:
+                html_lines.append("</ul>")
+                in_list = False
+            cells = [c.strip() for c in stripped[1:-1].split("|")]
+            # Check if delimiter row (e.g. |:---|:---|)
+            is_delimiter = all(re.match(r"^:?-+:?$", c) for c in cells if c)
+            if is_delimiter:
+                continue
+
+            if not in_table:
+                html_lines.append('<div class="table-container"><table>')
+                html_lines.append("<thead><tr>")
+                for cell in cells:
+                    html_lines.append(f"<th>{format_inline_markdown(cell)}</th>")
+                html_lines.append("</tr></thead><tbody>")
+                in_table = True
+            else:
+                html_lines.append("<tr>")
+                for cell in cells:
+                    html_lines.append(f"<td>{format_inline_markdown(cell)}</td>")
+                html_lines.append("</tr>")
+            continue
+        else:
+            if in_table:
+                html_lines.append("</tbody></table></div>")
+                in_table = False
+
         # Lists
-        if line.strip().startswith("- ") or line.strip().startswith("* "):
+        if stripped.startswith("- ") or stripped.startswith("* "):
             if not in_list:
                 html_lines.append("<ul>")
                 in_list = True
-            item_text = line.strip()[2:]
+            item_text = stripped[2:]
             html_lines.append(f"<li>{format_inline_markdown(item_text)}</li>")
             continue
         else:
-            if in_list and line.strip() == "":
+            if in_list and stripped == "":
                 html_lines.append("</ul>")
                 in_list = False
+
+        # Horizontal rules
+        if re.match(r"^(?:---|\*\*\*|___)\s*$", stripped):
+            if in_list:
+                html_lines.append("</ul>")
+                in_list = False
+            html_lines.append("<hr/>")
+            continue
 
         # Headings
         if line.startswith("# "):
@@ -96,15 +148,20 @@ def convert_markdown_to_simple_html(markdown_text: str) -> str:
             html_lines.append(f"<h3>{format_inline_markdown(line[4:])}</h3>")
         elif line.startswith("#### "):
             html_lines.append(f"<h4>{format_inline_markdown(line[5:])}</h4>")
-        elif line.strip() == "":
+        elif stripped == "":
             html_lines.append("<br/>")
         else:
             html_lines.append(f"<p>{format_inline_markdown(line)}</p>")
 
     if in_code_block:
-        html_lines.append("</code></pre>")
+        if code_lang == "mermaid":
+            html_lines.append("</pre>")
+        else:
+            html_lines.append("</code></pre>")
     if in_list:
         html_lines.append("</ul>")
+    if in_table:
+        html_lines.append("</tbody></table></div>")
 
     return "\n".join(html_lines)
 
@@ -256,6 +313,47 @@ def wrap_with_material_layout(
       background: none;
       padding: 0;
     }}
+    main.doc-content hr {{
+      border: none;
+      border-top: 1px solid var(--md-sys-color-outline-variant);
+      margin: 2rem 0;
+    }}
+    .table-container {{
+      width: 100%;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-small);
+    }}
+    main.doc-content table {{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      text-align: left;
+    }}
+    main.doc-content th, main.doc-content td {{
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    }}
+    main.doc-content th {{
+      background-color: var(--md-sys-color-surface-container);
+      color: var(--md-sys-color-primary);
+      font-weight: 600;
+      font-family: var(--md-sys-font-heading);
+    }}
+    main.doc-content tr:last-child td {{
+      border-bottom: none;
+    }}
+    main.doc-content tr:hover td {{
+      background-color: var(--md-sys-color-surface-container-high);
+    }}
+    pre.mermaid {{
+      background: none;
+      border: none;
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: center;
+    }}
     footer.app-footer {{
       text-align: center;
       padding: 2.5rem 1rem;
@@ -308,6 +406,11 @@ def wrap_with_material_layout(
     if (savedTheme) {{
       document.documentElement.setAttribute('data-theme', savedTheme);
     }}
+  </script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    mermaid.initialize({{ startOnLoad: true, theme: isDark ? 'dark' : 'neutral' }});
   </script>
 </body>
 </html>

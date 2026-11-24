@@ -126,6 +126,7 @@ internal class UpdateStatusCommand : CliktCommand(name = "status") {
             "eventId" to chained.id,
             "ts" to nowInstant.toString(),
             "type" to chained.type.name,
+            "eventType" to chained.type.name,
             "actor" to chained.actor.name,
             "sequenceNumber" to chained.sequenceNumber,
             "prevEventHash" to chained.prevEventHash,

@@ -166,8 +166,9 @@ internal class EmailReadInboxCommand : CliktCommand(name = "read-inbox") {
             "label:JOB"
         }
 
+        val recipientQuery = "(to:fnc314@fnc314.com OR to:fnc314@fnc314.dev OR to:fnc314@gmail.com)"
         val sinceQuery = if (!since.isNullOrBlank()) " after:$since" else ""
-        val fullQuery = "($labelQuery)$sinceQuery"
+        val fullQuery = "($labelQuery OR $recipientQuery)$sinceQuery"
 
         if (verbose) {
             t.println("Executing query: $fullQuery")

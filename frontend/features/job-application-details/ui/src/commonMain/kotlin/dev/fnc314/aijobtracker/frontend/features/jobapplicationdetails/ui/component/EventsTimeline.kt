@@ -21,6 +21,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -40,6 +43,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.fnc314.aijobtracker.frontend.core.widgets.AppText
+import dev.fnc314.aijobtracker.frontend.core.data.model.EventActor
 import dev.fnc314.aijobtracker.frontend.core.data.model.TrackerEvent
 import dev.fnc314.aijobtracker.frontend.core.designsystem.componentSizes
 import dev.fnc314.aijobtracker.frontend.core.designsystem.iconSizes
@@ -51,6 +55,7 @@ import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.gene
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.timeline_empty
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.timeline_event_cd
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.timeline_scheduled
+import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.timeline_source_email
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.timeline_transition
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.timeline_transition_current
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.timeline_transition_start
@@ -210,11 +215,46 @@ private fun EventsTimelineDescription(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.Start,
       ) {
-        Text(
-          text = event.type.displayName(),
-          style = MaterialTheme.typography.titleSmall,
-          color = MaterialTheme.colorScheme.onSurface,
-        )
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween,
+          verticalAlignment = Alignment.CenterVertically,
+        ) {
+          Text(
+            text = event.type.displayName(),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface,
+          )
+
+          val isEmailSource = event.actor == EventActor.EMAIL_SYNC || !event.emailMessageId.isNullOrBlank()
+          if (isEmailSource) {
+            Surface(
+              shape = MaterialTheme.shapes.extraSmall,
+              color = MaterialTheme.colorScheme.secondaryContainer,
+            ) {
+              Row(
+                modifier = Modifier.padding(
+                  horizontal = MaterialTheme.spacing.extraSmall,
+                  vertical = MaterialTheme.spacing.micro,
+                ),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.micro),
+              ) {
+                Icon(
+                  imageVector = Icons.Default.Email,
+                  contentDescription = stringResource(Res.string.timeline_source_email),
+                  tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                  modifier = Modifier.size(MaterialTheme.iconSizes.extraSmall),
+                )
+                Text(
+                  text = stringResource(Res.string.timeline_source_email),
+                  style = MaterialTheme.typography.labelSmall,
+                  color = MaterialTheme.colorScheme.onSecondaryContainer,
+                )
+              }
+            }
+          }
+        }
 
         event.note?.let { note ->
 

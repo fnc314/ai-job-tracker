@@ -16,6 +16,7 @@ Follow these steps **in order**.
 ## Step 0: Prerequisites
 
 Confirm that a Gmail integration is available via either:
+
 1. Composio Gmail tool (`GMAIL_FETCH_EMAILS`, `GMAIL_FETCH_MESSAGE_BY_MESSAGE_ID`, `GMAIL_LIST_LABELS`, executed via `COMPOSIO_MULTI_EXECUTE_TOOL`), OR
 2. Native Anthropic/Claude Gmail MCP tools (`mcp__claude_ai_Gmail__*` or standard Gmail MCP `list_labels`, `search_threads`, `get_thread`).
 
@@ -28,7 +29,7 @@ If neither is available/active, instruct the user to connect Gmail (Composio `CO
 `$ARGUMENTS` decides:
 
 | input | mode |
-|---|---|
+| --- | --- |
 | `review` | review the queue only — no Gmail access |
 | `fetch` | fetch with the default 30-day window, then stage |
 | `fetch <company>` or just `<company>` | fetch scoped to one tracked application, then stage |
@@ -65,7 +66,7 @@ Lookback: the `since <date>` argument if given, else `newer_than:30d`. Already-p
 The default scope is all four job-search inbox areas:
 
 | area | Gmail selector |
-|---|---|
+| --- | --- |
 | Primary | `category:primary` |
 | Updates | `category:updates` |
 | JOBS | `label:JOBS` |
@@ -94,7 +95,7 @@ That returns `{count, labels: [{id, name, type}]}` from `meta/sync.gmail.labels`
 
 Combine, with OR groups:
 
-- the selected scope: either `--label`'s single `label:"…"`, or the default group `(category:primary OR category:updates OR label:"JOBS" OR label:"JOBS/<sub>" …)`
+- the selected scope: either `--label`'s single `label:"…"`, or the default group `(category:primary OR category:updates OR label:"JOBS" OR label:"JOBS/<sub>" … OR to:fnc314@fnc314.com OR to:fnc314@fnc314.dev OR to:fnc314@gmail.com)`
 - a quoted-name OR-group of the open applications' company names, e.g. `{"Acme Corp" "BigCo"}`
 - a sender-domain OR-group of common ATS platforms: `{from:greenhouse.io from:lever.co from:myworkday.com from:ashbyhq.com from:smartrecruiters.com from:icims.com from:bamboohr.com}`
 - the lookback bound, e.g. `newer_than:30d` or `after:2026/06/15`
@@ -102,13 +103,14 @@ Combine, with OR groups:
 
 Example: `newer_than:30d in:inbox ((category:primary OR category:updates) OR label:"JOBS" OR label:"JOBS/Applications") ({"Acme Corp" "BigCo"} OR {from:greenhouse.io from:lever.co})`
 
-3. Execute:
+1. Execute:
    - **Composio:** `GMAIL_FETCH_EMAILS` with `query`, `include_payload: false` (or `ids_only: true`), `max_results: 50`, paginating via `page_token`.
    - **Claude/Anthropic MCP:** `search_threads` with `view: THREAD_VIEW_MINIMAL`, `pageSize: 50`, paginating via `pageToken`.
 
 ### Step 3b: Read the full bodies
 
 Fetch every returned message by id:
+
 - **Composio:** `GMAIL_FETCH_MESSAGE_BY_MESSAGE_ID` with `format: "full"`.
 - **Claude/Anthropic MCP:** `get_thread` with `messageFormat: FULL_CONTENT`.
 
@@ -266,7 +268,7 @@ Rejecting writes nothing to `applications`. The message ids stay processed, so t
 The tracker is updated by `approve`; `job-applications/<Company>/<Role>/<YYYY-MM-DD>/outcome.md` is not. For each **approved** change, update the archive:
 
 | Signal | `outcome.md` action |
-|---|---|
+| --- | --- |
 | Rejection | Set `Status: rejected` and `Date resolved:` to the email's date |
 | Interview invite / scheduled | Tick the matching stage checkbox with the email's date |
 | Assessment / OA | Tick the nearest stage checkbox, or add a Notes line if no checkbox fits |
