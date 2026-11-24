@@ -6,7 +6,7 @@
 
 _The job search platform that runs entirely on your machine._
 
-[![CI](https://github.com/fnc314/ai-job-search/actions/workflows/ci.yml/badge.svg)](https://github.com/fnc314/ai-job-search/actions/workflows/ci.yml)
+[![CI](https://github.com/fnc314/ai-job-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/fnc314/ai-job-tracker/actions/workflows/ci.yml)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.4.21-purple.svg?logo=kotlin)](https://kotlinlang.org)
 [![Compose Multiplatform](https://img.shields.io/badge/Compose_Multiplatform-1.7.3-blue.svg?logo=jetpackcompose)](https://www.jetbrains.com/lp/compose-multiplatform/)
 [![Mise](https://img.shields.io/badge/Task_Runner-mise-green.svg?logo=mise)](https://mise.jdx.dev)

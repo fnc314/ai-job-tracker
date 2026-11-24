@@ -378,7 +378,7 @@ def wrap_with_material_layout(
       <a href="{base_prefix}readme/index.html" class="{'active' if current_nav == 'readme' else ''}">Overview</a>
       <a href="{base_prefix}dokka/index.html" class="{'active' if current_nav == 'dokka' else ''}">API Docs (Dokka)</a>
       <a href="{base_prefix}tasks/index.html" class="{'active' if current_nav == 'tasks' else ''}">Task Catalog</a>
-      <a href="https://github.com/fnc314/ai-job-search" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/fnc314/ai-job-tracker" target="_blank" rel="noopener">GitHub</a>
       <button class="theme-toggle" onclick="toggleTheme()">🌓 Theme</button>
     </nav>
   </header>
@@ -390,7 +390,7 @@ def wrap_with_material_layout(
   <footer class="app-footer">
     <p>
       Designed and engineered by <a href="https://www.fnc314.dev" target="_blank" rel="noopener">Franco N. Colaizzi</a> ·
-      <a href="https://github.com/fnc314/ai-job-search" target="_blank" rel="noopener">ai-job-search</a> ·
+      <a href="https://github.com/fnc314/ai-job-tracker" target="_blank" rel="noopener">ai-job-tracker</a> ·
       Published on <a href="https://ai-job-tracker.fnc314.dev">ai-job-tracker.fnc314.dev</a>
     </p>
   </footer>
