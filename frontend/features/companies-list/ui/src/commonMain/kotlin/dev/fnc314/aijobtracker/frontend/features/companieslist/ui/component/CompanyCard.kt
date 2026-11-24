@@ -125,73 +125,72 @@ public fun CompanyCard(
         }
       }
     },
-    compactSummary = {
-      Column(verticalArrangement = Arrangement.spacedBy(SUBTITLE_LINE_SPACING)) {
-        Text(
-          text = "${stringResource(Res.string.company_card_submitted_label)}: ${model.submittedApplications} · ${
-            stringResource(
-              Res.string.company_card_total_label,
-            )
-          }: ${model.totalApplications}",
-          style = MaterialTheme.typography.bodySmall,
-          color = MaterialTheme.colorScheme.onSurface,
-        )
-        if (!model.lastApplicationSubmittedDate.isNullOrBlank()) {
-          Column(verticalArrangement = Arrangement.spacedBy(DATE_STACK_SPACING)) {
-            Text(
-              text = stringResource(Res.string.company_card_last_submitted_label),
-              style = MaterialTheme.typography.labelSmall,
-              color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Text(
-              text = model.lastApplicationSubmittedDate,
-              style = MaterialTheme.typography.labelSmall,
-              fontWeight = FontWeight.SemiBold,
-              color = MaterialTheme.colorScheme.onSurface,
-            )
-          }
-        }
-      }
-    },
-    wideTrailingHeader = {
-      Column(
-        horizontalAlignment = Alignment.End,
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmall),
-      ) {
-        Text(
-          text = "${stringResource(Res.string.company_card_submitted_label)}: ${model.submittedApplications} · ${
-            stringResource(
-              Res.string.company_card_total_label,
-            )
-          }: ${model.totalApplications}",
-          style = MaterialTheme.typography.labelSmall,
-          fontWeight = FontWeight.Medium,
-          color = MaterialTheme.colorScheme.onSurface,
-        )
-        if (!model.lastApplicationSubmittedDate.isNullOrBlank()) {
-          Column(
-            horizontalAlignment = Alignment.End,
-            verticalArrangement = Arrangement.spacedBy(DATE_STACK_SPACING),
-            modifier = Modifier.defaultMinSize(),
-          ) {
-            Text(
-              text = stringResource(Res.string.company_card_last_submitted_label),
-              style = MaterialTheme.typography.labelSmall,
-              color = MaterialTheme.colorScheme.onSurfaceVariant,
-              textAlign = TextAlign.End,
-              autoSize = TextAutoSize.StepBased(),
-            )
-            Text(
-              text = model.lastApplicationSubmittedDate,
-              style = MaterialTheme.typography.labelSmall,
-              fontWeight = FontWeight.SemiBold,
-              color = MaterialTheme.colorScheme.onSurface,
-              textAlign = TextAlign.End,
-            )
-          }
-        }
-      }
-    },
+//    compactSummary = {
+//      Column(verticalArrangement = Arrangement.spacedBy(SUBTITLE_LINE_SPACING)) {
+//        Text(
+//          text = "${stringResource(Res.string.company_card_submitted_label)}: ${model.submittedApplications} · ${
+//            stringResource(
+//              Res.string.company_card_total_label,
+//            )
+//          }: ${model.totalApplications}",
+//          style = MaterialTheme.typography.bodySmall,
+//          color = MaterialTheme.colorScheme.onSurface,
+//        )
+//        if (!model.lastApplicationSubmittedDate.isNullOrBlank()) {
+//          Column(verticalArrangement = Arrangement.spacedBy(DATE_STACK_SPACING)) {
+//            Text(
+//              text = stringResource(Res.string.company_card_last_submitted_label),
+//              style = MaterialTheme.typography.labelSmall,
+//              color = MaterialTheme.colorScheme.onSurfaceVariant,
+//            )
+//            Text(
+//              text = model.lastApplicationSubmittedDate,
+//              style = MaterialTheme.typography.labelSmall,
+//              fontWeight = FontWeight.SemiBold,
+//              color = MaterialTheme.colorScheme.onSurface,
+//            )
+//          }
+//        }
+//      }
+//    },
+//    wideTrailingHeader = {
+//      Column(
+//        horizontalAlignment = Alignment.End,
+//        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmall),
+//      ) {
+//        Text(
+//          text = "${stringResource(Res.string.company_card_submitted_label)}: ${model.submittedApplications} · ${
+//            stringResource(
+//              Res.string.company_card_total_label,
+//            )
+//          }: ${model.totalApplications}",
+//          style = MaterialTheme.typography.labelSmall,
+//          fontWeight = FontWeight.Medium,
+//          color = MaterialTheme.colorScheme.onSurface,
+//        )
+//        if (!model.lastApplicationSubmittedDate.isNullOrBlank()) {
+//          Column(
+//            horizontalAlignment = Alignment.End,
+//            verticalArrangement = Arrangement.spacedBy(DATE_STACK_SPACING),
+//            modifier = Modifier.defaultMinSize(),
+//          ) {
+//            Text(
+//              text = stringResource(Res.string.company_card_last_submitted_label),
+//              style = MaterialTheme.typography.labelSmall,
+//              color = MaterialTheme.colorScheme.onSurfaceVariant,
+//              textAlign = TextAlign.End,
+//            )
+//            Text(
+//              text = model.lastApplicationSubmittedDate,
+//              style = MaterialTheme.typography.labelSmall,
+//              fontWeight = FontWeight.SemiBold,
+//              color = MaterialTheme.colorScheme.onSurface,
+//              textAlign = TextAlign.End,
+//            )
+//          }
+//        }
+//      }
+//    },
     wideBody = {
       CompanyWideMetadataSection(model = model)
     },

@@ -19,57 +19,63 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
  * common compilation targets (JVM, JS, WasmJS, iOS), and applies shared linting ([DetektConventionPlugin]),
  * documentation ([DokkaConventionPlugin]), and testing conventions.
  */
-public class KotlinMultiplatformConventionPlugin : Plugin<Project>, BaseConventionPlugin {
+public class KotlinMultiplatformConventionPlugin :
+  Plugin<Project>,
+  BaseConventionPlugin {
+  override fun apply(target: Project) {
+    target.configurePlugin()
+  }
 
-    override fun apply(target: Project) {
-        target.configurePlugin()
-    }
+  override fun Project.configurePlugin() {
+    plugins.apply(
+      CatalogTypes.Plugins
+        .KOTLIN_MULTIPLATFORM(this)
+        .get()
+        .pluginId,
+    )
 
-    override fun Project.configurePlugin() {
-        plugins.apply(CatalogTypes.Plugins.KOTLIN_MULTIPLATFORM(this).get().pluginId)
+    configureKotlinMultiplatformExtension()
+    val kotlin = extensions.getByType(KotlinMultiplatformExtension::class.java)
 
-        configureKotlinMultiplatformExtension()
-        val kotlin = extensions.getByType(KotlinMultiplatformExtension::class.java)
-
-        // 2. Standard multiplatform targets
-        with(kotlin) {
-            jvm {
-                compilerOptions {
-                    jvmTarget.set(
-                        JvmTarget.fromTarget(
-                            CatalogTypes.Versions.JVM_TOOLCHAIN.asString(this@configurePlugin),
-                        ),
-                    )
-                }
-            }
-            js {
-                browser()
-            }
-            @OptIn(ExperimentalWasmDsl::class)
-            wasmJs {
-                browser()
-            }
-            iosArm64()
-            iosSimulatorArm64()
-            compilerOptions {
-                freeCompilerArgs.add("-Xexpect-actual-classes")
-            }
-            sourceSets.apply {
-                commonMain.dependencies {
-                    implementation(
-                        CatalogTypes.Libraries.KOTLINX_DATETIME(project),
-                    )
-                }
-            }
+    // 2. Standard multiplatform targets
+    with(kotlin) {
+      jvm {
+        compilerOptions {
+          jvmTarget.set(
+            JvmTarget.fromTarget(
+              CatalogTypes.Versions.JVM_TOOLCHAIN.asString(this@configurePlugin),
+            ),
+          )
         }
-
-        // 3. Testing conventions (dependencies, logging, test tasks)
-        plugins.apply(TestingConventionPlugin::class.java)
-
-        // 4. Dokka documentation conventions
-        plugins.apply(DokkaConventionPlugin::class.java)
-
-        // 5. Detekt static analysis and formatting conventions
-        plugins.apply(DetektConventionPlugin::class.java)
+      }
+      js {
+        browser()
+      }
+      @OptIn(ExperimentalWasmDsl::class)
+      wasmJs {
+        browser()
+      }
+      iosArm64()
+      iosSimulatorArm64()
+      compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+      }
+      sourceSets.apply {
+        commonMain.dependencies {
+          implementation(
+            CatalogTypes.Libraries.KOTLINX_DATETIME(project),
+          )
+        }
+      }
     }
+
+    // 3. Testing conventions (dependencies, logging, test tasks)
+    plugins.apply(TestingConventionPlugin::class.java)
+
+    // 4. Dokka documentation conventions
+    plugins.apply(DokkaConventionPlugin::class.java)
+
+    // 5. Detekt static analysis and formatting conventions
+    plugins.apply(DetektConventionPlugin::class.java)
+  }
 }

@@ -11,35 +11,37 @@ import org.gradle.api.artifacts.Configuration
 /**
  * Concern convention plugin providing Jetpack Navigation 3 and serialization dependencies.
  */
-public class NavigationDependenciesConventionPlugin : Plugin<Project>, BaseConventionPlugin {
-    override fun apply(target: Project): Unit {
-        target.configurePlugin()
+public class NavigationDependenciesConventionPlugin :
+  Plugin<Project>,
+  BaseConventionPlugin {
+  override fun apply(target: Project) {
+    target.configurePlugin()
+  }
+
+  override fun Project.configurePlugin() {
+    configurations.configureEach { config: Configuration ->
+      config.resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == "androidx.navigation3" && details.requested.name == "navigation3-ui") {
+          if (config.name.contains("ios", ignoreCase = true) ||
+            config.name.contains("js", ignoreCase = true) ||
+            config.name.contains("wasm", ignoreCase = true) ||
+            config.name.contains("apple", ignoreCase = true) ||
+            config.name.contains("native", ignoreCase = true) ||
+            config.name.contains("web", ignoreCase = true)
+          ) {
+            details.useTarget("androidx.navigation3:navigation3-runtime:${details.requested.version}")
+          }
+        }
+      }
     }
 
-    override fun Project.configurePlugin(): Unit {
-        configurations.configureEach { config: Configuration ->
-            config.resolutionStrategy.eachDependency { details ->
-                if (details.requested.group == "androidx.navigation3" && details.requested.name == "navigation3-ui") {
-                    if (config.name.contains("ios", ignoreCase = true) ||
-                        config.name.contains("js", ignoreCase = true) ||
-                        config.name.contains("wasm", ignoreCase = true) ||
-                        config.name.contains("apple", ignoreCase = true) ||
-                        config.name.contains("native", ignoreCase = true) ||
-                        config.name.contains("web", ignoreCase = true)
-                    ) {
-                        details.useTarget("androidx.navigation3:navigation3-runtime:${details.requested.version}")
-                    }
-                }
-            }
+    kotlinMultiplatform {
+      commonMain {
+        dependencies {
+          implementation(CatalogTypes.Libraries.KOTLINX_SERIALIZATION_JSON(project))
+          implementation(CatalogTypes.Bundles.NAVIGATION3(project))
         }
-
-        kotlinMultiplatform {
-            commonMain {
-                dependencies {
-                    implementation(CatalogTypes.Libraries.KOTLINX_SERIALIZATION_JSON(project))
-                    implementation(CatalogTypes.Bundles.NAVIGATION3(project))
-                }
-            }
-        }
+      }
     }
+  }
 }

@@ -17,6 +17,7 @@
   androidx-test-runner = "1.7.0"
   clikt = "5.2.1"
   coil = "3.6.3"
+  compose-bom = "2026.11.01"
   compose-constraint-layout = "1.1.2"
   compose-icons = "2.2.1"
   compose-material-icons = "1.7.3"
@@ -82,6 +83,7 @@
   coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
   coil-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil" }
   coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
+  compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
   compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose-multiplatform" }
   compose-constraint = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "compose-constraint-layout" }
   compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-multiplatform" }
@@ -166,6 +168,11 @@
     "coil-compose",
     "coil-core",
     "coil-network-ktor3",
+  ]
+  compose-bom = [
+    "compose-bom",
+    "androidx-activity-compose",
+    "compose-constraint",
   ]
   compose-tooling = [
     "compose-uiToolingPreview",
