@@ -2,6 +2,7 @@
 
 > [!NOTE]
 > **Quick Facts for AI Agents & Developers**
+>
 > - **Subproject**: `:frontend:core-widgets`
 > - **Package Root**: `dev.fnc314.tools.jobtracker.core.widgets`
 > - **Primary Contributions**: Universal shared Compose components (`TopLevelCard`, `JobApplicationCard`, `CompanyLogoImage`, `StatusBadge`, `FitBadge`, `NotesWidget`, `TooltipIconButton`), Coil image loading subsystem (`JobApplicationTrackerImage`, `ProvideImageLoader`), re-exports `core:design-system`
@@ -12,12 +13,15 @@
 ---
 
 ## 1. Module Overview
+
 `:frontend:core-widgets` houses reusable, theme-aware Compose presentation components that are shared across multiple feature modules. It serves as the universal shared UI layer, eliminating duplicate widget implementations and standardizing micro-interactions, badge styling, and accessibility across all screens. It also owns the Coil image loading subsystem, providing a centralized `ImageLoader` configuration with observability hooks and a single wrapper composable (`JobApplicationTrackerImage`) for all image loading.
 
 ---
 
 ## 2. Contribution to the Larger Application
+
 This module is the primary UI foundation consumed by all feature screens:
+
 - **Upstream Consumers**: `features:job-applications-list`, `features:job-applications-details`, `features:settings`, `features:add-job-application`, `features:tracker-edits`, `features:sign-in`, and `apps:core`.
 - **Downstream Dependencies**: `core:design-system` (exported via `api`), `core:data` (exported via `api`), Material 3.
 - **Architectural Role (Option A)**: By exporting `core:design-system` as an `api` dependency, `:core-widgets` allows feature modules to depend **only** on `:core-widgets` while still accessing design tokens (`spacing`, `componentSizes`, `iconSizes`) without needing direct `core:design-system` dependencies in their build files.
@@ -30,6 +34,7 @@ This module is the primary UI foundation consumed by all feature screens:
 core/widgets/src/
 ├── commonMain/kotlin/dev/fnc314/tools/jobtracker/core/widgets/
 │   ├── TopLevelCard.kt                 # Unified Grid-based adaptive card skeleton with actions & surface variants
+│   ├── CompanyMetricsTextRow.kt        # Renders metric counts and percentage breakdown rows with rounded container styling
 │   ├── JobApplicationCard.kt           # Job application card built on TopLevelCard
 │   ├── StatusBadge.kt                  # Visual tonal pill displaying application funnel status
 │   ├── FitBadge.kt                     # Color-tiered fit rating pill (green / amber / neutral)
@@ -47,6 +52,8 @@ core/widgets/src/
 
 ## 4. Public API Surface & Significant Contributions
 
+- `CompanyMetricsTextRow(draftCount, draftPercentage, submittedCount, submittedPercentage, interviewingCount, interviewingPercentage, offerCount, offerPercentage, rejectedCount, rejectedPercentage, modifier)`:
+  - Renders rows of application status metric counts and percentage breakdowns inside rounded container styling (`MaterialTheme.shapes.small`) with responsive spacing.
 - `TopLevelCard(title, modifier, onClick, contentDescription, onClickLabel, variant, isExpanded, onToggleExpand, showActionsWhenNotCollapsible, thumbnail, subtitle, compactSummary, wideTrailingHeader, wideBody, expandedContent, actions)`:
   - Unified responsive `Grid`-based card skeleton (`@file:OptIn(ExperimentalGridApi::class)`) used across `JobApplicationCard`, `CompanyCard`, and `EditCard`.
   - Automatically toggles collapsible `expandedContent` on compact viewports when hidden content exists, and acts as a direct navigation target when no content is hidden.
@@ -86,6 +93,7 @@ core/widgets/src/
 ---
 
 ## 6. Deep-Link & Navigation Integration
+
 `:core-widgets` is a component library. It does not declare navigation destinations or handle deep links directly, but its widgets are rendered inside screens navigated via deep links.
 
 ---
@@ -93,6 +101,7 @@ core/widgets/src/
 ## 7. Convention Plugins & Dependencies
 
 ### Applied Convention Plugins
+
 - `local.kotlin.multiplatform`: Multi-target toolchain.
 - `local.android.kmp.library`: AGP Multiplatform Library setup.
 - `local.compose`: Compose compiler plugin.
@@ -100,6 +109,7 @@ core/widgets/src/
 - `local.dependencies.di`: Koin dependency injection.
 
 ### Key Dependencies
+
 - `api(projects.coreDesignSystem)`: Exports tokens, themes, and responsive classes to feature consumers.
 - `api(projects.coreData)`: Exports domain entities (`TrackerStatus`, etc.) needed by widgets.
 - `implementation(libs.bundles.coil)`: Coil 3 image loading (coil-compose, coil-core, coil-network-ktor3).
