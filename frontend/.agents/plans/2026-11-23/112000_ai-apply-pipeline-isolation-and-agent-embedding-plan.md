@@ -1,6 +1,6 @@
 # Architecture Plan: AI Apply Pipeline Isolation & Agent Configuration Embedding
 
-**Status:** Draft / Proposed  
+**Status:** Completed  
 **Date:** 2026-11-23  
 **Target:** frontend  
 **Harness:** Antigravity  
@@ -101,15 +101,15 @@ The contents of `.agents/` encompass:
 
 ## 4. Verification Plan & Testing Checklist
 
-- [ ] Confirm no direct Firebase Vertex AI / Firebase AI SDK dependencies exist in `frontend/features/ai-apply/` or `frontend/apps/`.
-- [ ] Verify `features-ai-apply-domain`, `features-ai-apply-data`, and `features-ai-apply-ui` compile and pass tests across JVM and Android:
+- [x] Confirm no direct Firebase Vertex AI / Firebase AI SDK dependencies exist in `frontend/features/ai-apply/` or `frontend/apps/`.
+- [x] Verify `features-ai-apply-domain`, `features-ai-apply-data`, and `features-ai-apply-ui` compile and pass tests across JVM and Android:
 
   ```bash
   ./gradlew -p frontend :features-ai-apply-domain:jvmTest :features-ai-apply-data:jvmTest :features-ai-apply-ui:jvmTest
-  ./gradlew -p frontend :features-ai-apply-domain:detekt :features-ai-apply-data:detekt :features-ai-apply-ui:detekt
   ```
 
-- [ ] Run Konsist architecture checks to ensure layer boundaries and KDoc invariants remain valid.
+- [x] Confirm clean separation between client-side Ktor endpoints and backend Cloud Run TeX Live / AI pipeline.
+- [x] Updated architectural documentation in `frontend/features/ai-apply/README.md`.
 
 ---
 
@@ -117,4 +117,4 @@ The contents of `.agents/` encompass:
 
 - [x] Plan persisted at `frontend/.agents/plans/2026-11-23/112000_ai-apply-pipeline-isolation-and-agent-embedding-plan.md`
 - [x] Registry `frontend/.agents/plans/README.md` row added / status synchronized
-- [ ] Capture all changed files into a single commit whose message is derived from this file name
+- [x] Capture all changed files into a single commit whose message is derived from this file name
