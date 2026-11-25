@@ -54,6 +54,7 @@
   materialKolor = "6.0.0"
   mockk = "1.14.12"
   mordant = "3.1.1"
+  navgraph = "0.3.0"
   navigation-compose = "2.10.0"
   navigation3 = "1.2.2"
   node = "26.13.1"
@@ -154,6 +155,7 @@
   navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
   navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
   navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
+  compose-navgraph-annotations = { module = "com.github.skydoves.navgraph:annotations", version.ref = "navgraph" }
   pdfbox = { module = "org.apache.pdfbox:pdfbox", version.ref = "pdfbox" }
   protobuf-bom = { module = "com.google.protobuf:protobuf-bom", version.ref = "protobuf" }
   protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf" }
@@ -280,6 +282,7 @@
   kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
   kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
   ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+  navgraph = { id = "com.github.skydoves.navgraph", version.ref = "navgraph" }
   local-detekt = { id = "dev.fnc314.aijobtracker.detekt" }
   local-dokka = { id = "dev.fnc314.aijobtracker.dokka" }
   local-multiplatform-library = { id = "dev.fnc314.aijobtracker.multiplatform-library" }

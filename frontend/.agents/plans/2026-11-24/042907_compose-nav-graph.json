@@ -1,0 +1,261 @@
+{
+  "navVersion": "navgraph",
+  "schemaVersion": 1,
+  "nodes": [
+    {
+      "id": "dev.fnc314.aijobtracker.app.android.navgraph.AddJobApplicationKey",
+      "route": "AddJobApplicationKey",
+      "module": ":apps-android",
+      "clickTargetFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AddJobApplicationNavScreen",
+      "sourceFile": "/Users/fnc314/Code/ai/ai-job-tracker/frontend/apps/android/src/main/kotlin/dev/fnc314/aijobtracker/app/android/navgraph/AppNavScreens.kt",
+      "sourceLine": 202,
+      "previews": [
+        {
+          "previewName": "AddJobApplicationPreview",
+          "previewFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AddJobApplicationPreview",
+          "previewMethodFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AppNavScreensKt.AddJobApplicationPreview",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "id": "dev.fnc314.aijobtracker.app.android.navgraph.AiApplyKey",
+      "route": "AiApplyKey",
+      "module": ":apps-android",
+      "clickTargetFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AiApplyNavScreen",
+      "sourceFile": "/Users/fnc314/Code/ai/ai-job-tracker/frontend/apps/android/src/main/kotlin/dev/fnc314/aijobtracker/app/android/navgraph/AppNavScreens.kt",
+      "sourceLine": 174,
+      "previews": [
+        {
+          "previewName": "AiApplyPreview",
+          "previewFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AiApplyPreview",
+          "previewMethodFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AppNavScreensKt.AiApplyPreview",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "id": "dev.fnc314.aijobtracker.app.android.navgraph.ArtifactPreviewKey",
+      "route": "ArtifactPreviewKey",
+      "module": ":apps-android",
+      "clickTargetFqn": "dev.fnc314.aijobtracker.app.android.navgraph.ArtifactPreviewNavScreen",
+      "sourceFile": "/Users/fnc314/Code/ai/ai-job-tracker/frontend/apps/android/src/main/kotlin/dev/fnc314/aijobtracker/app/android/navgraph/AppNavScreens.kt",
+      "sourceLine": 229,
+      "args": [
+        {
+          "name": "applicationId",
+          "type": "kotlin.String"
+        },
+        {
+          "name": "artifactId",
+          "type": "kotlin.String"
+        }
+      ],
+      "previews": [
+        {
+          "previewName": "ArtifactPreview",
+          "previewFqn": "dev.fnc314.aijobtracker.app.android.navgraph.ArtifactPreview",
+          "previewMethodFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AppNavScreensKt.ArtifactPreview",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "id": "dev.fnc314.aijobtracker.app.android.navgraph.CompaniesListKey",
+      "route": "CompaniesListKey",
+      "module": ":apps-android",
+      "clickTargetFqn": "dev.fnc314.aijobtracker.app.android.navgraph.CompaniesListNavScreen",
+      "sourceFile": "/Users/fnc314/Code/ai/ai-job-tracker/frontend/apps/android/src/main/kotlin/dev/fnc314/aijobtracker/app/android/navgraph/AppNavScreens.kt",
+      "sourceLine": 119,
+      "previews": [
+        {
+          "previewName": "CompaniesListPreview",
+          "previewFqn": "dev.fnc314.aijobtracker.app.android.navgraph.CompaniesListPreview",
+          "previewMethodFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AppNavScreensKt.CompaniesListPreview",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "id": "dev.fnc314.aijobtracker.app.android.navgraph.CompanyDetailsKey",
+      "route": "CompanyDetailsKey",
+      "module": ":apps-android",
+      "clickTargetFqn": "dev.fnc314.aijobtracker.app.android.navgraph.CompanyDetailsNavScreen",
+      "sourceFile": "/Users/fnc314/Code/ai/ai-job-tracker/frontend/apps/android/src/main/kotlin/dev/fnc314/aijobtracker/app/android/navgraph/AppNavScreens.kt",
+      "sourceLine": 147,
+      "args": [
+        {
+          "name": "companyName",
+          "type": "kotlin.String"
+        }
+      ],
+      "previews": [
+        {
+          "previewName": "CompanyDetailsPreview",
+          "previewFqn": "dev.fnc314.aijobtracker.app.android.navgraph.CompanyDetailsPreview",
+          "previewMethodFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AppNavScreensKt.CompanyDetailsPreview",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "id": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationDetailsKey",
+      "route": "JobApplicationDetailsKey",
+      "module": ":apps-android",
+      "clickTargetFqn": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationDetailsNavScreen",
+      "sourceFile": "/Users/fnc314/Code/ai/ai-job-tracker/frontend/apps/android/src/main/kotlin/dev/fnc314/aijobtracker/app/android/navgraph/AppNavScreens.kt",
+      "sourceLine": 91,
+      "args": [
+        {
+          "name": "id",
+          "type": "kotlin.String"
+        }
+      ],
+      "previews": [
+        {
+          "previewName": "JobApplicationDetailsPreview",
+          "previewFqn": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationDetailsPreview",
+          "previewMethodFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AppNavScreensKt.JobApplicationDetailsPreview",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "id": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationListKey",
+      "route": "JobApplicationListKey",
+      "module": ":apps-android",
+      "clickTargetFqn": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationListNavScreen",
+      "sourceFile": "/Users/fnc314/Code/ai/ai-job-tracker/frontend/apps/android/src/main/kotlin/dev/fnc314/aijobtracker/app/android/navgraph/AppNavScreens.kt",
+      "sourceLine": 62,
+      "previews": [
+        {
+          "previewName": "JobApplicationListPreview",
+          "previewFqn": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationListPreview",
+          "previewMethodFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AppNavScreensKt.JobApplicationListPreview",
+          "primary": true
+        }
+      ],
+      "start": true
+    },
+    {
+      "id": "dev.fnc314.aijobtracker.app.android.navgraph.SettingsKey",
+      "route": "SettingsKey",
+      "module": ":apps-android",
+      "clickTargetFqn": "dev.fnc314.aijobtracker.app.android.navgraph.SettingsNavScreen",
+      "sourceFile": "/Users/fnc314/Code/ai/ai-job-tracker/frontend/apps/android/src/main/kotlin/dev/fnc314/aijobtracker/app/android/navgraph/AppNavScreens.kt",
+      "sourceLine": 283,
+      "previews": [
+        {
+          "previewName": "SettingsPreview",
+          "previewFqn": "dev.fnc314.aijobtracker.app.android.navgraph.SettingsPreview",
+          "previewMethodFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AppNavScreensKt.SettingsPreview",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "id": "dev.fnc314.aijobtracker.app.android.navgraph.SignInKey",
+      "route": "SignInKey",
+      "module": ":apps-android",
+      "clickTargetFqn": "dev.fnc314.aijobtracker.app.android.navgraph.SignInNavScreen",
+      "sourceFile": "/Users/fnc314/Code/ai/ai-job-tracker/frontend/apps/android/src/main/kotlin/dev/fnc314/aijobtracker/app/android/navgraph/AppNavScreens.kt",
+      "sourceLine": 311,
+      "previews": [
+        {
+          "previewName": "SignInPreview",
+          "previewFqn": "dev.fnc314.aijobtracker.app.android.navgraph.SignInPreview",
+          "previewMethodFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AppNavScreensKt.SignInPreview",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "id": "dev.fnc314.aijobtracker.app.android.navgraph.TrackerEditsKey",
+      "route": "TrackerEditsKey",
+      "module": ":apps-android",
+      "clickTargetFqn": "dev.fnc314.aijobtracker.app.android.navgraph.TrackerEditsNavScreen",
+      "sourceFile": "/Users/fnc314/Code/ai/ai-job-tracker/frontend/apps/android/src/main/kotlin/dev/fnc314/aijobtracker/app/android/navgraph/AppNavScreens.kt",
+      "sourceLine": 256,
+      "previews": [
+        {
+          "previewName": "TrackerEditsPreview",
+          "previewFqn": "dev.fnc314.aijobtracker.app.android.navgraph.TrackerEditsPreview",
+          "previewMethodFqn": "dev.fnc314.aijobtracker.app.android.navgraph.AppNavScreensKt.TrackerEditsPreview",
+          "primary": true
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.AddJobApplicationKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationListKey",
+      "label": "Saved"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.AiApplyKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationListKey",
+      "label": "Save & Return"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.CompaniesListKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.CompanyDetailsKey",
+      "label": "Company Profile"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.CompanyDetailsKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationDetailsKey",
+      "label": "Application"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationDetailsKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.ArtifactPreviewKey",
+      "label": "Preview CV / Letter"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationDetailsKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.TrackerEditsKey",
+      "label": "Edit Application"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationListKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.AddJobApplicationKey",
+      "label": "Add Lead / Job"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationListKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.AiApplyKey",
+      "label": "AI Fast Apply"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationListKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.CompaniesListKey",
+      "label": "Companies"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationListKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationDetailsKey",
+      "label": "View Details"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationListKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.SettingsKey",
+      "label": "Settings"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.SettingsKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.SignInKey",
+      "label": "Sign Out"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.SignInKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationListKey",
+      "label": "Authenticated"
+    },
+    {
+      "from": "dev.fnc314.aijobtracker.app.android.navgraph.TrackerEditsKey",
+      "to": "dev.fnc314.aijobtracker.app.android.navgraph.JobApplicationListKey",
+      "label": "Approved / Dismissed"
+    }
+  ]
+}

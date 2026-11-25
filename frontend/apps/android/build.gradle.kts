@@ -3,11 +3,26 @@ plugins {
   alias(libs.plugins.local.dependencies.firebase)
   alias(libs.plugins.composeCompiler)
   alias(libs.plugins.google.play.services)
+  alias(libs.plugins.kotlinSerialization)
+  id("com.google.devtools.ksp")
+  alias(libs.plugins.navgraph)
+}
+
+ksp {
+  arg("navgraph.annotatedOnly", "true")
+}
+
+navgraph {
+  renderBackend.set(com.github.skydoves.navgraph.gradle.RenderBackend.ROBOLECTRIC)
 }
 
 dependencies {
   implementation(projects.appsCore)
   implementation(projects.coreData)
+  implementation(projects.coreNavigation)
+  implementation(libs.navigation3.runtime)
+  implementation(libs.navigation3.ui)
+  implementation(libs.compose.material3)
 
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.core.ktx)

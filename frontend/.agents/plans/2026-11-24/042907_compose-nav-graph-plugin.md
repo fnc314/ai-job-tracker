@@ -1,6 +1,6 @@
 # Implementation Plan: Compose Navigation Graph (`compose-nav-graph`) Integration
 
-**Status:** In Progress  
+**Status:** Completed  
 **Date:** 2026-11-24  
 **Target:** `:frontend:apps:android`  
 **Harness:** Antigravity  
@@ -82,7 +82,7 @@ Following Section 6 of the playbook, we implement representative previews:
 
 ### B. Module Configuration
 
-2. In `frontend/apps/android/build.gradle.kts`:
+1. In `frontend/apps/android/build.gradle.kts`:
    - Apply `alias(libs.plugins.ksp)`.
    - Apply `alias(libs.plugins.navgraph)`.
    - Configure `ksp { arg("navgraph.annotatedOnly", "true") }`.
@@ -90,19 +90,75 @@ Following Section 6 of the playbook, we implement representative previews:
 
 ### C. Annotated Graph & Representative Previews
 
-3. Create `frontend/apps/android/src/main/kotlin/dev/fnc314/aijobtracker/app/android/navgraph/AppNavGraph.kt`:
+1. Create `frontend/apps/android/src/main/kotlin/dev/fnc314/aijobtracker/app/android/navgraph/AppNavGraph.kt`:
    - Annotate all destination keys with `@NavDestination` and `@NavEdge`.
    - Designate `JobApplicationListRoute` with `@NavGraphRoot`.
    - Implement `@NavPreview` functions for all 10 core destinations.
 
 ### D. Mise Automation Task
 
-4. Add `.config/mise/tasks/frontend/navgraph.zsh` to generate the interactive HTML and PNG files with a single command (`mise run navgraph`).
+1. Add `.config/mise/tasks/frontend/navgraph.zsh` to generate the interactive HTML and PNG files with a single command (`mise run navgraph`).
 
 ---
 
-## 4. Verification Plan
+## 4. Verification Plan & Rendered Output
 
-1. Run `./gradlew :frontend:apps:android:generateNavGraph :frontend:apps:android:exportNavGraphImage :frontend:apps:android:exportNavGraphHtml --console=plain`.
-2. Inspect `build/navgraph/nav-graph.json` to verify node count and edges.
-3. Verify `build/navgraph/nav-graph.png` and `build/navgraph/nav-graph.html` are created with rendered thumbnails.
+### 4.1 Verification Checklist
+
+- [x] Configure `gradle/libs.versions.toml` with `navgraph = "0.3.0"` and plugin declarations.
+- [x] Configure `frontend/apps/android/build.gradle.kts` with KSP annotations and `com.github.skydoves.navgraph`.
+- [x] Annotate navigation destinations in `AppNavKeys.kt` and implement representative DI-free previews in `AppNavScreens.kt`.
+- [x] Extract and verify structured graph model: 10 navigation nodes and 14 edges.
+- [x] Render preview thumbnails for all 10 core destinations using deterministic preview themes.
+- [x] Generate self-contained Mermaid topology flowchart and interactive HTML preview.
+- [x] Add automated Mise task: `.config/mise/tasks/frontend/navgraph.zsh`.
+
+### 4.2 Rendered Navigation Topology
+
+The generated topology (`042907_compose-nav-graph.mmd`):
+
+```mermaid
+flowchart TD
+    N0["AddJobApplicationKey"]
+    N1["AiApplyKey"]
+    N2["ArtifactPreviewKey"]
+    N3["CompaniesListKey"]
+    N4["CompanyDetailsKey"]
+    N5["JobApplicationDetailsKey"]
+    N6["★ JobApplicationListKey (Root)"]
+    N7["SettingsKey"]
+    N8["SignInKey"]
+    N9["TrackerEditsKey"]
+    N0 -->|"Saved"| N6
+    N1 -->|"Save & Return"| N6
+    N3 -->|"Company Profile"| N4
+    N4 -->|"Application"| N5
+    N5 -->|"Preview CV / Letter"| N2
+    N5 -->|"Edit Application"| N9
+    N6 -->|"Add Lead / Job"| N0
+    N6 -->|"AI Fast Apply"| N1
+    N6 -->|"Companies"| N3
+    N6 -->|"View Details"| N5
+    N6 -->|"Settings"| N7
+    N7 -->|"Sign Out"| N8
+    N8 -->|"Authenticated"| N6
+    N9 -->|"Approved / Dismissed"| N6
+```
+
+### 4.3 Evidence & Artifact Assets
+
+The generated artifacts are persisted in this date's plan directory:
+
+- **Structured Navigation JSON:** [`042907_compose-nav-graph.json`](./042907_compose-nav-graph.json)
+- **Mermaid Source:** [`042907_compose-nav-graph.mmd`](./042907_compose-nav-graph.mmd)
+- **Interactive HTML Graph & Gallery:** [`042907_compose-nav-graph.html`](./042907_compose-nav-graph.html)
+- **Sample Root Preview Thumbnail:** [`042907_job-application-list-preview.png`](./042907_job-application-list-preview.png)
+- **Full Thumbnails Gallery:** [`042907_thumbs/`](./042907_thumbs/)
+
+---
+
+## 5. Bookkeeping
+
+- [x] Plan persisted at `frontend/.agents/plans/2026-11-24/042907_compose-nav-graph-plugin.md`
+- [x] Registry `frontend/.agents/plans/README.md` row updated to `Completed`
+- [x] Captured all changed files and evidence assets into a single commit derived from this file name

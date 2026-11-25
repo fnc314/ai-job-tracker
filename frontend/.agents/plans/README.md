@@ -21,8 +21,8 @@ This directory contains design and implementation plans for the `frontend` proje
 
 | Plan | Status | Scope / Focus Area |
 | :--- | :--- | :--- |
-| [`042907_compose-nav-graph-plugin.md`](./2026-11-24/042907_compose-nav-graph-plugin.md) | Draft / Proposed | Integrate skydoves compose-nav-graph plugin to generate visual PNG and interactive HTML navigation graphs with representative previews |
-| [`112000_ai-apply-pipeline-isolation-and-agent-embedding-plan.md`](./2026-11-23/112000_ai-apply-pipeline-isolation-and-agent-embedding-plan.md) | Draft / Proposed | Architectural assessment of why client-side Firebase AI is rejected in `frontend/features/ai-apply` and feasibility analysis of embedding `.agents` configurations within multiplatform `frontend/apps` |
+| [`042907_compose-nav-graph-plugin.md`](./2026-11-24/042907_compose-nav-graph-plugin.md) | Completed | Integrate skydoves compose-nav-graph plugin to generate visual PNG and interactive HTML navigation graphs with representative previews |
+| [`112000_ai-apply-pipeline-isolation-and-agent-embedding-plan.md`](./2026-11-23/112000_ai-apply-pipeline-isolation-and-agent-embedding-plan.md) | Completed | Architectural assessment of why client-side Firebase AI is rejected in `frontend/features/ai-apply` and feasibility analysis of embedding `.agents` configurations within multiplatform `frontend/apps` |
 | [`145500_frontend-fcm-and-proposal-override-ui.md`](./2026-11-20/145500_frontend-fcm-and-proposal-override-ui.md) | Completed | Frontend FCM device token registration, push notification deep linking to `JobApplicationEditsRoute`, and inline transition override modal in `TrackerEditsScreen` |
 | [`054440_universal_text_selection_and_hyperlinks.md`](./2026-11-20/054440_universal_text_selection_and_hyperlinks.md) | Completed | Universal text selection and copiable text with accessible clickable hyperlink text components across Compose UI |
 | [`015319_desktop-jvm-google-signin-oauth-loopback.md`](./2026-11-20/015319_desktop-jvm-google-signin-oauth-loopback.md) | Draft | Google Sign-In via Browser Loopback OAuth 2.0 with PKCE on Desktop (JVM) to unlock Compose desktop app |

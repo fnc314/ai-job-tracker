@@ -1,0 +1,25 @@
+flowchart TD
+    N0["AddJobApplicationKey"]
+    N1["AiApplyKey"]
+    N2["ArtifactPreviewKey"]
+    N3["CompaniesListKey"]
+    N4["CompanyDetailsKey"]
+    N5["JobApplicationDetailsKey"]
+    N6["★ JobApplicationListKey (Root)"]
+    N7["SettingsKey"]
+    N8["SignInKey"]
+    N9["TrackerEditsKey"]
+    N0 -->|"Saved"| N6
+    N1 -->|"Save & Return"| N6
+    N3 -->|"Company Profile"| N4
+    N4 -->|"Application"| N5
+    N5 -->|"Preview CV / Letter"| N2
+    N5 -->|"Edit Application"| N9
+    N6 -->|"Add Lead / Job"| N0
+    N6 -->|"AI Fast Apply"| N1
+    N6 -->|"Companies"| N3
+    N6 -->|"View Details"| N5
+    N6 -->|"Settings"| N7
+    N7 -->|"Sign Out"| N8
+    N8 -->|"Authenticated"| N6
+    N9 -->|"Approved / Dismissed"| N6
