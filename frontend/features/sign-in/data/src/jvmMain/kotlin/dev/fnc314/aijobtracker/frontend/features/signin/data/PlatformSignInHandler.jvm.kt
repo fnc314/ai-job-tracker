@@ -1,6 +1,6 @@
 package dev.fnc314.aijobtracker.frontend.features.signin.data
 
-import dev.fnc314.aijobtracker.frontend.core.data.model.UserAccount
+import dev.fnc314.aijobtracker.frontend.core.auth.model.UserAccount
 import dev.fnc314.aijobtracker.frontend.core.network.RemoteNetworkConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO

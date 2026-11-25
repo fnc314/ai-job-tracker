@@ -14,7 +14,7 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import dev.fnc314.aijobtracker.frontend.core.data.ApplicationContextHolder
-import dev.fnc314.aijobtracker.frontend.core.data.model.UserAccount
+import dev.fnc314.aijobtracker.frontend.core.auth.model.UserAccount
 import kotlinx.coroutines.tasks.await
 import androidx.credentials.Credential
 

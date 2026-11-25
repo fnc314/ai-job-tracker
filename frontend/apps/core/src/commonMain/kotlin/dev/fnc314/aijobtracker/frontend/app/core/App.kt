@@ -27,7 +27,7 @@ import dev.fnc314.aijobtracker.frontend.app.core.di.MainApplication
 import dev.fnc314.aijobtracker.frontend.app.core.di.appModule
 import dev.fnc314.aijobtracker.frontend.app.core.impl.AppNavigatorImpl
 import dev.fnc314.aijobtracker.frontend.app.core.ui.AppScaffold
-import dev.fnc314.aijobtracker.frontend.core.data.model.AuthState
+import dev.fnc314.aijobtracker.frontend.core.auth.model.AuthState
 import dev.fnc314.aijobtracker.frontend.core.data.settings.AppSettingsRepository
 import dev.fnc314.aijobtracker.frontend.core.designsystem.JobTrackerTheme
 import dev.fnc314.aijobtracker.frontend.core.designsystem.ProvideWindowSizeClass
@@ -57,7 +57,7 @@ import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.ui.JobAppli
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.ui.JobApplicationsEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.settings.ui.JobApplicationSettingsRoute
 import dev.fnc314.aijobtracker.frontend.features.settings.ui.SettingsEntryRegistry
-import dev.fnc314.aijobtracker.frontend.features.signin.domain.repository.AuthRepository
+import dev.fnc314.aijobtracker.frontend.core.auth.repository.AuthRepository
 import dev.fnc314.aijobtracker.frontend.features.signin.ui.SignInEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.signin.ui.SignInRoute
 import dev.fnc314.aijobtracker.frontend.features.aiapply.ui.AiApplyEntryRegistry

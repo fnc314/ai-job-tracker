@@ -1,7 +1,7 @@
 package dev.fnc314.aijobtracker.frontend.features.signin.domain.usecase.impl
 
-import dev.fnc314.aijobtracker.frontend.core.data.model.UserAccount
-import dev.fnc314.aijobtracker.frontend.features.signin.domain.repository.AuthRepository
+import dev.fnc314.aijobtracker.frontend.core.auth.model.UserAccount
+import dev.fnc314.aijobtracker.frontend.core.auth.repository.AuthRepository
 import dev.fnc314.aijobtracker.frontend.features.signin.domain.usecase.SignInUseCase
 
 internal class SignInUseCaseImpl(

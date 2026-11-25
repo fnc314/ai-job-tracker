@@ -1,6 +1,6 @@
 package dev.fnc314.aijobtracker.frontend.features.signin.data
 
-import dev.fnc314.aijobtracker.frontend.core.data.model.UserAccount
+import dev.fnc314.aijobtracker.frontend.core.auth.model.UserAccount
 import java.io.File
 import java.nio.charset.StandardCharsets
 import java.security.KeyStore

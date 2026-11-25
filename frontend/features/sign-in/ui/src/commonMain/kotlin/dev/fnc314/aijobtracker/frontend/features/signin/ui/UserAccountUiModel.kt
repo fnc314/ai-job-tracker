@@ -1,7 +1,7 @@
 package dev.fnc314.aijobtracker.frontend.features.signin.ui
 
 import androidx.compose.runtime.Immutable
-import dev.fnc314.aijobtracker.frontend.core.data.model.UserAccount
+import dev.fnc314.aijobtracker.frontend.core.auth.model.UserAccount
 
 /**
  * Presentation model displaying active user identity and profile metadata.

@@ -2,7 +2,7 @@ package dev.fnc314.aijobtracker.frontend.features.signin.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.fnc314.aijobtracker.frontend.core.data.model.AuthState
+import dev.fnc314.aijobtracker.frontend.core.auth.model.AuthState
 import dev.fnc314.aijobtracker.frontend.features.signin.domain.usecase.ObserveAuthStateUseCase
 import dev.fnc314.aijobtracker.frontend.features.signin.domain.usecase.SignInUseCase
 import dev.fnc314.aijobtracker.frontend.features.signin.domain.usecase.SignOutUseCase

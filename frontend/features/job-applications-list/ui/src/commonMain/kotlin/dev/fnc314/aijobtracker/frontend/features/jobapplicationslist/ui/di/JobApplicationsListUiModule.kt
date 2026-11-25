@@ -8,7 +8,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-internal val jobApplicationsListUiModule: Module = module {
+public val jobApplicationsListUiModule: Module = module {
     viewModelOf(::JobApplicationsListViewModel)
     singleOf(::JobApplicationsEntryRegistry)
 }

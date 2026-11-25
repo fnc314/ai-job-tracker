@@ -1,7 +1,7 @@
 package dev.fnc314.aijobtracker.frontend.features.settings.ui
 
-import dev.fnc314.aijobtracker.frontend.core.data.model.AuthState
-import dev.fnc314.aijobtracker.frontend.core.data.model.UserAccount
+import dev.fnc314.aijobtracker.frontend.core.auth.model.AuthState
+import dev.fnc314.aijobtracker.frontend.core.auth.model.UserAccount
 import dev.fnc314.aijobtracker.frontend.core.data.model.DeviceRegistrationStatus
 import dev.fnc314.aijobtracker.frontend.core.data.settings.AppSettings
 import dev.fnc314.aijobtracker.frontend.core.data.settings.UiMode

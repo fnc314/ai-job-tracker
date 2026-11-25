@@ -23,65 +23,64 @@
   backend-artifact-compilation = { module = "dev.fnc314.aijobtracker.backend:artifact-compilation", version.ref = "version" }
 
   # Frontend Subsystem — Apps & Core
-  frontend-apps-core = { group = "dev.fnc314.aijobtracker", name = "frontend.apps.core", version.ref = "version" }
-  frontend-apps-cli = { group = "dev.fnc314.aijobtracker", name = "frontend.apps.cli", version.ref = "version" }
-  frontend-apps-terminal = { group = "dev.fnc314.aijobtracker", name = "frontend.apps.terminal", version.ref = "version" }
-  frontend-apps-desktop = { group = "dev.fnc314.aijobtracker", name = "frontend.apps.desktop", version.ref = "version" }
-  frontend-apps-android = { group = "dev.fnc314.aijobtracker", name = "frontend.apps.android", version.ref = "version" }
-  frontend-apps-web = { group = "dev.fnc314.aijobtracker", name = "frontend.apps.web", version.ref = "version" }
-  frontend-core-documents = { group = "dev.fnc314.aijobtracker", name = "frontend.core.documents", version.ref = "version" }
-  frontend-core-auth = { group = "dev.fnc314.aijobtracker", name = "frontend.core.auth", version.ref = "version" }
-  frontend-core-data = { group = "dev.fnc314.aijobtracker", name = "frontend.core.data", version.ref = "version" }
-  frontend-core-design-system = { group = "dev.fnc314.aijobtracker", name = "frontend.core.design-system", version.ref = "version" }
-  frontend-core-logging = { group = "dev.fnc314.aijobtracker", name = "frontend.core.logging", version.ref = "version" }
-  frontend-core-navigation = { group = "dev.fnc314.aijobtracker", name = "frontend.core.navigation", version.ref = "version" }
-  frontend-core-network = { group = "dev.fnc314.aijobtracker", name = "frontend.core.network", version.ref = "version" }
-  frontend-core-widgets = { group = "dev.fnc314.aijobtracker", name = "frontend.core.widgets", version.ref = "version" }
+  frontend-apps-core = { group = "dev.fnc314.aijobtracker.apps.core", name = "core", version.ref = "version" }
+  frontend-apps-cli = { group = "dev.fnc314.aijobtracker.apps.cli", name = "cli", version.ref = "version" }
+  frontend-apps-terminal = { group = "dev.fnc314.aijobtracker.apps.terminal", name = "terminal", version.ref = "version" }
+  frontend-apps-desktop = { group = "dev.fnc314.aijobtracker.apps.desktop", name = "desktop", version.ref = "version" }
+  frontend-apps-android = { group = "dev.fnc314.aijobtracker.apps.android", name = "android", version.ref = "version" }
+  frontend-apps-web = { group = "dev.fnc314.aijobtracker.apps.web", name = "web", version.ref = "version" }
+  frontend-core-documents = { group = "dev.fnc314.aijobtracker.core.documents", name = "documents", version.ref = "version" }
+  frontend-core-auth = { group = "dev.fnc314.aijobtracker.core.auth", name = "auth", version.ref = "version" }
+  frontend-core-data = { group = "dev.fnc314.aijobtracker.core.data", name = "data", version.ref = "version" }
+  frontend-core-design-system = { group = "dev.fnc314.aijobtracker.core.design-system", name = "design-system", version.ref = "version" }
+  frontend-core-logging = { group = "dev.fnc314.aijobtracker.core.logging", name = "logging", version.ref = "version" }
+  frontend-core-navigation = { group = "dev.fnc314.aijobtracker.core.navigation", name = "navigation", version.ref = "version" }
+  frontend-core-network = { group = "dev.fnc314.aijobtracker.core.network", name = "network", version.ref = "version" }
+  frontend-core-widgets = { group = "dev.fnc314.aijobtracker.core.widgets", name = "widgets", version.ref = "version" }
 
   # Frontend Subsystem — Features
-  frontend-features-add-job-application-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.add-job-application.data", version.ref = "version" }
-  frontend-features-add-job-application-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.add-job-application.domain", version.ref = "version" }
-  frontend-features-add-job-application-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.add-job-application.ui", version.ref = "version" }
-  frontend-features-ai-apply-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.ai-apply.data", version.ref = "version" }
-  frontend-features-ai-apply-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.ai-apply.domain", version.ref = "version" }
-  frontend-features-ai-apply-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.ai-apply.ui", version.ref = "version" }
-  frontend-features-documents-viewer-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.documents-viewer.data", version.ref = "version" }
-  frontend-features-documents-viewer-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.documents-viewer.domain", version.ref = "version" }
-  frontend-features-documents-viewer-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.documents-viewer.ui", version.ref = "version" }
-  frontend-features-companies-list-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.companies-list.data", version.ref = "version" }
-  frontend-features-companies-list-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.companies-list.domain", version.ref = "version" }
-  frontend-features-companies-list-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.companies-list.ui", version.ref = "version" }
-  frontend-features-company-details-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.company-details.data", version.ref = "version" }
-  frontend-features-company-details-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.company-details.domain", version.ref = "version" }
-  frontend-features-company-details-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.company-details.ui", version.ref = "version" }
-  frontend-features-job-application-details-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.job-application-details.data", version.ref = "version" }
-  frontend-features-job-application-details-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.job-application-details.domain", version.ref = "version" }
-  frontend-features-job-application-details-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.job-application-details.ui", version.ref = "version" }
-  frontend-features-job-applications-list-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.job-applications-list.data", version.ref = "version" }
-  frontend-features-job-applications-list-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.job-applications-list.domain", version.ref = "version" }
-  frontend-features-job-applications-list-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.job-applications-list.ui", version.ref = "version" }
-  frontend-features-settings-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.settings.data", version.ref = "version" }
-  frontend-features-settings-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.settings.domain", version.ref = "version" }
-  frontend-features-settings-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.settings.ui", version.ref = "version" }
-  frontend-features-sign-in-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.sign-in.data", version.ref = "version" }
-  frontend-features-sign-in-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.sign-in.domain", version.ref = "version" }
-  frontend-features-sign-in-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.sign-in.ui", version.ref = "version" }
-  frontend-features-tracker-edits-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.tracker-edits.data", version.ref = "version" }
-  frontend-features-tracker-edits-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.tracker-edits.domain", version.ref = "version" }
-  frontend-features-tracker-edits-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.tracker-edits.ui", version.ref = "version" }
-
+  frontend-features-add-job-application-data = { group = "dev.fnc314.aijobtracker.features.add-job-application.data", name = "data", version.ref = "version" }
+  frontend-features-add-job-application-domain = { group = "dev.fnc314.aijobtracker.features.add-job-application.domain", name = "domain", version.ref = "version" }
+  frontend-features-add-job-application-ui = { group = "dev.fnc314.aijobtracker.features.add-job-application.ui", name = "ui", version.ref = "version" }
+  frontend-features-ai-apply-data = { group = "dev.fnc314.aijobtracker.features.ai-apply.data", name = "data", version.ref = "version" }
+  frontend-features-ai-apply-domain = { group = "dev.fnc314.aijobtracker.features.ai-apply.domain", name = "domain", version.ref = "version" }
+  frontend-features-ai-apply-ui = { group = "dev.fnc314.aijobtracker.features.ai-apply.ui", name = "ui", version.ref = "version" }
+  frontend-features-documents-viewer-data = { group = "dev.fnc314.aijobtracker.features.documents-viewer.data", name = "data", version.ref = "version" }
+  frontend-features-documents-viewer-domain = { group = "dev.fnc314.aijobtracker.features.documents-viewer.domain", name = "domain", version.ref = "version" }
+  frontend-features-documents-viewer-ui = { group = "dev.fnc314.aijobtracker.features.documents-viewer.ui", name = "ui", version.ref = "version" }
+  frontend-features-companies-list-data = { group = "dev.fnc314.aijobtracker.features.companies-list.data", name = "data", version.ref = "version" }
+  frontend-features-companies-list-domain = { group = "dev.fnc314.aijobtracker.features.companies-list.domain", name = "domain", version.ref = "version" }
+  frontend-features-companies-list-ui = { group = "dev.fnc314.aijobtracker.features.companies-list.ui", name = "ui", version.ref = "version" }
+  frontend-features-company-details-data = { group = "dev.fnc314.aijobtracker.features.company-details.data", name = "data", version.ref = "version" }
+  frontend-features-company-details-domain = { group = "dev.fnc314.aijobtracker.features.company-details.domain", name = "domain", version.ref = "version" }
+  frontend-features-company-details-ui = { group = "dev.fnc314.aijobtracker.features.company-details.ui", name = "ui", version.ref = "version" }
+  frontend-features-job-application-details-data = { group = "dev.fnc314.aijobtracker.features.job-application-details.data", name = "data", version.ref = "version" }
+  frontend-features-job-application-details-domain = { group = "dev.fnc314.aijobtracker.features.job-application-details.domain", name = "domain", version.ref = "version" }
+  frontend-features-job-application-details-ui = { group = "dev.fnc314.aijobtracker.features.job-application-details.ui", name = "ui", version.ref = "version" }
+  frontend-features-job-applications-list-data = { group = "dev.fnc314.aijobtracker.features.job-applications-list.data", name = "data", version.ref = "version" }
+  frontend-features-job-applications-list-domain = { group = "dev.fnc314.aijobtracker.features.job-applications-list.domain", name = "domain", version.ref = "version" }
+  frontend-features-job-applications-list-ui = { group = "dev.fnc314.aijobtracker.features.job-applications-list.ui", name = "ui", version.ref = "version" }
+  frontend-features-settings-data = { group = "dev.fnc314.aijobtracker.features.settings.data", name = "data", version.ref = "version" }
+  frontend-features-settings-domain = { group = "dev.fnc314.aijobtracker.features.settings.domain", name = "domain", version.ref = "version" }
+  frontend-features-settings-ui = { group = "dev.fnc314.aijobtracker.features.settings.ui", name = "ui", version.ref = "version" }
+  frontend-features-sign-in-data = { group = "dev.fnc314.aijobtracker.features.sign-in.data", name = "data", version.ref = "version" }
+  frontend-features-sign-in-domain = { group = "dev.fnc314.aijobtracker.features.sign-in.domain", name = "domain", version.ref = "version" }
+  frontend-features-sign-in-ui = { group = "dev.fnc314.aijobtracker.features.sign-in.ui", name = "ui", version.ref = "version" }
+  frontend-features-tracker-edits-data = { group = "dev.fnc314.aijobtracker.features.tracker-edits.data", name = "data", version.ref = "version" }
+  frontend-features-tracker-edits-domain = { group = "dev.fnc314.aijobtracker.features.tracker-edits.domain", name = "domain", version.ref = "version" }
+  frontend-features-tracker-edits-ui = { group = "dev.fnc314.aijobtracker.features.tracker-edits.ui", name = "ui", version.ref = "version" }
 
   # Frontend Subsystem — Feature Assembly Modules
-  frontend-features-add-job-application-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.add-job-application.module", version.ref = "version" }
-  frontend-features-ai-apply-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.ai-apply.module", version.ref = "version" }
-  frontend-features-documents-viewer-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.documents-viewer.module", version.ref = "version" }
-  frontend-features-companies-list-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.companies-list.module", version.ref = "version" }
-  frontend-features-company-details-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.company-details.module", version.ref = "version" }
-  frontend-features-job-application-details-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.job-application-details.module", version.ref = "version" }
-  frontend-features-job-applications-list-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.job-applications-list.module", version.ref = "version" }
-  frontend-features-settings-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.settings.module", version.ref = "version" }
-  frontend-features-sign-in-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.sign-in.module", version.ref = "version" }
-  frontend-features-tracker-edits-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.tracker-edits.module", version.ref = "version" }
+  frontend-features-add-job-application-module = { group = "dev.fnc314.aijobtracker.features.add-job-application.module", name = "module", version.ref = "version" }
+  frontend-features-ai-apply-module = { group = "dev.fnc314.aijobtracker.features.ai-apply.module", name = "module", version.ref = "version" }
+  frontend-features-documents-viewer-module = { group = "dev.fnc314.aijobtracker.features.documents-viewer.module", name = "module", version.ref = "version" }
+  frontend-features-companies-list-module = { group = "dev.fnc314.aijobtracker.features.companies-list.module", name = "module", version.ref = "version" }
+  frontend-features-company-details-module = { group = "dev.fnc314.aijobtracker.features.company-details.module", name = "module", version.ref = "version" }
+  frontend-features-job-application-details-module = { group = "dev.fnc314.aijobtracker.features.job-application-details.module", name = "module", version.ref = "version" }
+  frontend-features-job-applications-list-module = { group = "dev.fnc314.aijobtracker.features.job-applications-list.module", name = "module", version.ref = "version" }
+  frontend-features-settings-module = { group = "dev.fnc314.aijobtracker.features.settings.module", name = "module", version.ref = "version" }
+  frontend-features-sign-in-module = { group = "dev.fnc314.aijobtracker.features.sign-in.module", name = "module", version.ref = "version" }
+  frontend-features-tracker-edits-module = { group = "dev.fnc314.aijobtracker.features.tracker-edits.module", name = "module", version.ref = "version" }
 
   # Internal Subsystem
   internal-apps-terminal-roadmap = { module = "dev.fnc314.aijobtracker.internal:apps-terminal-roadmap", version.ref = "version" }

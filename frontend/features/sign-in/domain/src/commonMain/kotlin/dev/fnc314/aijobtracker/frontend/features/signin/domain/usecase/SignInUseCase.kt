@@ -1,6 +1,6 @@
 package dev.fnc314.aijobtracker.frontend.features.signin.domain.usecase
 
-import dev.fnc314.aijobtracker.frontend.core.data.model.UserAccount
+import dev.fnc314.aijobtracker.frontend.core.auth.model.UserAccount
 
 /**
  * Use case initiating platform-specific user sign-in.

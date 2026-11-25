@@ -1,6 +1,6 @@
 package dev.fnc314.aijobtracker.frontend.features.signin.domain.usecase
 
-import dev.fnc314.aijobtracker.frontend.core.data.model.AuthState
+import dev.fnc314.aijobtracker.frontend.core.auth.model.AuthState
 import kotlinx.coroutines.flow.StateFlow
 
 /**

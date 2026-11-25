@@ -10,6 +10,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.features.signIn.domain)
+            implementation(projects.core.auth)
             implementation(projects.core.data)
             implementation(projects.core.network)
             implementation(libs.kotlinx.coroutines.core)

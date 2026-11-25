@@ -7,6 +7,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.core.auth)
             implementation(projects.core.data)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.koin.core)

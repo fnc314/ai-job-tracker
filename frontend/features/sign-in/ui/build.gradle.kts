@@ -12,6 +12,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.core.navigation)
+            implementation(projects.core.auth)
             implementation(projects.features.signIn.domain)
             implementation(projects.core.widgets)
             implementation(libs.bundles.androidx.lifecycle.compose)
