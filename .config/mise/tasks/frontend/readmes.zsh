@@ -16,7 +16,7 @@ MODULES=(
     "core/widgets"
     "features/add-job-application"
     "features/ai-apply"
-    "features/artifact-previewer"
+    "features/documents-viewer"
     "features/companies-list"
     "features/company-details"
     "features/job-application-details"

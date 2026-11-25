@@ -37,7 +37,7 @@ import dev.fnc314.aijobtracker.frontend.core.designsystem.componentSizes
 import dev.fnc314.aijobtracker.frontend.core.designsystem.iconSizes
 import dev.fnc314.aijobtracker.frontend.core.designsystem.spacing
 import dev.fnc314.aijobtracker.frontend.core.navigation.LocalAppNavigator
-import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.ui.ArtifactPreviewRoute
+import dev.fnc314.aijobtracker.frontend.features.documentsviewer.ui.DocumentViewerRoute
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.Res
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.artifacts_action_open
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.artifacts_action_preview
@@ -108,7 +108,7 @@ internal fun ArtifactsList(
 
             isMd -> {
               if (settings.renderMarkdownInternally) {
-                navigator.navigate(ArtifactPreviewRoute(applicationId, artifact.id))
+                navigator.navigate(DocumentViewerRoute(applicationId, artifact.id))
               } else {
                 val target = artifact.localPath
                   ?: artifact.externalUrl
@@ -133,7 +133,7 @@ internal fun ArtifactsList(
         },
         settings = settings,
         onViewInternal = {
-          navigator.navigate(ArtifactPreviewRoute(applicationId, artifact.id))
+          navigator.navigate(DocumentViewerRoute(applicationId, artifact.id))
         },
         onOpenExternal = {
           val target = artifact.localPath

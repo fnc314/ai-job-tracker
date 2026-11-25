@@ -222,7 +222,7 @@ internal fun AddJobApplicationPreview() {
 }
 
 // -------------------------------------------------------------------------
-// 7. ArtifactPreviewScreen
+// 7. DocumentViewerScreen
 // -------------------------------------------------------------------------
 @NavDestination(route = ArtifactPreviewKey::class)
 @Composable

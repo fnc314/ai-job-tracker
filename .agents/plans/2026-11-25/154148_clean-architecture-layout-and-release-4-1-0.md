@@ -19,7 +19,8 @@ This plan establishes a pristine Clean Architecture modularization across all 10
    - Pure Kotlin business logic in Domain (Entities, Repository interfaces, Use Cases).
    - Pure data plumbing in Data (Repository implementations, data sources, network/storage DTOs).
 2. **Dedicated `:features:<name>:module` Assembly Modules**:
-   - Created 10 dedicated `:features:<name>:module` subprojects (`add-job-application`, `ai-apply`, `artifact-previewer`, `companies-list`, `company-details`, `job-application-details`, `job-applications-list`, `settings`, `sign-in`, `tracker-edits`).
+   - Created 10 dedicated `:features:<name>:module` subprojects (`add-job-application`, `ai-apply`, `documents-viewer` [formerly `artifact-previewer`], `companies-list`, `company-details`, `job-application-details`, `job-applications-list`, `settings`, `sign-in`, `tracker-edits`).
+   - Renamed `:frontend:features:artifact-previewer` to `:frontend:features:documents-viewer` across all tiers (`data`, `domain`, `ui`, `module`) to mirror `:frontend:core:documents`.
    - Wires up the DI definitions and exposes one consolidated, cohesive `public val <name>Module: Module` per feature.
    - Relocated DI container tests into `:features:<name>:module`.
 3. **Encapsulate Implementation Details from `:apps:core`**:

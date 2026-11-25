@@ -13,7 +13,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.core.documents)
             implementation(projects.core.navigation)
-            implementation(projects.features.artifactPreviewer.ui)
+            implementation(projects.features.documentsViewer.ui)
             implementation(projects.features.jobApplicationDetails.domain)
             implementation(projects.core.widgets)
             implementation(libs.bundles.androidx.lifecycle.compose)

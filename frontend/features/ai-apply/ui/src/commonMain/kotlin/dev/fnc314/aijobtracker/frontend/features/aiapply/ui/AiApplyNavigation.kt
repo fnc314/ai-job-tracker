@@ -7,7 +7,7 @@ import dev.fnc314.aijobtracker.frontend.core.navigation.FeatureEntryRegistry
 import dev.fnc314.aijobtracker.frontend.core.navigation.JobApplicationsTrackerNavKey
 import dev.fnc314.aijobtracker.frontend.core.navigation.LocalAppNavigator
 import dev.fnc314.aijobtracker.frontend.core.navigation.TopBarActions
-import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.ui.ArtifactPreviewRoute
+import dev.fnc314.aijobtracker.frontend.features.documentsviewer.ui.DocumentViewerRoute
 import dev.fnc314.aijobtracker.frontend.features_ai_apply_ui.generated.resources.Res
 import dev.fnc314.aijobtracker.frontend.features_ai_apply_ui.generated.resources.apply_assistant_title
 import kotlinx.serialization.Serializable
@@ -38,7 +38,7 @@ public class AiApplyEntryRegistry : FeatureEntryRegistry {
                     navigator.navigateToApplicationDetails(ApplicationId(id))
                 },
                 onPreviewArtifact = { appId, artifactId ->
-                    navigator.navigate(ArtifactPreviewRoute(applicationId = appId, artifactId = artifactId))
+                    navigator.navigate(DocumentViewerRoute(applicationId = appId, artifactId = artifactId))
                 },
             )
         }

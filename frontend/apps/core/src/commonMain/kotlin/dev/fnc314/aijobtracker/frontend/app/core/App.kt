@@ -43,8 +43,8 @@ import dev.fnc314.aijobtracker.frontend.core.navigation.TopLevelDestination
 import dev.fnc314.aijobtracker.frontend.features.addjobapplication.ui.AddJobApplicationEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.addjobapplication.ui.JobApplicationAddApplicationRoute
 import dev.fnc314.aijobtracker.frontend.features.addjobapplication.ui.JobApplicationAddLeadRoute
-import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.ui.ArtifactPreviewerEntryRegistry
-import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.ui.ArtifactPreviewRoute
+import dev.fnc314.aijobtracker.frontend.features.documentsviewer.ui.DocumentsViewerEntryRegistry
+import dev.fnc314.aijobtracker.frontend.features.documentsviewer.ui.DocumentViewerRoute
 import dev.fnc314.aijobtracker.frontend.features.trackeredits.ui.JobApplicationEditsRoute
 import dev.fnc314.aijobtracker.frontend.features.trackeredits.ui.TrackerEditsEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.companieslist.ui.CompaniesEntryRegistry
@@ -82,7 +82,7 @@ private val navigationSavedStateConfig = SavedStateConfiguration {
       subclass(JobApplicationAddLeadRoute::class, JobApplicationAddLeadRoute.serializer())
       subclass(JobApplicationSettingsRoute::class, JobApplicationSettingsRoute.serializer())
       subclass(AiApplyRoute::class, AiApplyRoute.serializer())
-      subclass(ArtifactPreviewRoute::class, ArtifactPreviewRoute.serializer())
+      subclass(DocumentViewerRoute::class, DocumentViewerRoute.serializer())
     }
   }
 }
@@ -161,7 +161,7 @@ public fun App() {
       koinInject<SettingsEntryRegistry>(),
       koinInject<AddJobApplicationEntryRegistry>(),
       koinInject<AiApplyEntryRegistry>(),
-      koinInject<ArtifactPreviewerEntryRegistry>(),
+      koinInject<DocumentsViewerEntryRegistry>(),
       koinInject<TrackerEditsEntryRegistry>(),
     )
 

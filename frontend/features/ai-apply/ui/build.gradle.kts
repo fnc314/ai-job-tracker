@@ -15,7 +15,7 @@ kotlin {
             implementation(projects.core.navigation)
             implementation(projects.core.widgets)
             implementation(projects.features.aiApply.domain)
-            implementation(projects.features.artifactPreviewer.ui)
+            implementation(projects.features.documentsViewer.ui)
             implementation(libs.bundles.androidx.lifecycle.compose)
             implementation(libs.kotlinx.coroutines.core)
         }

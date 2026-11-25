@@ -45,9 +45,9 @@
   frontend-features-ai-apply-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.ai-apply.data", version.ref = "version" }
   frontend-features-ai-apply-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.ai-apply.domain", version.ref = "version" }
   frontend-features-ai-apply-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.ai-apply.ui", version.ref = "version" }
-  frontend-features-artifact-previewer-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.artifact-previewer.data", version.ref = "version" }
-  frontend-features-artifact-previewer-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.artifact-previewer.domain", version.ref = "version" }
-  frontend-features-artifact-previewer-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.artifact-previewer.ui", version.ref = "version" }
+  frontend-features-documents-viewer-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.documents-viewer.data", version.ref = "version" }
+  frontend-features-documents-viewer-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.documents-viewer.domain", version.ref = "version" }
+  frontend-features-documents-viewer-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.documents-viewer.ui", version.ref = "version" }
   frontend-features-companies-list-data = { group = "dev.fnc314.aijobtracker", name = "frontend.features.companies-list.data", version.ref = "version" }
   frontend-features-companies-list-domain = { group = "dev.fnc314.aijobtracker", name = "frontend.features.companies-list.domain", version.ref = "version" }
   frontend-features-companies-list-ui = { group = "dev.fnc314.aijobtracker", name = "frontend.features.companies-list.ui", version.ref = "version" }
@@ -74,7 +74,7 @@
   # Frontend Subsystem — Feature Assembly Modules
   frontend-features-add-job-application-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.add-job-application.module", version.ref = "version" }
   frontend-features-ai-apply-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.ai-apply.module", version.ref = "version" }
-  frontend-features-artifact-previewer-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.artifact-previewer.module", version.ref = "version" }
+  frontend-features-documents-viewer-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.documents-viewer.module", version.ref = "version" }
   frontend-features-companies-list-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.companies-list.module", version.ref = "version" }
   frontend-features-company-details-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.company-details.module", version.ref = "version" }
   frontend-features-job-application-details-module = { group = "dev.fnc314.aijobtracker", name = "frontend.features.job-application-details.module", version.ref = "version" }
@@ -121,9 +121,9 @@
     "frontend-features-ai-apply-data",
     "frontend-features-ai-apply-domain",
     "frontend-features-ai-apply-ui",
-    "frontend-features-artifact-previewer-data",
-    "frontend-features-artifact-previewer-domain",
-    "frontend-features-artifact-previewer-ui",
+    "frontend-features-documents-viewer-data",
+    "frontend-features-documents-viewer-domain",
+    "frontend-features-documents-viewer-ui",
     "frontend-features-companies-list-data",
     "frontend-features-companies-list-domain",
     "frontend-features-companies-list-ui",
@@ -147,7 +147,7 @@
     "frontend-features-tracker-edits-ui",
     "frontend-features-add-job-application-module",
     "frontend-features-ai-apply-module",
-    "frontend-features-artifact-previewer-module",
+    "frontend-features-documents-viewer-module",
     "frontend-features-companies-list-module",
     "frontend-features-company-details-module",
     "frontend-features-job-application-details-module",
@@ -181,9 +181,9 @@
     "frontend-features-ai-apply-data",
     "frontend-features-ai-apply-domain",
     "frontend-features-ai-apply-ui",
-    "frontend-features-artifact-previewer-data",
-    "frontend-features-artifact-previewer-domain",
-    "frontend-features-artifact-previewer-ui",
+    "frontend-features-documents-viewer-data",
+    "frontend-features-documents-viewer-domain",
+    "frontend-features-documents-viewer-ui",
     "frontend-features-companies-list-data",
     "frontend-features-companies-list-domain",
     "frontend-features-companies-list-ui",
@@ -207,7 +207,7 @@
     "frontend-features-tracker-edits-ui",
     "frontend-features-add-job-application-module",
     "frontend-features-ai-apply-module",
-    "frontend-features-artifact-previewer-module",
+    "frontend-features-documents-viewer-module",
     "frontend-features-companies-list-module",
     "frontend-features-company-details-module",
     "frontend-features-job-application-details-module",

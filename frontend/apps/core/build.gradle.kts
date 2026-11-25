@@ -36,7 +36,7 @@ kotlin {
       implementation(projects.features.settings.module)
       implementation(projects.features.addJobApplication.module)
       implementation(projects.features.aiApply.module)
-      implementation(projects.features.artifactPreviewer.module)
+      implementation(projects.features.documentsViewer.module)
       implementation(projects.features.trackerEdits.module)
 
       // Lifecycle

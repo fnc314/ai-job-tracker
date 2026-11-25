@@ -8,7 +8,7 @@ import dev.fnc314.aijobtracker.frontend.core.network.di.coreNetworkModule
 import dev.fnc314.aijobtracker.frontend.core.widgets.di.coreWidgetsModule
 import dev.fnc314.aijobtracker.frontend.features.addjobapplication.module.addJobApplicationModule
 import dev.fnc314.aijobtracker.frontend.features.aiapply.module.aiApplyModule
-import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.module.artifactPreviewerModule
+import dev.fnc314.aijobtracker.frontend.features.documentsviewer.module.documentsViewerModule
 import dev.fnc314.aijobtracker.frontend.features.companieslist.module.companiesListModule
 import dev.fnc314.aijobtracker.frontend.features.companydetails.module.companyDetailsModule
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.module.jobApplicationDetailsModule
@@ -50,7 +50,7 @@ public val appModule: KoinModule = module {
     settingsModule,
     addJobApplicationModule,
     aiApplyModule,
-    artifactPreviewerModule,
+    documentsViewerModule,
     trackerEditsModule,
     jobApplicationsListModule,
     jobApplicationDetailsModule,
