@@ -1,33 +1,33 @@
-# Implementation Plan: Pure Clean Architecture with Dedicated Feature `:di` Modules & 4.1.0 Release
+# Plan: Clean Architecture Layout Alignment & 4.1.0 Release
 
-**Status:** Proposed  
-**Date:** 2026-11-25  
-**Target:** repository-wide  
-**Harness:** Antigravity  
-**Model:** inherit  
-**Session:** dd2ce48b-7a56-4517-bc53-6b123c839060  
+- **Status:** Completed
+- **Created:** 2026-11-25
+- **Completed:** 2026-11-25
+- **Branch:** `main`
+- **Release Version:** `4.1.0` (Tagged `version/4.1.0`)
 
 ---
 
 ## 1. Executive Summary & Goals
 
-This plan establishes a pristine Clean Architecture modularization across all 10 feature collections by introducing dedicated `:features:<name>:di` modules:
+This plan establishes a pristine Clean Architecture modularization across all 10 feature collections by introducing dedicated `:features:<name>:module` modules:
 
-1. **Purge DI Framework from Domain, Data, and UI Definition Modules**:
-   - Remove `koin` dependencies and plugins from all feature `domain` and `data` modules.
-   - Domain contains 100% pure Kotlin business logic (entities, repository interfaces, use cases).
-   - Data contains 100% pure data plumbing (data sources, DTOs, repository implementations) with zero DI framework coupling.
-2. **Dedicated `:features:<name>:di` Assembly Modules**:
-   - Create 10 dedicated `:features:<name>:di` modules (`add-job-application`, `ai-apply`, `artifact-previewer`, `companies-list`, `company-details`, `job-application-details`, `job-applications-list`, `settings`, `sign-in`, `tracker-edits`).
-   - Move all Koin module definitions (`singleOf(::FooRepositoryImpl) bind FooRepository::class`, `factoryOf(::FooUseCaseImpl) bind FooUseCase::class`, `viewModelOf(::FooViewModel)`) into `:features:<name>:di`.
-   - Expose one consolidated, cohesive `public val <feature>Module: Module` per feature.
+1. **Clean Architecture Boundary Across Feature Collections**:
+   - `UI -> Domain`
+   - `Data -> Domain` (Implements repository interfaces defined in domain)
+   - `UI` has NO direct dependency on `Data`
+   - Pure Kotlin business logic in Domain (Entities, Repository interfaces, Use Cases).
+   - Pure data plumbing in Data (Repository implementations, data sources, network/storage DTOs).
+2. **Dedicated `:features:<name>:module` Assembly Modules**:
+   - Created 10 dedicated `:features:<name>:module` subprojects (`add-job-application`, `ai-apply`, `artifact-previewer`, `companies-list`, `company-details`, `job-application-details`, `job-applications-list`, `settings`, `sign-in`, `tracker-edits`).
+   - Wires up the DI definitions and exposes one consolidated, cohesive `public val <name>Module: Module` per feature.
+   - Relocated DI container tests into `:features:<name>:module`.
 3. **Encapsulate Implementation Details from `:apps:core`**:
-   - `:apps:core` depends **only** on `:features:<name>:di` for each feature.
-   - `:apps:core` no longer directly declares 30 separate dependencies across `domain`, `data`, and `ui`.
-   - Third-party SDKs required by `data` remain strictly hidden implementation details of that feature.
+   - `:apps:core` depends **only** on `:features:<name>:module` for each feature.
+   - Implementation details and third-party data layer SDKs remain completely concealed from the composite core app.
 4. **Harden `mise run release` & Release 4.1.0**:
-   - Update `.config/mise/tasks/admin/release.zsh` to synchronize both `gradle/local.versions.toml` and root `gradle.properties`.
-   - Stage and commit all changes, then execute `mise run release 4.1.0 --no-push`.
+   - Updated `.config/mise/tasks/admin/release.zsh` to synchronize both `gradle/local.versions.toml` and root `gradle.properties`.
+   - Staged and committed all changes, executed `mise run release 4.1.0 --no-push`, tagged `version/4.1.0`.
 
 ---
 

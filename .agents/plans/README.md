@@ -27,7 +27,7 @@ Every architecture plan created by any agent must strictly adhere to these parad
 
 | Plan | Status | Scope / Focus Area |
 | :--- | :--- | :--- |
-| [`154148_clean-architecture-layout-and-release-4-1-0.md`](./2026-11-25/154148_clean-architecture-layout-and-release-4-1-0.md) | Proposed | Clean architecture layout alignment (UI -> Domain <- Data), repository interface domain relocation, nested Gradle project path preservation, and version 4.1.0 release |
+| [`154148_clean-architecture-layout-and-release-4-1-0.md`](./2026-11-25/154148_clean-architecture-layout-and-release-4-1-0.md) | Completed | Clean architecture layout alignment (UI -> Domain <- Data), repository interface domain relocation, nested Gradle project path preservation, and version 4.1.0 release |
 | [`133000_dokka-plugin-gradle-project-rework.md`](./2026-11-25/133000_dokka-plugin-gradle-project-rework.md) | Completed | Dokka plugin & project structure rework: 3-layer Dokka architecture (Root, Node, Leaf) conforming to Gradle Isolated Projects, 1:1 physical drive mapping, plugins-docs module, tools.versions.toml catalog, and mise migrations |
 | [`013453_fix-docs-site-markdown-rendering.md`](./2026-11-24/013453_fix-docs-site-markdown-rendering.md) | Completed | Fix docs site markdown and asset rendering in scripts/build_docs_site.py: raw HTML support, badge image links, and assets/ copy |
 | [`214205_deploy-backend.md`](./2026-11-23/214205_deploy-backend.md) | Completed | Build and deploy updated Kotlin backend service to Google Cloud Run via Cloud Build with health and CloudEvent endpoint smoke verification |
