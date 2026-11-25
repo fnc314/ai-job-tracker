@@ -3,14 +3,16 @@
 
 [libraries]
   # Records Subsystem
-  records-parser = { group = "dev.fnc314.aijobtracker.records", name = "records-parser", version.ref = "version" }
-  records-proto = { group = "dev.fnc314.aijobtracker.records", name = "records-proto", version.ref = "version" }
+  records-parser = { group = "dev.fnc314.aijobtracker.records", name = "parser", version.ref = "version" }
+  records-proto = { group = "dev.fnc314.aijobtracker.records", name = "proto", version.ref = "version" }
 
   # Tools & Project Plugins
-  project-plugins = { module = "dev.fnc314.aijobtracker.tools:ai-job-tracker_gradle-tools_project-plugins", version.ref = "version" }
+  tools-plugins-projects = { module = "dev.fnc314.aijobtracker.tools:ai-job-tracker_gradle-tools_plugins-projects", version.ref = "version" }
+  tools-plugins-settings = { module = "dev.fnc314.aijobtracker.tools:ai-job-tracker_gradle-tools_plugins-settings", version.ref = "version" }
+  tools-plugins-docs = { module = "dev.fnc314.aijobtracker.tools:ai-job-tracker_gradle-tools_plugins-docs", version.ref = "version" }
 
   # Backend Subsystem
-  backend-ai-client = { module = "dev.fnc314.aijobtracker.backend:ai-client", version.ref = "version" }
+  backend-ai-client = { module = "dev.fnc314.aijobtracker.backend:client", version.ref = "version" }
   backend-service = { module = "dev.fnc314.aijobtracker.backend:service", version.ref = "version" }
   backend-job-post-ranking = { module = "dev.fnc314.aijobtracker.backend:job-post-ranking", version.ref = "version" }
   backend-tracker-conventions = { module = "dev.fnc314.aijobtracker.backend:tracker-conventions", version.ref = "version" }
@@ -130,6 +132,60 @@
     "frontend-features-tracker-edits-data",
     "frontend-features-tracker-edits-domain",
     "frontend-features-tracker-edits-ui",
+  ]
+  frontend-apps = [
+    "frontend-apps-core",
+    "frontend-apps-cli",
+    "frontend-apps-terminal",
+    "frontend-apps-desktop",
+    "frontend-apps-android",
+    "frontend-apps-web",
+  ]
+  frontend-core = [
+    "frontend-core-artifacts",
+    "frontend-core-auth",
+    "frontend-core-data",
+    "frontend-core-design-system",
+    "frontend-core-logging",
+    "frontend-core-navigation",
+    "frontend-core-network",
+    "frontend-core-widgets",
+  ]
+  frontend-features = [
+    "frontend-features-add-job-application-data",
+    "frontend-features-add-job-application-domain",
+    "frontend-features-add-job-application-ui",
+    "frontend-features-ai-apply-data",
+    "frontend-features-ai-apply-domain",
+    "frontend-features-ai-apply-ui",
+    "frontend-features-artifact-previewer-data",
+    "frontend-features-artifact-previewer-domain",
+    "frontend-features-artifact-previewer-ui",
+    "frontend-features-companies-list-data",
+    "frontend-features-companies-list-domain",
+    "frontend-features-companies-list-ui",
+    "frontend-features-company-details-data",
+    "frontend-features-company-details-domain",
+    "frontend-features-company-details-ui",
+    "frontend-features-job-application-details-data",
+    "frontend-features-job-application-details-domain",
+    "frontend-features-job-application-details-ui",
+    "frontend-features-job-applications-list-data",
+    "frontend-features-job-applications-list-domain",
+    "frontend-features-job-applications-list-ui",
+    "frontend-features-settings-data",
+    "frontend-features-settings-domain",
+    "frontend-features-settings-ui",
+    "frontend-features-sign-in-data",
+    "frontend-features-sign-in-domain",
+    "frontend-features-sign-in-ui",
+    "frontend-features-tracker-edits-data",
+    "frontend-features-tracker-edits-domain",
+    "frontend-features-tracker-edits-ui",
+  ]
+  tools = [
+    "tools-plugins-projects",
+    "tools-plugins-settings",
   ]
   internal = [
     "internal-apps-terminal-roadmap",

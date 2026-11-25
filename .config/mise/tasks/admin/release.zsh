@@ -3,17 +3,31 @@
 #MISE alias="release"
 #USAGE arg "[version]" help="Semantic version to release (e.g. 1.0.0)"
 #USAGE flag "-p --push" help="Push the commit and created version tag to origin without prompt"
+#USAGE flag "-n --no-push" help="Skip push and prompt, creating commit and tag locally only"
 
 set -euo pipefail
 
 TOML_FILE="gradle/local.versions.toml"
-VERSION="${1:-}"
+VERSION=""
 AUTO_PUSH=false
+NO_PUSH=false
 
 for arg in "$@"; do
-    if [[ "$arg" == "-p" || "$arg" == "--push" ]]; then
-        AUTO_PUSH=true
-    fi
+    case "$arg" in
+        -p|--push)
+            AUTO_PUSH=true
+            ;;
+        -n|--no-push|--suppress-auto-push)
+            NO_PUSH=true
+            ;;
+        -*)
+            ;;
+        *)
+            if [[ -z "$VERSION" ]]; then
+                VERSION="$arg"
+            fi
+            ;;
+    esac
 done
 
 CURRENT_TOML_VERSION=$(sed -n -E 's/^[[:space:]]*version[[:space:]]*=[[:space:]]*"([^"]+)"/\1/p' "$TOML_FILE" | head -n1)
@@ -70,6 +84,8 @@ echo "✓ Created annotated tag: $TAG_NAME"
 DO_PUSH=false
 if [[ "$AUTO_PUSH" == true ]]; then
     DO_PUSH=true
+elif [[ "$NO_PUSH" == true ]]; then
+    DO_PUSH=false
 else
     echo ""
     read -r "CONFIRM_PUSH?Do you want to push branch '$BRANCH' and tag '$TAG_NAME' to origin now? [y/N] "

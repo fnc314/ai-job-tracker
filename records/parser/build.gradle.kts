@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 plugins {
   alias(libs.plugins.kotlinJvm)
   alias(libs.plugins.kotlinSerialization)
-  alias(libs.plugins.local.dokka)
+  alias(tools.plugins.docs.leaf)
 }
 
 kotlin {
@@ -19,7 +19,7 @@ kotlin {
 }
 
 dependencies {
-  implementation(projects.recordsProto)
+  implementation(projects.proto)
   implementation(libs.protobuf.kotlin)
   implementation(libs.kotlinx.serialization.json)
 

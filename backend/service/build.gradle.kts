@@ -14,7 +14,7 @@ application {
 }
 
 dependencies {
-    implementation(projects.aiClient)
+    implementation(projects.ai.client)
     implementation(projects.jobPostRanking)
     implementation(projects.jobPostScraping)
     implementation(projects.artifactCompilation)

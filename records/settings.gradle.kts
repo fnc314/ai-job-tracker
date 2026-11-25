@@ -1,8 +1,17 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    includeBuild("../gradle/tools/plugins-projects")
+    includeBuild("../gradle/tools/plugins-docs")
+    includeBuild("../gradle/tools/plugins-settings")
+}
+
 apply(from = "../gradle/tools/settings-plugins/subsystem.settings.gradle.kts")
 
 rootProject.name = "ai-job-tracker_records"
 
-include(":records-proto")
-project(":records-proto").projectDir = file("proto")
-include(":records-parser")
-project(":records-parser").projectDir = file("parser")
+include(":proto")
+include(":parser")

@@ -1,0 +1,44 @@
+[versions]
+  version = "3.4.2"
+  gradle-plugin-publish = "2.1.1"
+
+[libraries]
+  # Plugin dependencies
+  tools-settings-subsystem = { module = "dev.fnc314.aijobtracker.tools:ai-job-tracker_gradle-tools_plugins-settings", version.ref = "version" }
+  tools-plugins-projects = { module = "dev.fnc314.aijobtracker.tools:ai-job-tracker_gradle-tools_plugins-projects", version.ref = "version" }
+  tools-plugins-docs = { module = "dev.fnc314.aijobtracker.tools:ai-job-tracker_gradle-tools_plugins-docs", version.ref = "version" }
+
+[bundles]
+  plugins = [
+    "tools-settings-subsystem",
+    "tools-plugins-projects",
+    "tools-plugins-docs",
+  ]
+
+[plugins]
+  # Documentation plugins (dev.fnc314.aijobtracker.gradletools.docs.*)
+  docs-root = { id = "dev.fnc314.aijobtracker.gradletools.docs.root" }
+  docs-node = { id = "dev.fnc314.aijobtracker.gradletools.docs.node" }
+  docs-leaf = { id = "dev.fnc314.aijobtracker.gradletools.docs.leaf" }
+
+  # Settings plugins (dev.fnc314.aijobtracker.gradletools.settings.*)
+  settings-subsystem = { id = "dev.fnc314.aijobtracker.gradletools.settings.subsystem" }
+
+  # Project convention plugins (dev.fnc314.aijobtracker.gradletools.projects.*)
+  projects-multiplatform-library = { id = "dev.fnc314.aijobtracker.gradletools.projects.multiplatform-library" }
+  projects-kotlin-multiplatform = { id = "dev.fnc314.aijobtracker.gradletools.projects.kotlin-multiplatform" }
+  projects-android-application = { id = "dev.fnc314.aijobtracker.gradletools.projects.android-application" }
+  projects-android-kmp-library = { id = "dev.fnc314.aijobtracker.gradletools.projects.android-kmp-library" }
+  projects-compose = { id = "dev.fnc314.aijobtracker.gradletools.projects.compose" }
+  projects-kotlin-jvm = { id = "dev.fnc314.aijobtracker.gradletools.projects.kotlin-jvm" }
+  projects-detekt = { id = "dev.fnc314.aijobtracker.gradletools.projects.detekt" }
+
+  # Project dependency convention plugins
+  projects-dependencies-compose = { id = "dev.fnc314.aijobtracker.gradletools.projects.dependencies.compose" }
+  projects-dependencies-datasource = { id = "dev.fnc314.aijobtracker.gradletools.projects.dependencies.datasource" }
+  projects-dependencies-di = { id = "dev.fnc314.aijobtracker.gradletools.projects.dependencies.di" }
+  projects-dependencies-firebase = { id = "dev.fnc314.aijobtracker.gradletools.projects.dependencies.firebase" }
+  projects-dependencies-koin = { id = "dev.fnc314.aijobtracker.gradletools.projects.dependencies.koin" }
+  projects-dependencies-ktor = { id = "dev.fnc314.aijobtracker.gradletools.projects.dependencies.ktor" }
+  projects-dependencies-navigation = { id = "dev.fnc314.aijobtracker.gradletools.projects.dependencies.navigation" }
+  projects-dependencies-serialization = { id = "dev.fnc314.aijobtracker.gradletools.projects.dependencies.serialization" }

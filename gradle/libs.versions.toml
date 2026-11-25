@@ -284,7 +284,6 @@
   ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
   navgraph = { id = "com.github.skydoves.navgraph", version.ref = "navgraph" }
   local-detekt = { id = "dev.fnc314.aijobtracker.detekt" }
-  local-dokka = { id = "dev.fnc314.aijobtracker.dokka" }
   local-multiplatform-library = { id = "dev.fnc314.aijobtracker.multiplatform-library" }
   protobuf = { id = "com.google.protobuf", version.ref = "protobuf-gradle-plugin" }
 

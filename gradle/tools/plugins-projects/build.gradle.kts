@@ -1,0 +1,144 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import java.time.Instant
+
+plugins {
+  alias(libs.plugins.kotlinJvm)
+  alias(tools.plugins.docs.leaf)
+  `java-gradle-plugin`
+}
+
+group = "dev.fnc314.aijobtracker.tools"
+version = local.versions.version.get()
+
+
+kotlin {
+  @OptIn(ExperimentalAbiValidation::class)
+  abiValidation {
+    referenceDumpDir = layout.projectDirectory.dir("api")
+  }
+  explicitApi()
+  jvmToolchain(
+    libs.versions.jvm.toolchain.get().toInt()
+  )
+  compilerOptions {
+    apiVersion = libs.versions.kotlin.asProvider().map {
+      KotlinVersion.fromVersion(it.substringBeforeLast("."))
+    }
+    languageVersion = libs.versions.kotlin.asProvider().map {
+      KotlinVersion.fromVersion(it.substringBeforeLast("."))
+    }
+    optIn = setOf(
+      "kotlin.time.ExperimentalTime",
+      "kotlin.uuid.ExperimentalUuidApi",
+      "kotlin.io.path.ExperimentalPathApi",
+      "kotlin.contracts.ExperimentalContracts",
+      "org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi",
+      "kotlinx.coroutines.ExperimentalCoroutinesApi",
+      "kotlinx.serialization.ExperimentalSerializationApi",
+    )
+  }
+}
+
+dependencies {
+  gradleApi()
+  implementation(libs.android.gradle.plugin)
+  implementation(libs.bundles.serialization)
+  implementation(libs.compose.gradle.plugin)
+  implementation(libs.detekt.gradle.plugin)
+  implementation(libs.dokka.gradle.plugin)
+  implementation(libs.koin.compiler.gradle.plugin)
+  implementation(libs.kotlin.gradle.plugin)
+  implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.ksp.gradle.plugin)
+}
+
+gradlePlugin {
+  plugins {
+    create("multiplatform-library") {
+      id = libs.plugins.local.multiplatform.library.map { it.pluginId }.get()
+      description = "Applies Android Kotlin Multiplatform Library Plugin"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.MultiplatformLibrary"
+      displayName = "Multiplatform Library"
+    }
+    create("kotlin-multiplatform") {
+      id = libs.plugins.local.kotlin.multiplatform.map { it.pluginId }.get()
+      description = "Applies Kotlin Multiplatform toolchains and target conventions"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.functional.KotlinMultiplatformConventionPlugin"
+      displayName = "Kotlin Multiplatform Convention"
+    }
+    create("android-application") {
+      id = libs.plugins.local.android.application.map { it.pluginId }.get()
+      description = "Applies Android Application plugin and SDK conventions"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.functional.AndroidApplicationConventionPlugin"
+      displayName = "Android KMP Library Convention"
+    }
+    create("android-kmp-library") {
+      id = libs.plugins.local.android.kmp.library.map { it.pluginId }.get()
+      description = "Applies Android KMP Library toolchain and SDK conventions"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.functional.AndroidKmpLibraryConventionPlugin"
+      displayName = "Android KMP Library Convention"
+    }
+    create("compose") {
+      id = libs.plugins.local.compose.map { it.pluginId }.get()
+      description = "Applies Compose Multiplatform and Compose Compiler plugins"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.functional.ComposeConventionPlugin"
+      displayName = "Compose Multiplatform Convention"
+    }
+    create("dependencies-compose") {
+      id = libs.plugins.local.dependencies.compose.map { it.pluginId }.get()
+      description = "Applies Compose UI and tooling dependency bundles"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.config.ComposeDependenciesConventionPlugin"
+      displayName = "Compose Dependencies Convention"
+    }
+    create("dependencies-firebase") {
+      id = libs.plugins.local.dependencies.firebase.map { it.pluginId }.get()
+      description = "Configures Firebase dependencies"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.config.RemoteDependenciesConventionPlugin"
+      displayName = "Firebase Dependencies Convention"
+    }
+    create("dependencies-serialization") {
+      id = libs.plugins.local.dependencies.serialization.map { it.pluginId }.get()
+      description = "Applies Kotlin Serialization plugin and runtime library"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.config.SerializationDependenciesConventionPlugin"
+      displayName = "Serialization Dependencies Convention"
+    }
+    create("dependencies-di") {
+      id = libs.plugins.local.dependencies.di.map { it.pluginId }.get()
+      description = "Applies DI dependency bundles"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.config.KoinDependenciesConventionPlugin"
+      displayName = "DI Dependencies Convention"
+    }
+    create("dependencies-koin") {
+      id = libs.plugins.local.dependencies.koin.map { it.pluginId }.get()
+      description = "Applies DI dependency bundles (legacy alias)"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.config.KoinDependenciesConventionPlugin"
+      displayName = "Koin Dependencies Convention"
+    }
+    create("dependencies-navigation") {
+      id = libs.plugins.local.dependencies.navigation.map { it.pluginId }.get()
+      description = "Applies Compose Navigation and Serialization dependencies"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.config.NavigationDependenciesConventionPlugin"
+      displayName = "Navigation Dependencies Convention"
+    }
+    create("dependencies-datasource") {
+      id = libs.plugins.local.dependencies.datasource.map { it.pluginId }.get()
+      description = "Applies Room and SQLite data source dependency bundles across targets"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.config.DataSourceDependenciesConventionPlugin"
+      displayName = "Data Source Dependencies Convention"
+    }
+    create("detekt") {
+      id = libs.plugins.local.detekt.map { it.pluginId }.get()
+      description = "Applies Detekt static analysis and formatting conventions"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.config.DetektConventionPlugin"
+      displayName = "Detekt Static Analysis Convention"
+    }
+    create("backend-service") {
+      id = "dev.fnc314.aijobtracker.backend-service"
+      description = "Applies backend service conventions (Ktor, Firebase, JVM 21)"
+      implementationClass = "dev.fnc314.aijobtracker.gradle.plugins.config.BackendServiceConventionPlugin"
+      displayName = "Backend Service Convention"
+    }
+  }
+}

@@ -1,7 +1,8 @@
 plugins {
+    alias(tools.plugins.docs.node)
+    alias(tools.plugins.docs.leaf) apply false
     alias(libs.plugins.kotlinJvm) apply false
     alias(libs.plugins.dokka) apply false
-    alias(libs.plugins.local.dokka) apply false
 }
 
 val backendVersion = local.versions.version.get()
@@ -10,7 +11,7 @@ subprojects {
     group = "dev.fnc314.aijobtracker.backend"
     version = backendVersion
 
-    apply(plugin = "dev.fnc314.aijobtracker.dokka")
+  apply(plugin = "dev.fnc314.aijobtracker.gradletools.docs.leaf")
 }
 
 // Forwarding tasks for composite builds and root task orchestration

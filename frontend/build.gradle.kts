@@ -1,4 +1,6 @@
 plugins {
+  alias(tools.plugins.docs.node)
+  alias(tools.plugins.docs.leaf) apply false
   alias(libs.plugins.detekt) apply false
   // this is necessary to avoid the plugins to be loaded multiple times
   // in each subproject's classloader
@@ -29,5 +31,5 @@ subprojects {
   group = "dev.fnc314.aijobtracker.frontend"
   version = frontendVersion
 
-  apply(plugin = "dev.fnc314.aijobtracker.dokka")
+  apply(plugin = "dev.fnc314.aijobtracker.gradletools.docs.leaf")
 }
