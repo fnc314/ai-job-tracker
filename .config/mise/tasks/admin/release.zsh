@@ -4,6 +4,7 @@
 #USAGE arg "[version]" help="Semantic version to release (e.g. 1.0.0)"
 #USAGE flag "-p --push" help="Push the commit and created version tag to origin without prompt"
 #USAGE flag "-n --no-push" help="Skip push and prompt, creating commit and tag locally only"
+#USAGE flag "--suppress-auto-push" help="Alias to skip push and prompt, creating commit and tag locally only"
 
 set -euo pipefail
 
