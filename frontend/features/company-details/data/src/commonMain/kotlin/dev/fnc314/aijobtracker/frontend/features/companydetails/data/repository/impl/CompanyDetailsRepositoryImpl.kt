@@ -12,7 +12,7 @@ import dev.fnc314.aijobtracker.frontend.core.data.model.TrackerStatus
 import dev.fnc314.aijobtracker.frontend.core.data.source.RemoteDataSource
 import dev.fnc314.aijobtracker.frontend.core.data.source.RemoteRecord
 import dev.fnc314.aijobtracker.frontend.core.data.util.InstantParser
-import dev.fnc314.aijobtracker.frontend.features.companydetails.data.repository.CompanyDetailsRepository
+import dev.fnc314.aijobtracker.frontend.features.companydetails.domain.repository.CompanyDetailsRepository
 import dev.fnc314.aijobtracker.frontend.core.data.model.CompanyWithApplications
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

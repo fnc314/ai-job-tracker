@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-#MISE description="Assemble Android debug APK (:apps-android:assembleDebug)"
+#MISE description="Assemble Android debug APK (:apps:android:assembleDebug)"
 #USAGE flag "--force-refresh" help="Force refresh dependencies" default="false"
 #USAGE flag "--scan" help="add --scan to the gradle command" default="false"
 
@@ -22,4 +22,4 @@ if [ "${forceRefresh}" = "true" ]; then
     "--refresh-dependencies"
 fi
 
-./gradlew :frontend:apps-android:assembleDebug "$@"
+./gradlew :frontend:apps:android:assembleDebug "$@"

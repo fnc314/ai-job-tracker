@@ -5,4 +5,4 @@
 
 set -euo pipefail
 
-"${MISE_PROJECT_ROOT}/gradlew" -q :frontend:apps-cli:run --args="tracker status $*"
+"${MISE_PROJECT_ROOT}/gradlew" -q :frontend:apps:cli:run --args="tracker status $*"

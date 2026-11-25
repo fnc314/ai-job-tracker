@@ -1,4 +1,4 @@
 #!/usr/bin/env zsh
 #MISE description="Package Compose Desktop application for current OS"
 set -eu
-./gradlew :frontend:apps-desktop:packageDistributionForCurrentOS
+./gradlew :frontend:apps:desktop:packageDistributionForCurrentOS

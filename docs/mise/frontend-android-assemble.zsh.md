@@ -1,11 +1,11 @@
 ## `frontend:android:assemble`
 
-Assemble Android debug APK (:apps-android:assembleDebug)
-
+Assemble Android debug APK (:apps:android:assembleDebug)
 
 - **Usage:** `frontend:android:assemble [--force-refresh] [--scan]`
 
 ### Flags
+
 - **`--force-refresh`** — Force refresh dependencies
 
   **Default:** `false`

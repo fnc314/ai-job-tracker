@@ -11,11 +11,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreData)
-            implementation(projects.coreNavigation)
-            implementation(projects.featuresCompanyDetailsDomain)
-            implementation(projects.featuresCompanyDetailsData)
-            implementation(projects.coreWidgets)
+            implementation(projects.core.navigation)
+            implementation(projects.features.companyDetails.domain)
+            implementation(projects.core.widgets)
             implementation(libs.bundles.androidx.lifecycle.compose)
             implementation(libs.bundles.coil)
             implementation(libs.compose.icons.font.awesome.brands)

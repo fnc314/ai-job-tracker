@@ -1,6 +1,6 @@
 package dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.data.di
 
-import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.data.repository.ArtifactPreviewerRepository
+import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.domain.repository.ArtifactPreviewerRepository
 import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.data.repository.impl.ArtifactPreviewerRepositoryImpl
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf

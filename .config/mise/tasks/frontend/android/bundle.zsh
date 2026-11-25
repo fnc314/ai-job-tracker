@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-#MISE description="Bundle Android release AAB (:apps-android:bundleRelease)"
+#MISE description="Bundle Android release AAB (:apps:android:bundleRelease)"
 #USAGE flag "--force-refresh" help="Force refresh dependencies" default="false"
 
 set -eu
@@ -7,7 +7,7 @@ set -eu
 forceRefresh="${usage_force_refresh:-false}"
 
 if [ "${forceRefresh}" = "true" ]; then
-	./gradlew :frontend:apps-android:bundleRelease --no-build-cache --no-configuration-cache --refresh-dependencies
+	./gradlew :frontend:apps:android:bundleRelease --no-build-cache --no-configuration-cache --refresh-dependencies
 else
-	./gradlew :frontend:apps-android:bundleRelease
+	./gradlew :frontend:apps:android:bundleRelease
 fi

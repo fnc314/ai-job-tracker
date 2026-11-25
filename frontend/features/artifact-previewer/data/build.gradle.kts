@@ -7,8 +7,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreArtifacts)
-            implementation(projects.coreData)
+            implementation(projects.features.artifactPreviewer.domain)
+            implementation(projects.core.documents)
+            implementation(projects.core.data)
             implementation(libs.kotlinx.coroutines.core)
         }
     }

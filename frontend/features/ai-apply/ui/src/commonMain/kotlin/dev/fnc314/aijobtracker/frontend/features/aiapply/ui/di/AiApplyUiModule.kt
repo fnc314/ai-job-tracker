@@ -1,6 +1,5 @@
 package dev.fnc314.aijobtracker.frontend.features.aiapply.ui.di
 
-import dev.fnc314.aijobtracker.frontend.features.aiapply.data.di.aiApplyDataModule
 import dev.fnc314.aijobtracker.frontend.features.aiapply.domain.di.aiApplyDomainModule
 import dev.fnc314.aijobtracker.frontend.features.aiapply.ui.AiApplyEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.aiapply.ui.ApplyAssistantViewModel
@@ -21,5 +20,4 @@ public val aiApplyUiModule: Module = module {
  * Aggregate Koin module uniting data, domain, and UI definitions for the AI Apply assistant feature.
  */
 public val aiApplyFeatureModule: Module = module {
-    includes(aiApplyDataModule, aiApplyDomainModule, aiApplyUiModule)
 }

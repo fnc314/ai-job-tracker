@@ -11,13 +11,11 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreArtifacts)
-            implementation(projects.coreData)
-            implementation(projects.coreNavigation)
-            implementation(projects.featuresArtifactPreviewerUi)
-            implementation(projects.featuresJobApplicationDetailsDomain)
-            implementation(projects.featuresJobApplicationDetailsData)
-            implementation(projects.coreWidgets)
+            implementation(projects.core.documents)
+            implementation(projects.core.navigation)
+            implementation(projects.features.artifactPreviewer.ui)
+            implementation(projects.features.jobApplicationDetails.domain)
+            implementation(projects.core.widgets)
             implementation(libs.bundles.androidx.lifecycle.compose)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.markdown.renderer.m3)

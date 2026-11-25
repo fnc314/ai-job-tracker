@@ -9,9 +9,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreData)
-            implementation(projects.coreNetwork)
-            implementation(projects.featuresAiApplyDomain)
+            implementation(projects.core.data)
+            implementation(projects.core.network)
+            implementation(projects.features.aiApply.domain)
             implementation(libs.bundles.ktor.client)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)

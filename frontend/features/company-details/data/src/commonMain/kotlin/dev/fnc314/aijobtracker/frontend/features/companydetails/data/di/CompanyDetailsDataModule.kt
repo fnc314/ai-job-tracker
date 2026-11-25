@@ -1,6 +1,6 @@
 package dev.fnc314.aijobtracker.frontend.features.companydetails.data.di
 
-import dev.fnc314.aijobtracker.frontend.features.companydetails.data.repository.CompanyDetailsRepository
+import dev.fnc314.aijobtracker.frontend.features.companydetails.domain.repository.CompanyDetailsRepository
 import dev.fnc314.aijobtracker.frontend.features.companydetails.data.repository.impl.CompanyDetailsRepositoryImpl
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf

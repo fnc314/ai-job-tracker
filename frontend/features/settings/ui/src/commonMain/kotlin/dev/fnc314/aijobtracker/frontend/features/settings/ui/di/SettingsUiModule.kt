@@ -1,6 +1,5 @@
 package dev.fnc314.aijobtracker.frontend.features.settings.ui.di
 
-import dev.fnc314.aijobtracker.frontend.features.settings.data.di.settingsDataModule
 import dev.fnc314.aijobtracker.frontend.features.settings.domain.di.settingsDomainModule
 import dev.fnc314.aijobtracker.frontend.features.settings.ui.SettingsEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.settings.ui.SettingsViewModel
@@ -21,5 +20,4 @@ public val settingsUiModule: Module = module {
  * Aggregate Koin module uniting data, domain, and UI definitions for application settings.
  */
 public val settingsFeatureModule: Module = module {
-    includes(settingsDataModule, settingsDomainModule, settingsUiModule)
 }

@@ -28,7 +28,7 @@ tasks.register("buildAll") {
     gradle.includedBuild("records").task(":proto:jar"),
     gradle.includedBuild("records").task(":parser:jar"),
     gradle.includedBuild("backend").task(":jar"),
-    gradle.includedBuild("frontend").task(":apps-cli:installDist"),
-    gradle.includedBuild("frontend").task(":apps-terminal:installDist"),
+    gradle.includedBuild("frontend").task(":apps:cli:installDist"),
+    gradle.includedBuild("frontend").task(":apps:terminal:installDist"),
   )
 }

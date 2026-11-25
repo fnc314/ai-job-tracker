@@ -9,8 +9,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreData)
-            implementation(projects.coreNetwork)
+            implementation(projects.features.signIn.domain)
+            implementation(projects.core.data)
+            implementation(projects.core.network)
             implementation(libs.kotlinx.coroutines.core)
         }
         jvmMain.dependencies {

@@ -57,7 +57,7 @@ import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.ui.JobAppli
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.ui.JobApplicationsEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.settings.ui.JobApplicationSettingsRoute
 import dev.fnc314.aijobtracker.frontend.features.settings.ui.SettingsEntryRegistry
-import dev.fnc314.aijobtracker.frontend.features.signin.data.repository.AuthRepository
+import dev.fnc314.aijobtracker.frontend.features.signin.domain.repository.AuthRepository
 import dev.fnc314.aijobtracker.frontend.features.signin.ui.SignInEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.signin.ui.SignInRoute
 import dev.fnc314.aijobtracker.frontend.features.aiapply.ui.AiApplyEntryRegistry

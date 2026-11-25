@@ -7,9 +7,8 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreData)
+            implementation(projects.core.data)
             implementation(libs.kotlinx.coroutines.core)
-            implementation(projects.featuresJobApplicationsListData)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

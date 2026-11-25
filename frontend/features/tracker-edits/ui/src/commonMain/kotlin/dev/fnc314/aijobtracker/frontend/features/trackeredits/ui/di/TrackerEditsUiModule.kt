@@ -1,6 +1,5 @@
 package dev.fnc314.aijobtracker.frontend.features.trackeredits.ui.di
 
-import dev.fnc314.aijobtracker.frontend.features.trackeredits.data.di.trackerEditsDataModule
 import dev.fnc314.aijobtracker.frontend.features.trackeredits.domain.di.trackerEditsDomainModule
 import dev.fnc314.aijobtracker.frontend.features.trackeredits.ui.TrackerEditsEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.trackeredits.ui.TrackerEditsViewModel
@@ -21,5 +20,4 @@ public val trackerEditsUiModule: Module = module {
  * Aggregate Koin module uniting data, domain, and UI definitions for the tracker edits feature.
  */
 public val trackerEditsFeatureModule: Module = module {
-    includes(trackerEditsDataModule, trackerEditsDomainModule, trackerEditsUiModule)
 }

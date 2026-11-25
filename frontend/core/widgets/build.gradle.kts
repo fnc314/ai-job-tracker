@@ -9,9 +9,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(projects.coreDesignSystem)
-            api(projects.coreData)
-            implementation(projects.coreLogging)
+            api(projects.core.designSystem)
+            api(projects.core.data)
+            implementation(projects.core.logging)
             implementation(libs.bundles.coil)
         }
     }

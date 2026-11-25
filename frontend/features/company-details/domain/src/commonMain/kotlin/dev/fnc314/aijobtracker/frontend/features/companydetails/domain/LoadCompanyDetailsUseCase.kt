@@ -1,7 +1,7 @@
 package dev.fnc314.aijobtracker.frontend.features.companydetails.domain
 
 import dev.fnc314.aijobtracker.frontend.core.data.model.CompanyWithApplications
-import dev.fnc314.aijobtracker.frontend.features.companydetails.data.repository.CompanyDetailsRepository
+import dev.fnc314.aijobtracker.frontend.features.companydetails.domain.repository.CompanyDetailsRepository
 
 /**
  * Domain usecase that loads detailed company information and associated job applications.

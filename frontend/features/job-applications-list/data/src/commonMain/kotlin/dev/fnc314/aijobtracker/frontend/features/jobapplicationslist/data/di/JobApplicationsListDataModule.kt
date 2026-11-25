@@ -1,6 +1,6 @@
 package dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.data.di
 
-import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.data.repository.JobApplicationsListRepository
+import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.domain.repository.JobApplicationsListRepository
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.data.repository.impl.JobApplicationsListRepositoryImpl
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.data.source.LocalJobApplicationsListDataSource
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.data.source.RemoteJobApplicationsListDataSource

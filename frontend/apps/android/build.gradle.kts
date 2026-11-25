@@ -17,9 +17,9 @@ navgraph {
 }
 
 dependencies {
-  implementation(projects.appsCore)
-  implementation(projects.coreData)
-  implementation(projects.coreNavigation)
+  implementation(projects.apps.core)
+  implementation(projects.core.data)
+  implementation(projects.core.navigation)
   implementation(libs.navigation3.runtime)
   implementation(libs.navigation3.ui)
   implementation(libs.compose.material3)

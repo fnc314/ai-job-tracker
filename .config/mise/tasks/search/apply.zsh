@@ -16,9 +16,9 @@ set -euo pipefail
 TARGET="${1:-}"
 
 if [[ -n "$TARGET" ]]; then
-    exec "${MISE_PROJECT_ROOT}/gradlew" -q :frontend:apps-cli:run --args="apply $*"
+    exec "${MISE_PROJECT_ROOT}/gradlew" -q :frontend:apps:cli:run --args="apply $*"
 else
     echo "[search:apply] Querying applications with status RANKED or DRAFTING..."
-    "${MISE_PROJECT_ROOT}/gradlew" -q :frontend:apps-cli:run --args="tracker list --status RANKED"
-    exec "${MISE_PROJECT_ROOT}/gradlew" -q :frontend:apps-cli:run --args="tracker list --status DRAFTING"
+    "${MISE_PROJECT_ROOT}/gradlew" -q :frontend:apps:cli:run --args="tracker list --status RANKED"
+    exec "${MISE_PROJECT_ROOT}/gradlew" -q :frontend:apps:cli:run --args="tracker list --status DRAFTING"
 fi

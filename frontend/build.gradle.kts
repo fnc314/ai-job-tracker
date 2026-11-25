@@ -28,7 +28,8 @@ plugins {
 val frontendVersion = local.versions.version.get()
 
 subprojects {
-  group = "dev.fnc314.aijobtracker.frontend"
+  val subprojectPath = path.removePrefix(":").replace(":", ".")
+  group = "dev.fnc314.aijobtracker.$subprojectPath"
   version = frontendVersion
 
   apply(plugin = "dev.fnc314.aijobtracker.gradletools.docs.leaf")

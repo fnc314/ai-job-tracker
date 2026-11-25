@@ -2,7 +2,7 @@ package dev.fnc314.aijobtracker.frontend.features.companieslist.domain
 
 import dev.fnc314.aijobtracker.frontend.core.data.model.Company
 import dev.fnc314.aijobtracker.frontend.core.data.model.CompanyMetrics
-import dev.fnc314.aijobtracker.frontend.features.companieslist.data.repository.CompaniesListRepository
+import dev.fnc314.aijobtracker.frontend.features.companieslist.domain.repository.CompaniesListRepository
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest

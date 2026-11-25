@@ -1,6 +1,5 @@
 package dev.fnc314.aijobtracker.frontend.features.companydetails.ui.di
 
-import dev.fnc314.aijobtracker.frontend.features.companydetails.data.di.companyDetailsDataModule
 import dev.fnc314.aijobtracker.frontend.features.companydetails.domain.di.companyDetailsDomainModule
 import dev.fnc314.aijobtracker.frontend.features.companydetails.ui.CompanyDetailsEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.companydetails.ui.CompanyDetailsViewModel
@@ -18,5 +17,4 @@ internal val companyDetailsUiModule: Module = module {
  * Composite Koin feature module bundling company details data, domain, and UI dependencies.
  */
 public val companyDetailsFeatureModule: Module = module {
-    includes(companyDetailsDataModule, companyDetailsDomainModule, companyDetailsUiModule)
 }

@@ -52,9 +52,8 @@ internal sealed interface KotlinConfigConventionPlugin : Plugin<Project> {
 
                 val composeExt = project.extensions.findByType(org.jetbrains.compose.ComposeExtension::class.java)
                 (composeExt as? org.gradle.api.plugins.ExtensionAware)?.extensions?.findByType(org.jetbrains.compose.resources.ResourcesExtension::class.java)?.let { resExt ->
-                    val cleanPath = project.path.removePrefix(":").replace(":", "_").replace("-", "_")
-                    val groupPrefix = if (project.group.toString().isNotEmpty()) "${project.group}." else ""
-                    resExt.packageOfResClass = "$groupPrefix$cleanPath.generated.resources"
+                    val cleanPath = project.path.removePrefix(":").removePrefix("frontend:").replace(":", "_").replace("-", "_")
+                    resExt.packageOfResClass = "dev.fnc314.aijobtracker.frontend.$cleanPath.generated.resources"
                 }
 
                 sourceSets.getByName("commonMain").dependencies {

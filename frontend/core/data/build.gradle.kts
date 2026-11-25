@@ -12,9 +12,9 @@ plugins {
 kotlin {
   sourceSets {
     commonMain.dependencies {
-      implementation(projects.coreAuth)
-      implementation(projects.coreLogging)
-      implementation(projects.coreNetwork)
+      implementation(projects.core.auth)
+      implementation(projects.core.logging)
+      implementation(projects.core.network)
       implementation(libs.kotlinx.coroutines.core)
       implementation(libs.kotlinx.datetime)
       implementation(libs.bundles.ktor.client)

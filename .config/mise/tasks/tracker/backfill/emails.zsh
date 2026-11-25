@@ -9,7 +9,7 @@ set -eu
 CLI_BIN="${MISE_PROJECT_ROOT}/frontend/apps/cli/build/install/apps-cli/bin/apps-cli"
 
 if [ ! -f "${CLI_BIN}" ]; then
-  "${MISE_PROJECT_ROOT}/gradlew" :frontend:apps-cli:installDist
+  "${MISE_PROJECT_ROOT}/gradlew" :frontend:apps:cli:installDist
 fi
 
 exec "${CLI_BIN}" tracker backfill emails "$@"

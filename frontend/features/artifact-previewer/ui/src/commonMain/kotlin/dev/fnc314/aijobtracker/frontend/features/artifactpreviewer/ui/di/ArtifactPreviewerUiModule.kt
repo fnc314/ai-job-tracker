@@ -1,6 +1,5 @@
 package dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.ui.di
 
-import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.data.di.artifactPreviewerDataModule
 import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.domain.di.artifactPreviewerDomainModule
 import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.ui.ArtifactPreviewerEntryRegistry
 import org.koin.core.module.Module
@@ -18,5 +17,4 @@ public val artifactPreviewerUiModule: Module = module {
  * Aggregate Koin module uniting data, domain, and UI definitions for the artifact previewer feature.
  */
 public val artifactPreviewerFeatureModule: Module = module {
-    includes(artifactPreviewerDataModule, artifactPreviewerDomainModule, artifactPreviewerUiModule)
 }

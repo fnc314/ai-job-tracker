@@ -13,7 +13,6 @@ import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.domain.us
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.domain.usecase.LoadJobApplicationUseCase
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.domain.usecase.RecordEventUseCase
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.domain.usecase.UpdateApplicationStatusUseCase
-import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.domain.usecase.UpdateFitScoreUseCase
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -43,7 +42,7 @@ internal class JobApplicationDetailViewModelTest {
         company = "Acme Corp",
         role = "Staff Android Engineer",
         location = "Remote",
-        status = TrackerStatus.APPLIED,
+        status = TrackerStatus.SUBMITTED,
         channel = ApplicationChannel.LINKEDIN,
         jobId = "job_1",
         jobUrl = "https://example.com/job/1",
@@ -106,18 +105,12 @@ internal class JobApplicationDetailViewModelTest {
         }
     }
 
-    private class FakeUpdateFitScoreUseCase(
-        var updatedApplication: JobApplication? = null,
-    ) : UpdateFitScoreUseCase {
-        var lastParams: UpdateFitScoreUseCase.Params? = null
-        override suspend fun invoke(params: UpdateFitScoreUseCase.Params): JobApplication {
-            lastParams = params
-            return updatedApplication ?: throw IllegalStateException("Not configured")
+    private class FakeGetArtifactSignedUrlUseCase : GetArtifactSignedUrlUseCase {
+        var lastPath: String? = null
+        override suspend fun invoke(params: GetArtifactSignedUrlUseCase.Params): String {
+            lastPath = params.path
+            return "https://signed.url/${params.path}"
         }
-    }
-
-    private class FakeGetEventsUseCase : GetEventsUseCase {
-        override suspend fun invoke(params: GetEventsUseCase.Params): List<TrackerEvent> = emptyList()
     }
 
     private class FakeLoadArtifactsUseCase(
@@ -126,37 +119,34 @@ internal class JobApplicationDetailViewModelTest {
         override suspend fun invoke(params: LoadArtifactsUseCase.Params): List<TrackerArtifact> = artifacts
     }
 
-    private class FakeGetArtifactSignedUrlUseCase : GetArtifactSignedUrlUseCase {
-        override suspend fun invoke(params: GetArtifactSignedUrlUseCase.Params): String {
-            return "https://signed.url/${params.path}"
-        }
+    private class FakeGetEventsUseCase(
+        var events: List<TrackerEvent> = emptyList(),
+    ) : GetEventsUseCase {
+        override suspend fun invoke(params: GetEventsUseCase.Params): List<TrackerEvent> = events
     }
 
     private lateinit var loadAppUseCase: FakeLoadJobApplicationUseCase
     private lateinit var loadCompaniesUseCase: FakeLoadCompaniesUseCase
     private lateinit var getEventsUseCase: FakeGetEventsUseCase
-    private lateinit var loadArtifactsUseCase: FakeLoadArtifactsUseCase
     private lateinit var updateStatusUseCase: FakeUpdateApplicationStatusUseCase
     private lateinit var recordEventUseCase: FakeRecordEventUseCase
-    private lateinit var updateFitScoreUseCase: FakeUpdateFitScoreUseCase
     private lateinit var getSignedUrlUseCase: FakeGetArtifactSignedUrlUseCase
+    private lateinit var loadArtifactsUseCase: FakeLoadArtifactsUseCase
     private lateinit var viewModel: JobApplicationDetailViewModel
 
     @BeforeTest
     fun setUp(): Unit {
         Dispatchers.setMain(testDispatcher)
+
         loadAppUseCase = FakeLoadJobApplicationUseCase(application = sampleApplication)
         loadCompaniesUseCase = FakeLoadCompaniesUseCase(companies = listOf(sampleCompany))
         getEventsUseCase = FakeGetEventsUseCase()
-        loadArtifactsUseCase = FakeLoadArtifactsUseCase()
         updateStatusUseCase = FakeUpdateApplicationStatusUseCase(
             updatedApplication = sampleApplication.copy(status = TrackerStatus.INTERVIEW)
         )
         recordEventUseCase = FakeRecordEventUseCase()
-        updateFitScoreUseCase = FakeUpdateFitScoreUseCase(
-            updatedApplication = sampleApplication.copy(fitRating = 95)
-        )
         getSignedUrlUseCase = FakeGetArtifactSignedUrlUseCase()
+        loadArtifactsUseCase = FakeLoadArtifactsUseCase()
 
         viewModel = JobApplicationDetailViewModel(
             loadApplicationUseCase = loadAppUseCase,
@@ -164,7 +154,6 @@ internal class JobApplicationDetailViewModelTest {
             getEventsUseCase = getEventsUseCase,
             updateStatusUseCase = updateStatusUseCase,
             recordEventUseCase = recordEventUseCase,
-            updateFitScoreUseCase = updateFitScoreUseCase,
             getSignedUrlUseCase = getSignedUrlUseCase,
             loadArtifactsUseCase = loadArtifactsUseCase,
         )
@@ -192,9 +181,8 @@ internal class JobApplicationDetailViewModelTest {
         assertIs<JobApplicationDetailUiState.Content>(state)
         assertEquals("Acme Corp", state.model.companyName)
         assertEquals("Staff Android Engineer", state.model.role)
-        assertEquals(TrackerStatus.APPLIED, state.model.status)
+        assertEquals(TrackerStatus.SUBMITTED, state.model.status)
         assertEquals(85, state.model.fitScore)
-        assertEquals(2, state.model.notesList.size)
         assertTrue(state.model.timelineEvents.isNotEmpty())
         assertEquals(false, state.isUpdating)
     }
@@ -221,6 +209,7 @@ internal class JobApplicationDetailViewModelTest {
         viewModel.onIntent(
             JobApplicationDetailUiIntent.UpdateStatus(
                 newStatus = TrackerStatus.INTERVIEW,
+                date = null,
                 note = "Passed screening",
             )
         )
@@ -235,22 +224,6 @@ internal class JobApplicationDetailViewModelTest {
     }
 
     @Test
-    fun updateFitScoreIntentUpdatesModel(): Unit = runTest(testDispatcher) {
-        backgroundScope.launch { viewModel.uiState.collect() }
-
-        viewModel.onIntent(JobApplicationDetailUiIntent.Load("app_1"))
-        advanceUntilIdle()
-
-        viewModel.onIntent(JobApplicationDetailUiIntent.UpdateFitScore(newScore = 95))
-        advanceUntilIdle()
-
-        val state = viewModel.uiState.value
-        assertIs<JobApplicationDetailUiState.Content>(state)
-        assertEquals(95, state.model.fitScore)
-        assertEquals("95", state.model.fitScoreDisplayText)
-    }
-
-    @Test
     fun recordEventIntentAppendsTimelineEvent(): Unit = runTest(testDispatcher) {
         backgroundScope.launch { viewModel.uiState.collect() }
 
@@ -261,7 +234,7 @@ internal class JobApplicationDetailViewModelTest {
 
         viewModel.onIntent(
             JobApplicationDetailUiIntent.RecordEvent(
-                type = TrackerEventType.RECRUITER_SCREEN_EVENT,
+                type = TrackerEventType.RECRUITER_SCREEN,
                 notes = "Screen went very well",
             )
         )

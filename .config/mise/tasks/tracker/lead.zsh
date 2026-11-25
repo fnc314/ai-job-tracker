@@ -14,4 +14,4 @@ for arg in "$@"; do
     gradle_args+=("$arg")
 done
 
-"${MISE_PROJECT_ROOT}/gradlew" -q :frontend:apps-cli:run --args="${gradle_args[*]}"
+"${MISE_PROJECT_ROOT}/gradlew" -q :frontend:apps:cli:run --args="${gradle_args[*]}"

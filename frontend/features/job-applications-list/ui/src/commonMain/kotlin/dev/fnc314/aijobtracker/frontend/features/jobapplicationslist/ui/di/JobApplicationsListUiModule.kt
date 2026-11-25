@@ -1,6 +1,5 @@
 package dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.ui.di
 
-import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.data.di.jobApplicationsListDataModule
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.domain.di.jobApplicationsListDomainModule
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.ui.JobApplicationsEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.ui.JobApplicationsListViewModel
@@ -18,5 +17,4 @@ internal val jobApplicationsListUiModule: Module = module {
  * Composite Koin feature module bundling job applications list data, domain, and UI dependencies.
  */
 public val jobApplicationsListFeatureModule: Module = module {
-    includes(jobApplicationsListDataModule, jobApplicationsListDomainModule, jobApplicationsListUiModule)
 }

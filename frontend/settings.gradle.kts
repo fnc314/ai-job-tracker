@@ -21,14 +21,10 @@ plugins {
 }
 
 projectCollections {
+    flattenMiddleProjects.set(false)
     registerProjectCollection("apps")
     registerProjectCollection("core")
     registerProjectCollection("features", depth = 2)
-    projectNameTransform = ProjectNameMapper { _, name, _ ->
-        name.removePrefix(":")
-            .replace(":", "-")
-            .prependIndent(":")
-    }
 }
 
 includeBuild("../records")

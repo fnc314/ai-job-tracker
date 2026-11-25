@@ -4,4 +4,4 @@
 
 set -euo pipefail
 
-"${MISE_PROJECT_ROOT}/gradlew" :frontend:apps-web:wasmJsBrowserDevelopmentRun
+"${MISE_PROJECT_ROOT}/gradlew" :frontend:apps:web:wasmJsBrowserDevelopmentRun

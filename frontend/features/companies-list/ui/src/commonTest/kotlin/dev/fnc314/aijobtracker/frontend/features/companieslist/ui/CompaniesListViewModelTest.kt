@@ -2,7 +2,7 @@ package dev.fnc314.aijobtracker.frontend.features.companieslist.ui
 
 import dev.fnc314.aijobtracker.frontend.core.data.model.Company
 import dev.fnc314.aijobtracker.frontend.core.data.model.CompanyMetrics
-import dev.fnc314.aijobtracker.frontend.features.companieslist.data.repository.CompaniesListRepository
+import dev.fnc314.aijobtracker.frontend.features.companieslist.domain.repository.CompaniesListRepository
 import dev.fnc314.aijobtracker.frontend.features.companieslist.domain.CompanySortOption
 import dev.fnc314.aijobtracker.frontend.features.companieslist.domain.CompanyStatusFilter
 import dev.fnc314.aijobtracker.frontend.features.companieslist.domain.FilterCompaniesUseCase

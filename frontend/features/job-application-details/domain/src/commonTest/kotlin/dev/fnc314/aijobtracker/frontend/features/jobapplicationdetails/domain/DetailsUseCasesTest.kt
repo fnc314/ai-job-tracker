@@ -11,20 +11,17 @@ import dev.fnc314.aijobtracker.frontend.core.data.model.TrackerStatus
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.domain.repository.JobApplicationDetailsRepository
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.domain.usecase.RecordEventUseCase
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.domain.usecase.UpdateApplicationStatusUseCase
-import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.domain.usecase.UpdateFitScoreUseCase
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.domain.usecase.impl.RecordEventUseCaseImpl
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.domain.usecase.impl.UpdateApplicationStatusUseCaseImpl
-import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.domain.usecase.impl.UpdateFitScoreUseCaseImpl
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
-import dev.fnc314.aijobtracker.frontend.core.data.model.TrackerArtifact
+import dev.fnc314.aijobtracker.frontend.core.artifacts.model.TrackerArtifact
 
 class DetailsUseCasesTest {
 
     private class FakeJobApplicationDetailsRepository : JobApplicationDetailsRepository {
-        var updatedFitScore: Pair<String, Int>? = null
         var updatedStatusCall: StatusCallParams? = null
         var lastRecordedEvent: TrackerEvent? = null
 
@@ -61,10 +58,7 @@ class DetailsUseCasesTest {
             return event.id
         }
 
-        override suspend fun updateFitScore(id: String, score: Int): JobApplication {
-            updatedFitScore = id to score
-            return Factory.createJobApplication(id = id, company = "Test Corp", fitRating = score)
-        }
+
     }
 
     // --- UpdateApplicationStatusUseCase Tests (5 Tests) ---
@@ -156,58 +150,6 @@ class DetailsUseCasesTest {
         )
         assertEquals(TrackerStatus.REJECTED, repo.updatedStatusCall?.status)
         assertEquals(TrackerStatus.REJECTED, result.status)
-    }
-
-    // --- UpdateFitScoreUseCase Tests (5 Tests) ---
-
-    @Test
-    fun testUpdateFitScore_StandardScore() = runTest {
-        val repo = FakeJobApplicationDetailsRepository()
-        val useCase = UpdateFitScoreUseCaseImpl(repo)
-
-        val result = useCase(UpdateFitScoreUseCase.Params(id = "app-fit-1", score = 85))
-        assertEquals("app-fit-1" to 85, repo.updatedFitScore)
-        assertEquals(85, result.fitScore)
-    }
-
-    @Test
-    fun testUpdateFitScore_BoundaryZero() = runTest {
-        val repo = FakeJobApplicationDetailsRepository()
-        val useCase = UpdateFitScoreUseCaseImpl(repo)
-
-        val result = useCase(UpdateFitScoreUseCase.Params(id = "app-fit-zero", score = 0))
-        assertEquals("app-fit-zero" to 0, repo.updatedFitScore)
-        assertEquals(0, result.fitScore)
-    }
-
-    @Test
-    fun testUpdateFitScore_BoundaryHundred() = runTest {
-        val repo = FakeJobApplicationDetailsRepository()
-        val useCase = UpdateFitScoreUseCaseImpl(repo)
-
-        val result = useCase(UpdateFitScoreUseCase.Params(id = "app-fit-100", score = 100))
-        assertEquals("app-fit-100" to 100, repo.updatedFitScore)
-        assertEquals(100, result.fitScore)
-    }
-
-    @Test
-    fun testUpdateFitScore_NegativeScoreEdgeCase() = runTest {
-        val repo = FakeJobApplicationDetailsRepository()
-        val useCase = UpdateFitScoreUseCaseImpl(repo)
-
-        val result = useCase(UpdateFitScoreUseCase.Params(id = "app-fit-neg", score = -5))
-        assertEquals("app-fit-neg" to -5, repo.updatedFitScore)
-        assertEquals(-5, result.fitScore)
-    }
-
-    @Test
-    fun testUpdateFitScore_AboveHundredScoreEdgeCase() = runTest {
-        val repo = FakeJobApplicationDetailsRepository()
-        val useCase = UpdateFitScoreUseCaseImpl(repo)
-
-        val result = useCase(UpdateFitScoreUseCase.Params(id = "app-fit-150", score = 150))
-        assertEquals("app-fit-150" to 150, repo.updatedFitScore)
-        assertEquals(150, result.fitScore)
     }
 
     // --- RecordEventUseCase Tests (5 Tests) ---

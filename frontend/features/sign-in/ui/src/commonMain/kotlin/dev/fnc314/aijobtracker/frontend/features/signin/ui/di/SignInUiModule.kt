@@ -1,6 +1,5 @@
 package dev.fnc314.aijobtracker.frontend.features.signin.ui.di
 
-import dev.fnc314.aijobtracker.frontend.features.signin.data.di.signInDataModule
 import dev.fnc314.aijobtracker.frontend.features.signin.domain.di.signInDomainModule
 import dev.fnc314.aijobtracker.frontend.features.signin.ui.SignInEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.signin.ui.SignInViewModel
@@ -21,5 +20,4 @@ public val signInUiModule: Module = module {
  * Aggregate Koin module uniting data, domain, and UI definitions for the sign-in feature.
  */
 public val signInFeatureModule: Module = module {
-    includes(signInDataModule, signInDomainModule, signInUiModule)
 }

@@ -14,7 +14,7 @@ application {
 dependencies {
     implementation(local.records.proto)
     implementation(local.records.parser)
-    implementation(projects.coreData)
+    implementation(projects.core.data)
     implementation(libs.clikt)
     implementation(libs.mordant)
     implementation(libs.firebase.admin)

@@ -11,11 +11,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreData)
-            implementation(projects.coreNavigation)
-            implementation(projects.featuresSignInDomain)
-            implementation(projects.featuresSignInData)
-            implementation(projects.coreWidgets)
+            implementation(projects.core.navigation)
+            implementation(projects.features.signIn.domain)
+            implementation(projects.core.widgets)
             implementation(libs.bundles.androidx.lifecycle.compose)
             implementation(libs.kotlinx.coroutines.core)
         }

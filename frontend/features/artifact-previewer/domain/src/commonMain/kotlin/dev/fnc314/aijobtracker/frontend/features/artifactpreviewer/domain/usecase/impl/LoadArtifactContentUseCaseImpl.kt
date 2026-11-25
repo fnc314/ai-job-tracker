@@ -2,7 +2,7 @@ package dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.domain.useca
 
 import dev.fnc314.aijobtracker.frontend.core.artifacts.model.ArtifactsRepository
 import dev.fnc314.aijobtracker.frontend.core.data.platform.PlatformFileReader
-import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.data.repository.ArtifactPreviewerRepository
+import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.domain.repository.ArtifactPreviewerRepository
 import dev.fnc314.aijobtracker.frontend.features.artifactpreviewer.domain.usecase.LoadArtifactContentUseCase
 
 internal class LoadArtifactContentUseCaseImpl(

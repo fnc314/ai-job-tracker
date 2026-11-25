@@ -8,7 +8,8 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreData)
+            implementation(projects.features.companiesList.domain)
+            implementation(projects.core.data)
             implementation(libs.kotlinx.coroutines.core)
         }
     }

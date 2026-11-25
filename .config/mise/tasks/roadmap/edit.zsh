@@ -10,7 +10,7 @@ set -euo pipefail
 TUI_BIN="${MISE_PROJECT_ROOT}/internal/apps/terminal/roadmap/build/install/apps-terminal-roadmap/bin/apps-terminal-roadmap"
 
 if [ ! -f "${TUI_BIN}" ]; then
-  "${MISE_PROJECT_ROOT}/gradlew" :internal:apps-terminal-roadmap:installDist
+  "${MISE_PROJECT_ROOT}/gradlew" :internal:apps:terminal-roadmap:installDist
 fi
 
 ARGS=()

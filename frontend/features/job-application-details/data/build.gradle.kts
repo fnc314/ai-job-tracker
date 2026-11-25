@@ -8,9 +8,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreArtifacts)
-            implementation(projects.coreData)
-            implementation(projects.featuresJobApplicationDetailsDomain)
+            implementation(projects.core.documents)
+            implementation(projects.core.data)
+            implementation(projects.features.jobApplicationDetails.domain)
             implementation(libs.kotlinx.coroutines.core)
         }
         commonTest.dependencies {

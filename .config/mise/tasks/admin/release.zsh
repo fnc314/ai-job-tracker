@@ -9,6 +9,7 @@
 set -euo pipefail
 
 TOML_FILE="gradle/local.versions.toml"
+PROPERTIES_FILE="gradle.properties"
 VERSION=""
 AUTO_PUSH=false
 NO_PUSH=false
@@ -55,27 +56,33 @@ if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
     exit 1
 fi
 
-# Ensure working tree is clean, or only gradle/local.versions.toml is dirty
-UNCOMMITTED=$(git status --porcelain | grep -v "$TOML_FILE" || true)
+# Ensure working tree is clean, or only gradle/local.versions.toml and gradle.properties are dirty
+UNCOMMITTED=$(git status --porcelain | grep -v "$TOML_FILE" | grep -v "$PROPERTIES_FILE" || true)
 if [[ -n "$UNCOMMITTED" ]]; then
-    echo "⚠️ Warning: Working tree has uncommitted changes outside of $TOML_FILE:" >&2
+    echo "⚠️ Warning: Working tree has uncommitted changes outside of $TOML_FILE and $PROPERTIES_FILE:" >&2
     git status -s >&2
     echo "Please commit or stash your changes before tagging a release." >&2
     exit 1
 fi
 
-# Update gradle/local.versions.toml
+# Update gradle/local.versions.toml and gradle.properties
 if [[ -f "$TOML_FILE" ]]; then
     echo "📝 Updating $TOML_FILE to version = \"$VERSION\"..."
     # macOS-safe sed in-place
     sed -i '' -E "s/^[[:space:]]*version[[:space:]]*=[[:space:]]*\"[^\"]+\"/  version = \"$VERSION\"/" "$TOML_FILE"
-    git add "$TOML_FILE"
-    git commit -m "chore(release): bump version to $VERSION"
-    echo "✓ Committed $TOML_FILE bump."
 else
     echo "❌ Error: $TOML_FILE not found." >&2
     exit 1
 fi
+
+if [[ -f "$PROPERTIES_FILE" ]]; then
+    echo "📝 Updating $PROPERTIES_FILE to version=$VERSION..."
+    sed -i '' -E "s/^[[:space:]]*version[[:space:]]*=[[:space:]]*.*/version=$VERSION/" "$PROPERTIES_FILE"
+fi
+
+git add "$TOML_FILE" "$PROPERTIES_FILE"
+git commit -m "chore(release): bump version to $VERSION"
+echo "✓ Committed $TOML_FILE and $PROPERTIES_FILE bump."
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 echo "🚀 Creating git tag '$TAG_NAME' on branch '$BRANCH'..."

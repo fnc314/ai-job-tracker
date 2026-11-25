@@ -2,7 +2,7 @@ package dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.domain.use
 
 import dev.fnc314.aijobtracker.frontend.core.data.factory.Factory
 import dev.fnc314.aijobtracker.frontend.core.data.model.JobApplication
-import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.data.repository.JobApplicationsListRepository
+import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.domain.repository.JobApplicationsListRepository
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationslist.domain.usecase.impl.LoadAllJobApplicationsUseCaseImpl
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test

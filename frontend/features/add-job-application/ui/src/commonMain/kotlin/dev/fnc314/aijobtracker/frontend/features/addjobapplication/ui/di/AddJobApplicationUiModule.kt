@@ -1,6 +1,5 @@
 package dev.fnc314.aijobtracker.frontend.features.addjobapplication.ui.di
 
-import dev.fnc314.aijobtracker.frontend.features.addjobapplication.data.di.addJobApplicationDataModule
 import dev.fnc314.aijobtracker.frontend.features.addjobapplication.domain.di.addJobApplicationDomainModule
 import dev.fnc314.aijobtracker.frontend.features.addjobapplication.ui.AddJobApplicationEntryRegistry
 import dev.fnc314.aijobtracker.frontend.features.addjobapplication.ui.AddJobApplicationViewModel
@@ -23,5 +22,4 @@ public val addJobApplicationUiModule: Module = module {
  * Aggregate Koin module uniting data, domain, and UI definitions for the add job application feature.
  */
 public val addJobApplicationFeatureModule: Module = module {
-    includes(addJobApplicationDataModule, addJobApplicationDomainModule, addJobApplicationUiModule)
 }

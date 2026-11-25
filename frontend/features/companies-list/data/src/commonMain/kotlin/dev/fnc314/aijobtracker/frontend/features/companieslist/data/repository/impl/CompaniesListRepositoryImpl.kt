@@ -1,7 +1,7 @@
 package dev.fnc314.aijobtracker.frontend.features.companieslist.data.repository.impl
 
 import dev.fnc314.aijobtracker.frontend.core.data.model.Company
-import dev.fnc314.aijobtracker.frontend.features.companieslist.data.repository.CompaniesListRepository
+import dev.fnc314.aijobtracker.frontend.features.companieslist.domain.repository.CompaniesListRepository
 import dev.fnc314.aijobtracker.frontend.features.companieslist.data.source.LocalCompaniesListDataSource
 import dev.fnc314.aijobtracker.frontend.features.companieslist.data.source.RemoteCompaniesListDataSource
 

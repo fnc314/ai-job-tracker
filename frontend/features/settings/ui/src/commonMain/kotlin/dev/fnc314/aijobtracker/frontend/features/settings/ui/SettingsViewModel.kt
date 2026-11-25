@@ -9,7 +9,7 @@ import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.Deregis
 import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.ObserveSettingsUseCase
 import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.RegisterDeviceNotificationsUseCase
 import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.UpdateSettingsUseCase
-import dev.fnc314.aijobtracker.frontend.features.signin.data.repository.AuthRepository
+import dev.fnc314.aijobtracker.frontend.features.signin.domain.usecase.SignOutUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 public class SettingsViewModel(
   private val observeSettingsUseCase: ObserveSettingsUseCase,
   private val updateSettingsUseCase: UpdateSettingsUseCase,
-  private val authRepository: AuthRepository,
+  private val signOutUseCase: SignOutUseCase,
   private val deregisterDeviceNotificationsUseCase: DeregisterDeviceNotificationsUseCase,
   private val registerDeviceNotificationsUseCase: RegisterDeviceNotificationsUseCase,
 ) : ViewModel() {
@@ -149,7 +149,7 @@ public class SettingsViewModel(
 
   private fun handleSignOut(): Unit {
     viewModelScope.launch {
-      authRepository.signOut()
+      signOutUseCase()
       _isSigningOut.value = true
     }
   }

@@ -8,7 +8,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreAuth)
+            implementation(projects.core.auth)
             implementation(libs.bundles.ktor.client)
         }
         iosMain.dependencies {

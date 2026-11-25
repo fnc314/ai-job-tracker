@@ -3,4 +3,4 @@
 set -euo pipefail
 
 cd "${MISE_PROJECT_ROOT}"
-exec "${MISE_PROJECT_ROOT}/gradlew" :frontend:core-data:jvmTest :frontend:apps-core:jvmTest "$@"
+exec "${MISE_PROJECT_ROOT}/gradlew" :frontend:core:data:jvmTest :frontend:apps:core:jvmTest "$@"

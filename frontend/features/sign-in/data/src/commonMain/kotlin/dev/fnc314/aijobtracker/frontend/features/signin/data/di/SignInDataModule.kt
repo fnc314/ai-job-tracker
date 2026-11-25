@@ -1,7 +1,7 @@
 package dev.fnc314.aijobtracker.frontend.features.signin.data.di
 
 import dev.fnc314.aijobtracker.frontend.features.signin.data.createPlatformSignInHandler
-import dev.fnc314.aijobtracker.frontend.features.signin.data.repository.AuthRepository
+import dev.fnc314.aijobtracker.frontend.features.signin.domain.repository.AuthRepository
 import dev.fnc314.aijobtracker.frontend.features.signin.data.repository.impl.AuthRepositoryImpl
 import dev.fnc314.aijobtracker.frontend.features.signin.data.source.LocalAuthDataSource
 import dev.fnc314.aijobtracker.frontend.features.signin.data.source.RemoteAuthDataSource

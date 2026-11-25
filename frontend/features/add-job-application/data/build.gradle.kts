@@ -8,8 +8,8 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreData)
-            implementation(projects.featuresAddJobApplicationDomain)
+            implementation(projects.core.data)
+            implementation(projects.features.addJobApplication.domain)
             implementation(libs.kotlinx.coroutines.core)
         }
         commonTest.dependencies {

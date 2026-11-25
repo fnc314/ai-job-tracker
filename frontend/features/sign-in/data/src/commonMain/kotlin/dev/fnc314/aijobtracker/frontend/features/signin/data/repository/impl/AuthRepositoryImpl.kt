@@ -2,7 +2,7 @@ package dev.fnc314.aijobtracker.frontend.features.signin.data.repository.impl
 
 import dev.fnc314.aijobtracker.frontend.core.data.model.AuthState
 import dev.fnc314.aijobtracker.frontend.core.data.model.UserAccount
-import dev.fnc314.aijobtracker.frontend.features.signin.data.repository.AuthRepository
+import dev.fnc314.aijobtracker.frontend.features.signin.domain.repository.AuthRepository
 import dev.fnc314.aijobtracker.frontend.features.signin.data.source.LocalAuthDataSource
 import dev.fnc314.aijobtracker.frontend.features.signin.data.source.RemoteAuthDataSource
 import kotlinx.coroutines.flow.MutableStateFlow
