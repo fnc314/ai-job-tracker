@@ -1,0 +1,126 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.github.ajalt.clikt.output/MordantMarkdownHelpFormatter///PointingToDeclaration/clikt-mordant-markdown/com.github.ajalt.clikt.output/-mordant-markdown-help-formatter/index.html
+$dokka.location:com.github.ajalt.clikt.command/ChainedCliktCommand///PointingToDeclaration/clikt-mordant/com.github.ajalt.clikt.command/-chained-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.command/SuspendingCliktCommand///PointingToDeclaration/clikt-mordant/com.github.ajalt.clikt.command/-suspending-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.command/SuspendingNoOpCliktCommand///PointingToDeclaration/clikt-mordant/com.github.ajalt.clikt.command/-suspending-no-op-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.completion/CompletionCommand///PointingToDeclaration/clikt-mordant/com.github.ajalt.clikt.completion/-completion-command/index.html
+$dokka.location:com.github.ajalt.clikt.core/CliktCommand///PointingToDeclaration/clikt-mordant/com.github.ajalt.clikt.core/-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.core/NoOpCliktCommand///PointingToDeclaration/clikt-mordant/com.github.ajalt.clikt.core/-no-op-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.output/MordantHelpFormatter///PointingToDeclaration/clikt-mordant/com.github.ajalt.clikt.output/-mordant-help-formatter/index.html
+$dokka.location:com.github.ajalt.clikt.testing/CliktCommandTestResult///PointingToDeclaration/clikt-mordant/com.github.ajalt.clikt.testing/-clikt-command-test-result/index.html
+$dokka.location:com.github.ajalt.clikt.command/CoreChainedCliktCommand///PointingToDeclaration/clikt/com.github.ajalt.clikt.command/-core-chained-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.command/CoreSuspendingCliktCommand///PointingToDeclaration/clikt/com.github.ajalt.clikt.command/-core-suspending-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.command/CoreSuspendingNoOpCliktCommand///PointingToDeclaration/clikt/com.github.ajalt.clikt.command/-core-suspending-no-op-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.completion/ChainedCompletionCommand///PointingToDeclaration/clikt/com.github.ajalt.clikt.completion/-chained-completion-command/index.html
+$dokka.location:com.github.ajalt.clikt.completion/CompletionCandidates///PointingToDeclaration/clikt/com.github.ajalt.clikt.completion/-completion-candidates/index.html
+$dokka.location:com.github.ajalt.clikt.completion/CompletionCommand///PointingToDeclaration/clikt/com.github.ajalt.clikt.completion/-completion-command/index.html
+$dokka.location:com.github.ajalt.clikt.completion/CompletionGenerator///PointingToDeclaration/clikt/com.github.ajalt.clikt.completion/-completion-generator/index.html
+$dokka.location:com.github.ajalt.clikt.completion/SuspendingCompletionCommand///PointingToDeclaration/clikt/com.github.ajalt.clikt.completion/-suspending-completion-command/index.html
+$dokka.location:com.github.ajalt.clikt.core/Abort///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-abort/index.html
+$dokka.location:com.github.ajalt.clikt.core/BadParameterValue///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-bad-parameter-value/index.html
+$dokka.location:com.github.ajalt.clikt.core/BaseCliktCommand///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-base-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.core/CliktError///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-clikt-error/index.html
+$dokka.location:com.github.ajalt.clikt.core/CliktUtil///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-clikt-util/index.html
+$dokka.location:com.github.ajalt.clikt.core/ContextCliktError///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-context-clikt-error/index.html
+$dokka.location:com.github.ajalt.clikt.core/Context///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-context/index.html
+$dokka.location:com.github.ajalt.clikt.core/CoreCliktCommand///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-core-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.core/CoreNoOpCliktCommand///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-core-no-op-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.core/FileNotFound///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-file-not-found/index.html
+$dokka.location:com.github.ajalt.clikt.core/GroupableOption///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-groupable-option/index.html
+$dokka.location:com.github.ajalt.clikt.core/IncorrectArgumentValueCount///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-incorrect-argument-value-count/index.html
+$dokka.location:com.github.ajalt.clikt.core/IncorrectOptionValueCount///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-incorrect-option-value-count/index.html
+$dokka.location:com.github.ajalt.clikt.core/InvalidFileFormat///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-invalid-file-format/index.html
+$dokka.location:com.github.ajalt.clikt.core/MessageEchoer///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-message-echoer/index.html
+$dokka.location:com.github.ajalt.clikt.core/MissingArgument///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-missing-argument/index.html
+$dokka.location:com.github.ajalt.clikt.core/MissingOption///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-missing-option/index.html
+$dokka.location:com.github.ajalt.clikt.core/MultiUsageError///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-multi-usage-error/index.html
+$dokka.location:com.github.ajalt.clikt.core/MutuallyExclusiveGroupException///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-mutually-exclusive-group-exception/index.html
+$dokka.location:com.github.ajalt.clikt.core/NoOpCliktCommand///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-no-op-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.core/NoSuchArgument///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-no-such-argument/index.html
+$dokka.location:com.github.ajalt.clikt.core/NoSuchOption///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-no-such-option/index.html
+$dokka.location:com.github.ajalt.clikt.core/NoSuchSubcommand///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-no-such-subcommand/index.html
+$dokka.location:com.github.ajalt.clikt.core/ParameterHolderDsl///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-parameter-holder-dsl/index.html
+$dokka.location:com.github.ajalt.clikt.core/ParameterHolder///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-parameter-holder/index.html
+$dokka.location:com.github.ajalt.clikt.core/PrintCompletionMessage///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-print-completion-message/index.html
+$dokka.location:com.github.ajalt.clikt.core/PrintHelpMessage///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-print-help-message/index.html
+$dokka.location:com.github.ajalt.clikt.core/PrintMessage///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-print-message/index.html
+$dokka.location:com.github.ajalt.clikt.core/ProgramResult///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-program-result/index.html
+$dokka.location:com.github.ajalt.clikt.core/RunnableCliktCommand///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-runnable-clikt-command/index.html
+$dokka.location:com.github.ajalt.clikt.core/StaticallyGroupedOption///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-statically-grouped-option/index.html
+$dokka.location:com.github.ajalt.clikt.core/TerminalEchoer///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-terminal-echoer/index.html
+$dokka.location:com.github.ajalt.clikt.core/TypoSuggestor///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-typo-suggestor/index.html
+$dokka.location:com.github.ajalt.clikt.core/UsageError///PointingToDeclaration/clikt/com.github.ajalt.clikt.core/-usage-error/index.html
+$dokka.location:com.github.ajalt.clikt.output/AbstractHelpFormatter///PointingToDeclaration/clikt/com.github.ajalt.clikt.output/-abstract-help-formatter/index.html
+$dokka.location:com.github.ajalt.clikt.output/HelpFormatter///PointingToDeclaration/clikt/com.github.ajalt.clikt.output/-help-formatter/index.html
+$dokka.location:com.github.ajalt.clikt.output/JsArray///PointingToDeclaration/clikt/com.github.ajalt.clikt.output/-js-array/index.html
+$dokka.location:com.github.ajalt.clikt.output/JsObject///PointingToDeclaration/clikt/com.github.ajalt.clikt.output/-js-object/index.html
+$dokka.location:com.github.ajalt.clikt.output/Localization///PointingToDeclaration/clikt/com.github.ajalt.clikt.output/-localization/index.html
+$dokka.location:com.github.ajalt.clikt.output/ParameterFormatter///PointingToDeclaration/clikt/com.github.ajalt.clikt.output/-parameter-formatter/index.html
+$dokka.location:com.github.ajalt.clikt.output/PlaintextHelpFormatter///PointingToDeclaration/clikt/com.github.ajalt.clikt.output/-plaintext-help-formatter/index.html
+$dokka.location:com.github.ajalt.clikt.output/TermUi///PointingToDeclaration/clikt/com.github.ajalt.clikt.output/-term-ui/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.arguments/ArgCallsTransformer///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.arguments/-arg-calls-transformer/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.arguments/ArgValidator///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.arguments/-arg-validator/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.arguments/ArgValueConverter///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.arguments/-arg-value-converter/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.arguments/ArgValueTransformer///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.arguments/-arg-value-transformer/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.arguments/ArgumentDelegate///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.arguments/-argument-delegate/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.arguments/ArgumentTransformContext///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.arguments/-argument-transform-context/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.arguments/Argument///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.arguments/-argument/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.arguments/ProcessedArgumentImpl///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.arguments/-processed-argument-impl/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.arguments/ProcessedArgument///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.arguments/-processed-argument/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.arguments/RawArgument///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.arguments/-raw-argument/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.groups/ChoiceGroup///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.groups/-choice-group/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.groups/CoOccurringOptionGroupTransform///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.groups/-co-occurring-option-group-transform/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.groups/CoOccurringOptionGroup///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.groups/-co-occurring-option-group/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.groups/MutuallyExclusiveOptionTransformContext///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.groups/-mutually-exclusive-option-transform-context/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.groups/MutuallyExclusiveOptionsTransform///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.groups/-mutually-exclusive-options-transform/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.groups/MutuallyExclusiveOptions///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.groups/-mutually-exclusive-options/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.groups/OptionGroup///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.groups/-option-group/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.groups/ParameterGroupDelegate///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.groups/-parameter-group-delegate/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.groups/ParameterGroup///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.groups/-parameter-group/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/AllTransformer///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-all-transformer/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/FlagConverter///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-flag-converter/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/NullableOption///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-nullable-option/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/OptionCallTransformContext///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-option-call-transform-context/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/OptionDelegate///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-option-delegate/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/OptionTransformContext///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-option-transform-context/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/OptionValidator///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-option-validator/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/OptionWithValues///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-option-with-values/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/Option///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-option/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/RawOption///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-raw-option/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/ValueConverter///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-value-converter/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/ValueTransformer///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-value-transformer/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/ValueWithDefault///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-value-with-default/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.options/ValuesTransformer///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.options/-values-transformer/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.transform/HelpTransformContext///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.transform/-help-transform-context/index.html
+$dokka.location:com.github.ajalt.clikt.parameters.transform/TransformContext///PointingToDeclaration/clikt/com.github.ajalt.clikt.parameters.transform/-transform-context/index.html
+$dokka.location:com.github.ajalt.clikt.parsers/ArgumentInvocation///PointingToDeclaration/clikt/com.github.ajalt.clikt.parsers/-argument-invocation/index.html
+$dokka.location:com.github.ajalt.clikt.parsers/CommandInvocation///PointingToDeclaration/clikt/com.github.ajalt.clikt.parsers/-command-invocation/index.html
+$dokka.location:com.github.ajalt.clikt.parsers/CommandLineParseResult///PointingToDeclaration/clikt/com.github.ajalt.clikt.parsers/-command-line-parse-result/index.html
+$dokka.location:com.github.ajalt.clikt.parsers/CommandLineParser///PointingToDeclaration/clikt/com.github.ajalt.clikt.parsers/-command-line-parser/index.html
+$dokka.location:com.github.ajalt.clikt.parsers/FlatInvocations///PointingToDeclaration/clikt/com.github.ajalt.clikt.parsers/-flat-invocations/index.html
+$dokka.location:com.github.ajalt.clikt.parsers/OptionInvocation///PointingToDeclaration/clikt/com.github.ajalt.clikt.parsers/-option-invocation/index.html
+$dokka.location:com.github.ajalt.clikt.sources/ChainedValueSource///PointingToDeclaration/clikt/com.github.ajalt.clikt.sources/-chained-value-source/index.html
+$dokka.location:com.github.ajalt.clikt.sources/MapValueSource///PointingToDeclaration/clikt/com.github.ajalt.clikt.sources/-map-value-source/index.html
+$dokka.location:com.github.ajalt.clikt.sources/PropertiesValueSource///PointingToDeclaration/clikt/com.github.ajalt.clikt.sources/-properties-value-source/index.html
+$dokka.location:com.github.ajalt.clikt.sources/ValueSource///PointingToDeclaration/clikt/com.github.ajalt.clikt.sources/-value-source/index.html
+
+module:clikt
+com.github.ajalt.clikt.command
+com.github.ajalt.clikt.completion
+com.github.ajalt.clikt.core
+com.github.ajalt.clikt.output
+com.github.ajalt.clikt.parameters.arguments
+com.github.ajalt.clikt.parameters.groups
+com.github.ajalt.clikt.parameters.options
+com.github.ajalt.clikt.parameters.transform
+com.github.ajalt.clikt.parsers
+com.github.ajalt.clikt.sources
+module:clikt-mordant
+com.github.ajalt.clikt.command
+com.github.ajalt.clikt.completion
+com.github.ajalt.clikt.core
+com.github.ajalt.clikt.output
+com.github.ajalt.clikt.testing
+module:clikt-mordant-markdown
+com.github.ajalt.clikt.output

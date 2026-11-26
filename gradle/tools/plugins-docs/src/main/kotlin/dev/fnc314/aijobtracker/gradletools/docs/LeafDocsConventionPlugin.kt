@@ -24,9 +24,17 @@ public class LeafDocsConventionPlugin : DocsConventionPlugin() {
 
       // Configure third-party external documentation links for cross-referencing external APIs
       dokka.dokkaSourceSets.configureEach { sourceSet ->
-        sourceSet.externalDocumentationLinks.register("clikt") { link ->
-          link.url.set(URI.create("https://ajalt.github.io/clikt/api/"))
-          link.packageListUrl.set(URI.create("https://ajalt.github.io/clikt/api/package-list"))
+        val cliktResource = LeafDocsConventionPlugin::class.java.getResource("/dev/fnc314/aijobtracker/gradletools/docs/packagelists/clikt/package-list")
+        if (cliktResource != null) {
+          sourceSet.externalDocumentationLinks.register("clikt") { link ->
+            link.url.set(URI.create("https://ajalt.github.io/clikt/api/"))
+            link.packageListUrl.set(cliktResource.toURI())
+          }
+        } else {
+          sourceSet.externalDocumentationLinks.register("clikt") { link ->
+            link.url.set(URI.create("https://ajalt.github.io/clikt/api/"))
+            link.packageListUrl.set(URI.create("https://ajalt.github.io/clikt/api/package-list"))
+          }
         }
         sourceSet.externalDocumentationLinks.register("mordant") { link ->
           link.url.set(URI.create("https://ajalt.github.io/mordant/api/"))
