@@ -1,26 +1,25 @@
 #!/usr/bin/env zsh
-#MISE description="Bump version in gradle/local.versions.toml, create git tag (version/X.Y.Z), and prompt to push"
+#MISE description="Bump version in gradle/local.versions.toml, create git tag (version/X.Y.Z), and push by default"
 #MISE alias="release"
 #USAGE arg "[version]" help="Semantic version to release (e.g. 1.0.0)"
-#USAGE flag "-p --push" help="Push the commit and created version tag to origin without prompt"
-#USAGE flag "-n --no-push" help="Skip push and prompt, creating commit and tag locally only"
-#USAGE flag "--suppress-auto-push" help="Alias to skip push and prompt, creating commit and tag locally only"
+#USAGE flag "-n --no-push" help="Skip push, creating commit and tag locally only"
+#USAGE flag "--suppress-auto-push" help="Alias to skip push, creating commit and tag locally only"
+#USAGE flag "--commit-only" help="Alias to skip push, creating commit and tag locally only"
 
 set -euo pipefail
 
 TOML_FILE="gradle/local.versions.toml"
 PROPERTIES_FILE="gradle.properties"
 VERSION=""
-AUTO_PUSH=false
 NO_PUSH=false
 
 for arg in "$@"; do
     case "$arg" in
-        -p|--push)
-            AUTO_PUSH=true
-            ;;
-        -n|--no-push|--suppress-auto-push)
+        -n|--no-push|--suppress-auto-push|--commit-only)
             NO_PUSH=true
+            ;;
+        -p|--push)
+            # Retained for backwards compatibility; push is now the default
             ;;
         -*)
             ;;
@@ -35,7 +34,7 @@ done
 CURRENT_TOML_VERSION=$(sed -n -E 's/^[[:space:]]*version[[:space:]]*=[[:space:]]*"([^"]+)"/\1/p' "$TOML_FILE" | head -n1)
 LATEST_GIT_TAG=$(git tag -l "version/*" | tr -s '[:space:]' '\n' | sort -V | tail -n1 | sed 's|^version/||')
 
-if [[ -z "$VERSION" || "$VERSION" == "-p" || "$VERSION" == "--push" ]]; then
+if [[ -z "$VERSION" ]]; then
     echo "Current toml version: ${CURRENT_TOML_VERSION:-None}"
     echo "Current highest git tag: ${LATEST_GIT_TAG:-None}"
     read -r "VERSION?Enter new version to release (e.g. 3.3.0): "
@@ -89,28 +88,16 @@ echo "🚀 Creating git tag '$TAG_NAME' on branch '$BRANCH'..."
 git tag -a "$TAG_NAME" -m "Release version $VERSION"
 echo "✓ Created annotated tag: $TAG_NAME"
 
-DO_PUSH=false
-if [[ "$AUTO_PUSH" == true ]]; then
-    DO_PUSH=true
-elif [[ "$NO_PUSH" == true ]]; then
-    DO_PUSH=false
-else
+if [[ "$NO_PUSH" == true ]]; then
     echo ""
-    read -r "CONFIRM_PUSH?Do you want to push branch '$BRANCH' and tag '$TAG_NAME' to origin now? [y/N] "
-    if [[ "$CONFIRM_PUSH" =~ ^[Yy]$ ]]; then
-        DO_PUSH=true
-    fi
-fi
-
-if [[ "$DO_PUSH" == true ]]; then
+    echo "Tag created locally (--no-push/--commit-only specified). When ready to publish:"
+    echo "   git push origin $BRANCH"
+    echo "   git push origin $TAG_NAME"
+else
     echo "Pushing '$BRANCH' and '$TAG_NAME' to origin..."
     git push origin "$BRANCH"
     git push origin "$TAG_NAME"
     echo "✓ Pushed commit and tag to remote origin."
-else
-    echo ""
-    echo "Tag created locally. When ready to publish:"
-    echo "   git push origin $BRANCH"
-    echo "   git push origin $TAG_NAME"
 fi
+
 

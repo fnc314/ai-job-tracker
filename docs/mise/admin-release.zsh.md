@@ -1,6 +1,6 @@
 ## `admin:release`
 
-Bump version in gradle/local.versions.toml, create git tag (version/X.Y.Z), and prompt to push
+Bump version in gradle/local.versions.toml, create git tag (version/X.Y.Z), and push by default
 
 - **Usage:** `admin:release [FLAGS] [version]`
 - **Aliases:** `release`
@@ -11,6 +11,6 @@ Bump version in gradle/local.versions.toml, create git tag (version/X.Y.Z), and 
 
 ### Flags
 
-- **`-p --push`** — Push the commit and created version tag to origin without prompt
-- **`-n --no-push`** — Skip push and prompt, creating commit and tag locally only
-- **`--suppress-auto-push`** — Alias to skip push and prompt, creating commit and tag locally only
+- **`-n --no-push`** — Skip push, creating commit and tag locally only
+- **`--suppress-auto-push`** — Alias to skip push, creating commit and tag locally only
+- **`--commit-only`** — Alias to skip push, creating commit and tag locally only
