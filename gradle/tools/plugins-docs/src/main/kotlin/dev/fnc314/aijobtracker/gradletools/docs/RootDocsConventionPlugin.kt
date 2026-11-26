@@ -23,7 +23,8 @@ public class RootDocsConventionPlugin : DocsConventionPlugin() {
       }
     }
 
-    // Conceal the Dokka plugin dependency by resolving it through the version catalog
+    // Conceal the Dokka plugin dependency by resolving it through the version catalog,
+    // excluding Gradle plugins that are not runtime Dokka plugins.
     val versionCatalogs = extensions.getByType(VersionCatalogsExtension::class.java)
     val toolsCatalog = versionCatalogs.find("tools").orElseGet {
       versionCatalogs.named("local")
@@ -31,7 +32,9 @@ public class RootDocsConventionPlugin : DocsConventionPlugin() {
     val docsPlugin = toolsCatalog.findLibrary("tools-plugins-docs").orElseThrow {
       IllegalStateException("Unable to resolve 'tools-plugins-docs' library from version catalogs")
     }
-    dependencies.addProvider("dokkaPlugin", docsPlugin)
+    val dep = dependencies.create(docsPlugin.get()) as org.gradle.api.artifacts.ExternalModuleDependency
+    dep.exclude(mapOf("group" to "org.jetbrains.dokka", "module" to "dokka-gradle-plugin"))
+    dependencies.add("dokkaPlugin", dep)
   }
 }
 
