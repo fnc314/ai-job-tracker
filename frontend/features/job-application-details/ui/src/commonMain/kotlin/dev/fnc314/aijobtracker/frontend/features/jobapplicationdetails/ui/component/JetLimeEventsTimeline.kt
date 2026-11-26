@@ -119,7 +119,7 @@ public fun JetLimeEventsTimeline(
             pointColor = Color.Transparent,
             pointStrokeColor = Color.Transparent,
             pointStrokeWidth = MaterialTheme.spacing.none,
-            pointRadius = MaterialTheme.iconSizes.small,
+            pointRadius = MaterialTheme.iconSizes.extraSmall,
             pointType = EventPointType.custom(
                 icon = rememberVectorPainter(event.type.icon),
                 tint = MaterialTheme.colorScheme.primary,

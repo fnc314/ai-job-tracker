@@ -1,18 +1,18 @@
 package dev.fnc314.aijobtracker.frontend.core.data.model
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Place
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.automirrored.outlined.Send
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Place
+import androidx.compose.material.icons.outlined.Refresh
+import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
@@ -43,70 +43,70 @@ public sealed interface TrackerEventType : WireContract {
         override val wireTag: Int = -1,
     ) : TrackerEventType {
         /** Fallback when event kind is unspecified. */
-        UNSPECIFIED(Icons.Default.CheckCircle, "Unspecified", "UNSPECIFIED", wireTag = 0),
+        UNSPECIFIED(Icons.Outlined.CheckCircle, "Unspecified", "UNSPECIFIED", wireTag = 0),
 
         /** Initial application submission to company. */
-        APPLY(Icons.AutoMirrored.Filled.Send, "Application Submitted", "APPLY", wireTag = 1),
+        APPLY(Icons.AutoMirrored.Outlined.Send, "Application Submitted", "APPLY", wireTag = 1),
 
         /** Automated or recruiter confirmation of application receipt. */
-        ACKNOWLEDGE(Icons.Default.Email, "Acknowledged", "ACKNOWLEDGE", wireTag = 2),
+        ACKNOWLEDGE(Icons.Outlined.Email, "Acknowledged", "ACKNOWLEDGE", wireTag = 2),
 
         /** Initial conversational phone or video screen with a technical recruiter. */
-        RECRUITER_SCREEN(Icons.Default.DateRange, "Recruiter Screen", "RECRUITER_SCREEN", wireTag = 3),
+        RECRUITER_SCREEN(Icons.Outlined.DateRange, "Recruiter Screen", "RECRUITER_SCREEN", wireTag = 3),
 
         /** Technical or behavioral interview scheduled. */
-        SCHEDULE_INTERVIEW(Icons.Default.DateRange, "Interview Scheduled", "SCHEDULE_INTERVIEW", wireTag = 4),
+        SCHEDULE_INTERVIEW(Icons.Outlined.DateRange, "Interview Scheduled", "SCHEDULE_INTERVIEW", wireTag = 4),
 
         /** Scheduled interview round concluded. */
-        COMPLETE_INTERVIEW(Icons.Default.DateRange, "Interview Completed", "COMPLETE_INTERVIEW", wireTag = 5),
+        COMPLETE_INTERVIEW(Icons.Outlined.DateRange, "Interview Completed", "COMPLETE_INTERVIEW", wireTag = 5),
 
         /** Take-home technical coding assessment or architectural assignment. */
-        ASSESS(Icons.Default.Edit, "Assessment", "ASSESS", wireTag = 6),
+        ASSESS(Icons.Outlined.Edit, "Assessment", "ASSESS", wireTag = 6),
 
         /** Full loop or final onsite interview round. */
-        VISIT_ONSITE(Icons.Default.Place, "On-Site Interview", "VISIT_ONSITE", wireTag = 7),
+        VISIT_ONSITE(Icons.Outlined.Place, "On-Site Interview", "VISIT_ONSITE", wireTag = 7),
 
         /** Formal offer of employment extended. */
-        OFFER(Icons.Default.Star, "Offer Received", "OFFER", wireTag = 8),
+        OFFER(Icons.Outlined.Star, "Offer Received", "OFFER", wireTag = 8),
 
         /** Offer formally accepted by candidate. */
-        ACCEPT_OFFER(Icons.Default.CheckCircle, "Offer Accepted", "ACCEPT_OFFER", wireTag = 9),
+        ACCEPT_OFFER(Icons.Outlined.CheckCircle, "Offer Accepted", "ACCEPT_OFFER", wireTag = 9),
 
         /** Candidate declined the employment offer. */
-        DECLINE_OFFER(Icons.Default.Close, "Offer Declined", "DECLINE_OFFER", wireTag = 10),
+        DECLINE_OFFER(Icons.Outlined.Close, "Offer Declined", "DECLINE_OFFER", wireTag = 10),
 
         /** Candidate rejected by company. */
-        REJECT(Icons.Default.Close, "Rejected", "REJECT", wireTag = 11),
+        REJECT(Icons.Outlined.Close, "Rejected", "REJECT", wireTag = 11),
 
         /** Application marked inactive after 30+ days of silence. */
-        GHOST(Icons.Default.Close, "No Response", "GHOST", wireTag = 12),
+        GHOST(Icons.Outlined.Close, "No Response", "GHOST", wireTag = 12),
 
         /** Candidate voluntarily withdrew from consideration. */
-        WITHDRAW(Icons.Default.Close, "Withdrawn", "WITHDRAW", wireTag = 13),
+        WITHDRAW(Icons.Outlined.Close, "Withdrawn", "WITHDRAW", wireTag = 13),
 
         /** Follow-up message sent by candidate or agent. */
-        SEND_FOLLOW_UP(Icons.Default.Email, "Follow-Up Sent", "SEND_FOLLOW_UP", wireTag = 14),
+        SEND_FOLLOW_UP(Icons.Outlined.Email, "Follow-Up Sent", "SEND_FOLLOW_UP", wireTag = 14),
 
         /** Tailored LaTeX CV or Cover Letter compiled for this role. */
-        TAILOR_DOCUMENT(Icons.Default.Edit, "Document Tailored", "TAILOR_DOCUMENT", wireTag = 15),
+        TAILOR_DOCUMENT(Icons.Outlined.Edit, "Document Tailored", "TAILOR_DOCUMENT", wireTag = 15),
 
         /** Candidate fit score recalculated against updated requirements. */
-        RECALCULATE_FIT(Icons.Default.Refresh, "Fit Recalculated", "RECALCULATE_FIT", wireTag = 16),
+        RECALCULATE_FIT(Icons.Outlined.Refresh, "Fit Recalculated", "RECALCULATE_FIT", wireTag = 16),
 
         /** New document or specification artifact attached. */
-        ADD_ARTIFACT(Icons.Default.Info, "Artifact Added", "ADD_ARTIFACT", wireTag = 17),
+        ADD_ARTIFACT(Icons.Outlined.Info, "Artifact Added", "ADD_ARTIFACT", wireTag = 17),
 
         /** Contextual strategy note added. */
-        ADD_NOTE(Icons.Default.Edit, "Note Added", "ADD_NOTE", wireTag = 18),
+        ADD_NOTE(Icons.Outlined.Edit, "Note Added", "ADD_NOTE", wireTag = 18),
 
         /** Record imported from external system or CSV archive. */
-        IMPORT(Icons.Default.Share, "Imported", "IMPORT", wireTag = 19),
+        IMPORT(Icons.Outlined.Share, "Imported", "IMPORT", wireTag = 19),
 
         /** Manual correction applied to status lifecycle. */
-        CORRECT_STATUS(Icons.Default.Refresh, "Status Corrected", "CORRECT_STATUS", wireTag = 20),
+        CORRECT_STATUS(Icons.Outlined.Refresh, "Status Corrected", "CORRECT_STATUS", wireTag = 20),
 
         /** Direct outreach initiated to recruiter or hiring team member. */
-        RECRUITER_OUTREACH(Icons.Default.Person, "Recruiter Outreach", "RECRUITER_OUTREACH");
+        RECRUITER_OUTREACH(Icons.Outlined.Person, "Recruiter Outreach", "RECRUITER_OUTREACH");
     }
 
     /**
@@ -115,7 +115,7 @@ public sealed interface TrackerEventType : WireContract {
     public data class Unrecognized(
         override val wireKey: String
     ) : TrackerEventType {
-        override val icon: ImageVector get() = Icons.Default.Info
+        override val icon: ImageVector get() = Icons.Outlined.Info
         override val displayName: String get() = "Unknown ($wireKey)"
     }
 
