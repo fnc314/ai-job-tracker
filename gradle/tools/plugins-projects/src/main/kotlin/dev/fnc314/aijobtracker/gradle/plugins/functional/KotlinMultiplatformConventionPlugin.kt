@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
  *
  * Enforces explicit API mode with warning severity, aligns the JVM toolchain, configures
  * common compilation targets (JVM, JS, WasmJS, iOS), and applies shared linting ([DetektConventionPlugin]),
- * documentation ([DokkaConventionPlugin]), and testing conventions.
+ * documentation, and testing conventions.
  */
 public class KotlinMultiplatformConventionPlugin :
   Plugin<Project>,

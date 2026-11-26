@@ -23,7 +23,7 @@ public class RootDocsConventionPlugin : DocsConventionPlugin() {
       }
     }
 
-    val pluginJar = layout.projectDirectory.file("gradle/tools/plugins-docs/build/libs/ai-job-tracker_gradle-tools_plugins-docs-4.1.0.jar")
+    val pluginJar = layout.projectDirectory.file("gradle/tools/plugins-docs/build/libs/ai-job-tracker_gradle-tools_plugins-docs-4.2.1.jar")
 
     tasks.withType(DokkaGeneratePublicationTask::class.java).configureEach { task ->
       task.generator.pluginsClasspath.from(pluginJar)
