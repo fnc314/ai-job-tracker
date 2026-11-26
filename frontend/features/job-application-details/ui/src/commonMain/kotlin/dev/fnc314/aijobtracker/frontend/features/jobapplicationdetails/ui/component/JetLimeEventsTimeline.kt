@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -115,13 +116,13 @@ public fun JetLimeEventsTimeline(
         val eventStyle = JetLimeEventDefaults.eventStyle(
             position = position,
             pointPlacement = PointPlacement.CENTER,
-            pointColor = MaterialTheme.colorScheme.primaryContainer,
-            pointStrokeColor = MaterialTheme.colorScheme.primary,
-            pointStrokeWidth = MaterialTheme.componentSizes.timelineLineWidth,
-            pointRadius = MaterialTheme.spacing.small,
+            pointColor = Color.Transparent,
+            pointStrokeColor = Color.Transparent,
+            pointStrokeWidth = MaterialTheme.spacing.none,
+            pointRadius = MaterialTheme.iconSizes.small,
             pointType = EventPointType.custom(
                 icon = rememberVectorPainter(event.type.icon),
-                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                tint = MaterialTheme.colorScheme.primary,
             ),
         )
 
