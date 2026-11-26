@@ -17,6 +17,7 @@ kotlin {
             implementation(projects.features.jobApplicationDetails.domain)
             implementation(projects.core.widgets)
             implementation(libs.bundles.androidx.lifecycle.compose)
+            implementation(libs.jetlime)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.markdown.renderer.m3)
         }

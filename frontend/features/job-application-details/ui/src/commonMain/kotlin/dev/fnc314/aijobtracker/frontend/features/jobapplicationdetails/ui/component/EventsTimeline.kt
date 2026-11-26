@@ -1,27 +1,15 @@
-@file:OptIn(ExperimentalGridApi::class)
-@file:Suppress("LongMethod")
-
 package dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.ui.component
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalGridApi
-import androidx.compose.foundation.layout.Fr
-import androidx.compose.foundation.layout.Grid
-import androidx.compose.foundation.layout.GridScope
-import androidx.compose.foundation.layout.GridTrackSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Icon
@@ -35,23 +23,28 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import dev.fnc314.aijobtracker.frontend.core.widgets.AppText
+import com.pushpal.jetlime.EventPointType
+import com.pushpal.jetlime.ItemsList
+import com.pushpal.jetlime.JetLimeColumn
+import com.pushpal.jetlime.JetLimeDefaults
+import com.pushpal.jetlime.JetLimeEvent
+import com.pushpal.jetlime.JetLimeEventDefaults
 import dev.fnc314.aijobtracker.frontend.core.data.model.EventActor
 import dev.fnc314.aijobtracker.frontend.core.data.model.TrackerEvent
 import dev.fnc314.aijobtracker.frontend.core.designsystem.componentSizes
 import dev.fnc314.aijobtracker.frontend.core.designsystem.iconSizes
 import dev.fnc314.aijobtracker.frontend.core.designsystem.spacing
+import dev.fnc314.aijobtracker.frontend.core.widgets.AppText
 import dev.fnc314.aijobtracker.frontend.core.widgets.formatRelativeInstant
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.ui.EventDetailDialog
-import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.data_missing
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.Res
+import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.data_missing
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.timeline_empty
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.timeline_event_cd
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.timeline_scheduled
@@ -63,11 +56,21 @@ import kotlin.time.Instant
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * Renders an interactive vertical timeline of job application events using JetLime.
+ *
+ * Each event renders an icon node representing its [TrackerEvent.type], vertical connecting lines,
+ * and an event summary card displaying transition states, notes, actor tags, and timestamps.
+ * Clicking any event card opens an [EventDetailDialog] displaying full payload metadata.
+ *
+ * @param events The ordered immutable list of application events to render.
+ * @param modifier The layout modifier for the timeline container.
+ */
 @Composable
 internal fun EventsTimeline(
   events: ImmutableList<TrackerEvent>,
   modifier: Modifier = Modifier,
-): Unit {
+) {
   var selectedEvent by remember { mutableStateOf<TrackerEvent?>(null) }
 
   if (selectedEvent != null) {
@@ -93,279 +96,163 @@ internal fun EventsTimeline(
     return
   }
 
-  Column(
-    modifier = modifier.fillMaxWidth(),
-    verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.none),
-  ) {
-    events.forEachIndexed { index, event ->
-      val isFirst = index == 0
-      val isLast = index == events.lastIndex
-      val eventCd: String = stringResource(Res.string.timeline_event_cd, event.type.displayName())
-      val gridSizes = object {
-        val columns = object {
-          val graphicNode = GridTrackSize.MinContent
-          val textNode = GridTrackSize.Flex(Fr(1.0F))
-        }
-        val gaps = object {
-          val column = MaterialTheme.spacing.medium
-          val row = MaterialTheme.spacing.none
-        }
-        val rows = object {
-          val all = GridTrackSize.Fixed(MaterialTheme.componentSizes.timelineNodeSize)
-        }
-      }
-      Grid(
-        config = {
-          column(
-            size = gridSizes.columns.graphicNode,
-          )
-          column(
-            size = gridSizes.columns.textNode
-          )
-          gap(
-            column = gridSizes.gaps.column,
-            row = gridSizes.gaps.row
-          )
-          row(
-            size = gridSizes.rows.all
-          )
-          row(
-            size = gridSizes.rows.all
-          )
-          row(
-            size = gridSizes.rows.all
-          )
+  val itemsList = remember(events) { ItemsList(events) }
+  val columnStyle = JetLimeDefaults.columnStyle(
+    contentDistance = MaterialTheme.spacing.medium,
+    itemSpacing = MaterialTheme.spacing.small,
+    lineThickness = MaterialTheme.componentSizes.timelineLineWidth,
+    lineBrush = JetLimeDefaults.lineSolidBrush(color = MaterialTheme.colorScheme.outlineVariant),
+  )
 
-          area(
-            areaId = "graphic-top",
-            row = 1,
-            rowSpan = 1,
-            column = 1,
-            columnSpan = 1,
-          )
-          area(
-            areaId = "graphic-icon",
-            row = 2,
-            rowSpan = 1,
-            column = 1,
-            columnSpan = 1,
-          )
-          area(
-            areaId = "graphic-bottom",
-            row = 3,
-            rowSpan = 1,
-            column = 1,
-            columnSpan = 1,
-          )
-          area(
-            areaId = "text",
-            row = 1,
-            rowSpan = 3,
-            column = 2,
-            columnSpan = 1,
-          )
-        },
-        modifier = Modifier
-          .fillMaxWidth()
-          .clip(MaterialTheme.shapes.small)
-          .clickable { selectedEvent = event }
-          .padding(
-            horizontal = MaterialTheme.spacing.medium,
-          )
-          .semantics { contentDescription = eventCd }
-      ) {
+  JetLimeColumn(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = MaterialTheme.spacing.medium),
+    itemsList = itemsList,
+    key = { _, event -> event.id.ifEmpty { "${event.type}_${event.createdAt}" } },
+    style = columnStyle,
+  ) { _, event, position ->
+    val eventCd: String = stringResource(Res.string.timeline_event_cd, event.type.displayName())
+    val eventStyle = JetLimeEventDefaults.eventStyle(
+      position = position,
+      pointColor = MaterialTheme.colorScheme.primaryContainer,
+      pointStrokeColor = MaterialTheme.colorScheme.primary,
+      pointStrokeWidth = MaterialTheme.componentSizes.timelineLineWidth,
+      pointRadius = MaterialTheme.componentSizes.timelineNodeSize / 2,
+      pointType = EventPointType.custom(
+        icon = rememberVectorPainter(event.type.icon),
+        tint = MaterialTheme.colorScheme.onPrimaryContainer,
+      ),
+    )
 
-        context(this) {
-          EventsTimelineGraphic(
-            event = event,
-            isFirst = isFirst,
-            isLast = isLast,
-          )
-
-          EventsTimelineDescription(
-            event = event,
-          )
-        }
-
-      }
+    JetLimeEvent(
+      style = eventStyle,
+      modifier = Modifier
+        .fillMaxWidth()
+        .clip(MaterialTheme.shapes.small)
+        .clickable { selectedEvent = event }
+        .semantics { contentDescription = eventCd },
+    ) {
+      EventsTimelineDescription(event = event)
     }
   }
 }
 
-
-@Suppress("LongMethod")
+/**
+ * Event detail card placed inside each timeline node slot.
+ *
+ * @param event The event being described.
+ * @param modifier Optional modifier for the description container.
+ */
 @Composable
-context(gridScope: GridScope)
 private fun EventsTimelineDescription(
   event: TrackerEvent,
+  modifier: Modifier = Modifier,
 ) {
-  with(gridScope) {
-    // Event Content Card
-    OutlinedCard(
-      shape = MaterialTheme.shapes.medium,
+  OutlinedCard(
+    shape = MaterialTheme.shapes.medium,
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(vertical = MaterialTheme.spacing.extraSmall),
+  ) {
+    Column(
       modifier = Modifier
-        .gridItem(areaId = "text")
-        .fillMaxSize()
-        .padding(vertical = MaterialTheme.spacing.small),
+        .fillMaxWidth()
+        .padding(MaterialTheme.spacing.small),
+      verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmall),
+      horizontalAlignment = Alignment.Start,
     ) {
-      Column(
-        modifier = Modifier
-          .fillMaxSize()
-          .padding(MaterialTheme.spacing.small),
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.Start,
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
       ) {
-        Row(
-          modifier = Modifier.fillMaxWidth(),
-          horizontalArrangement = Arrangement.SpaceBetween,
-          verticalAlignment = Alignment.CenterVertically,
-        ) {
-          Text(
-            text = event.type.displayName(),
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.onSurface,
-          )
+        Text(
+          text = event.type.displayName(),
+          style = MaterialTheme.typography.titleSmall,
+          color = MaterialTheme.colorScheme.onSurface,
+        )
 
-          val isEmailSource = event.actor == EventActor.EMAIL_SYNC || !event.emailMessageId.isNullOrBlank()
-          if (isEmailSource) {
-            Surface(
-              shape = MaterialTheme.shapes.extraSmall,
-              color = MaterialTheme.colorScheme.secondaryContainer,
+        val isEmailSource = event.actor == EventActor.EMAIL_SYNC || !event.emailMessageId.isNullOrBlank()
+        if (isEmailSource) {
+          Surface(
+            shape = MaterialTheme.shapes.extraSmall,
+            color = MaterialTheme.colorScheme.secondaryContainer,
+          ) {
+            Row(
+              modifier = Modifier.padding(
+                horizontal = MaterialTheme.spacing.extraSmall,
+                vertical = MaterialTheme.spacing.micro,
+              ),
+              verticalAlignment = Alignment.CenterVertically,
+              horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.micro),
             ) {
-              Row(
-                modifier = Modifier.padding(
-                  horizontal = MaterialTheme.spacing.extraSmall,
-                  vertical = MaterialTheme.spacing.micro,
-                ),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.micro),
-              ) {
-                Icon(
-                  imageVector = Icons.Default.Email,
-                  contentDescription = stringResource(Res.string.timeline_source_email),
-                  tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                  modifier = Modifier.size(MaterialTheme.iconSizes.extraSmall),
-                )
-                Text(
-                  text = stringResource(Res.string.timeline_source_email),
-                  style = MaterialTheme.typography.labelSmall,
-                  color = MaterialTheme.colorScheme.onSecondaryContainer,
-                )
-              }
+              Icon(
+                imageVector = Icons.Default.Email,
+                contentDescription = stringResource(Res.string.timeline_source_email),
+                tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                modifier = Modifier.size(MaterialTheme.iconSizes.extraSmall),
+              )
+              Text(
+                text = stringResource(Res.string.timeline_source_email),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSecondaryContainer,
+              )
             }
           }
         }
+      }
 
-        event.note?.let { note ->
+      event.note?.let { note ->
+        AppText(
+          text = note,
+          style = MaterialTheme.typography.bodySmall,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+          overflow = TextOverflow.Ellipsis,
+          minLines = 2,
+          maxLines = 8,
+          modifier = Modifier.wrapContentWidth(
+            align = Alignment.Start,
+          ),
+        )
+      }
 
-          AppText(
-            text = note,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            overflow = TextOverflow.Ellipsis,
-            minLines = 2,
-            maxLines = 8,
-            modifier = Modifier.wrapContentWidth(
-              align = Alignment.Start,
-            )
-          )
-        }
-
-        event.scheduledAt?.let { scheduledAt ->
-          if (scheduledAt != Instant.DISTANT_PAST) {
-            Text(
-              text = stringResource(
-                Res.string.timeline_scheduled,
-                scheduledAt
-              ),
-              style = MaterialTheme.typography.labelSmall,
-              color = MaterialTheme.colorScheme.secondary,
-            )
-          }
-        }
-
-        if (event.statusFrom != null || event.statusTo != null) {
-          val transitionFrom = event.statusFrom?.localizedDisplayName()
-            ?: stringResource(Res.string.timeline_transition_start)
-          val transitionTo = event.statusTo?.localizedDisplayName()
-            ?: stringResource(Res.string.timeline_transition_current)
-
+      event.scheduledAt?.let { scheduledAt ->
+        if (scheduledAt != Instant.DISTANT_PAST) {
           Text(
             text = stringResource(
-              Res.string.timeline_transition,
-              transitionFrom,
-              transitionTo,
+              Res.string.timeline_scheduled,
+              scheduledAt,
             ),
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.secondary,
           )
         }
+      }
+
+      if (event.statusFrom != null || event.statusTo != null) {
+        val transitionFrom = event.statusFrom?.localizedDisplayName()
+          ?: stringResource(Res.string.timeline_transition_start)
+        val transitionTo = event.statusTo?.localizedDisplayName()
+          ?: stringResource(Res.string.timeline_transition_current)
 
         Text(
-          text = formatRelativeInstant(event.createdAt)
-            ?: stringResource(Res.string.data_missing),
+          text = stringResource(
+            Res.string.timeline_transition,
+            transitionFrom,
+            transitionTo,
+          ),
           style = MaterialTheme.typography.labelSmall,
-          color = MaterialTheme.colorScheme.onSurfaceVariant,
+          color = MaterialTheme.colorScheme.primary,
         )
       }
-    }
-  }
-}
 
-
-@Composable
-context(gridScope: GridScope)
-private fun EventsTimelineGraphic(
-  event: TrackerEvent,
-  isFirst: Boolean,
-  isLast: Boolean,
-) {
-  with(gridScope) {
-    if (!isFirst) {
-      Box(
-        modifier = Modifier
-          .gridItem(areaId = "graphic-top")
-          .fillMaxSize(),
-        contentAlignment = Alignment.TopCenter,
-      ) {
-        Box(
-          modifier = Modifier
-            .width(MaterialTheme.componentSizes.timelineLineWidth)
-            .height(MaterialTheme.componentSizes.timelineNodeSize)
-            .background(MaterialTheme.colorScheme.outlineVariant)
-        )
-      }
-    }
-    Surface(
-      shape = CircleShape,
-      color = MaterialTheme.colorScheme.primaryContainer,
-      modifier = Modifier
-        .gridItem(areaId = "graphic-icon")
-        .size(MaterialTheme.componentSizes.timelineNodeSize)
-    ) {
-      Box(contentAlignment = Alignment.Center) {
-        Icon(
-          imageVector = event.type.icon,
-          contentDescription = null,
-          tint = MaterialTheme.colorScheme.onPrimaryContainer,
-          modifier = Modifier.size(MaterialTheme.iconSizes.medium),
-        )
-      }
-    }
-    if (!isLast) {
-      Box(
-        modifier = Modifier
-          .gridItem(areaId = "graphic-bottom")
-          .fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter,
-      ) {
-        Box(
-          modifier = Modifier
-            .width(MaterialTheme.componentSizes.timelineLineWidth)
-            .height(MaterialTheme.componentSizes.timelineNodeSize)
-            .background(MaterialTheme.colorScheme.outlineVariant)
-        )
-      }
+      Text(
+        text = formatRelativeInstant(event.createdAt)
+          ?: stringResource(Res.string.data_missing),
+        style = MaterialTheme.typography.labelSmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
     }
   }
 }

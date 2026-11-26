@@ -21,6 +21,7 @@ This directory contains design and implementation plans for the `frontend` proje
 
 | Plan | Status | Scope / Focus Area |
 | :--- | :--- | :--- |
+| [`204022_jetlime-timeline-integration.md`](./2026-11-25/204022_jetlime-timeline-integration.md) | Completed | Integrate JetLime Compose Multiplatform timeline library into frontend:features:job-application-details:ui, replacing custom grid layout |
 | [`042907_compose-nav-graph-plugin.md`](./2026-11-24/042907_compose-nav-graph-plugin.md) | Completed | Integrate skydoves compose-nav-graph plugin to generate visual PNG and interactive HTML navigation graphs with representative previews |
 | [`112000_ai-apply-pipeline-isolation-and-agent-embedding-plan.md`](./2026-11-23/112000_ai-apply-pipeline-isolation-and-agent-embedding-plan.md) | Completed | Architectural assessment of why client-side Firebase AI is rejected in `frontend/features/ai-apply` and feasibility analysis of embedding `.agents` configurations within multiplatform `frontend/apps` |
 | [`145500_frontend-fcm-and-proposal-override-ui.md`](./2026-11-20/145500_frontend-fcm-and-proposal-override-ui.md) | Completed | Frontend FCM device token registration, push notification deep linking to `JobApplicationEditsRoute`, and inline transition override modal in `TrackerEditsScreen` |
