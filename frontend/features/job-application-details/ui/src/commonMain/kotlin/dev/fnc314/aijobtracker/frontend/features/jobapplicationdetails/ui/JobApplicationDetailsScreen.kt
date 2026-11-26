@@ -16,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -48,10 +49,10 @@ import dev.fnc314.aijobtracker.frontend.core.widgets.FitBadge
 import dev.fnc314.aijobtracker.frontend.core.widgets.LoadingWidget
 import dev.fnc314.aijobtracker.frontend.core.widgets.StatusBadge
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.ui.component.ArtifactsList
-import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.ui.component.EventsTimeline
 import dev.fnc314.aijobtracker.frontend.features.jobapplicationdetails.ui.component.JobApplicationDetailsSummaryMenu
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.Res
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.detail_action_go_back
+import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.detail_action_show_events
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.detail_applied_on
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.detail_company_aliases
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.detail_company_industry
@@ -69,7 +70,6 @@ import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.gene
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.detail_prefix_location
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.detail_section_artifacts
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.email_evidence_title
-import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.detail_section_timeline
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
@@ -91,6 +91,7 @@ public fun JobApplicationDetailsScreen(
   applicationId: String,
   viewModel: JobApplicationDetailViewModel = koinInject(),
   onNavigateBack: () -> Unit,
+  onShowEvents: () -> Unit = {},
   onArtifactClick: (TrackerArtifact) -> Unit = {},
   settings: AppSettings = AppSettings(),
   modifier: Modifier = Modifier,
@@ -146,6 +147,7 @@ public fun JobApplicationDetailsScreen(
       JobApplicationDetailContent(
         state = state,
         onIntent = viewModel::onIntent,
+        onShowEvents = onShowEvents,
         onArtifactClick = onArtifactClick,
         settings = settings,
         modifier = modifier,
@@ -158,6 +160,7 @@ public fun JobApplicationDetailsScreen(
 private fun JobApplicationDetailContent(
   state: JobApplicationDetailUiState.Content,
   onIntent: (JobApplicationDetailUiIntent) -> Unit,
+  onShowEvents: () -> Unit,
   onArtifactClick: (TrackerArtifact) -> Unit,
   settings: AppSettings,
   modifier: Modifier = Modifier,
@@ -193,7 +196,10 @@ private fun JobApplicationDetailContent(
               modifier = Modifier.weight(1f),
               verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
             ) {
-              ApplicationSummarySection(model = model)
+              ApplicationSummarySection(
+                model = model,
+                onShowEvents = onShowEvents,
+              )
               model.company?.let { CompanyProfileSection(company = it) }
               ApplicationEmailsSection(model = model)
             }
@@ -213,7 +219,6 @@ private fun JobApplicationDetailContent(
                 applicationId = model.id,
               )
 
-              ApplicationTimelineSection(model = model)
               Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
             }
           }
@@ -225,7 +230,10 @@ private fun JobApplicationDetailContent(
               .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
           ) {
-            ApplicationSummarySection(model = model)
+            ApplicationSummarySection(
+              model = model,
+              onShowEvents = onShowEvents,
+            )
             model.company?.let { CompanyProfileSection(company = it) }
             ApplicationEmailsSection(model = model)
 
@@ -241,7 +249,6 @@ private fun JobApplicationDetailContent(
               applicationId = model.id,
             )
 
-            ApplicationTimelineSection(model = model)
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
           }
         }
@@ -253,6 +260,7 @@ private fun JobApplicationDetailContent(
 @Composable
 internal fun ApplicationSummarySection(
   model: JobApplicationDetailUiModel,
+  onShowEvents: () -> Unit = {},
   modifier: Modifier = Modifier,
 ) {
   OutlinedCard(
@@ -360,6 +368,15 @@ internal fun ApplicationSummarySection(
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )
+
+      OutlinedButton(
+        onClick = onShowEvents,
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(top = MaterialTheme.spacing.small),
+      ) {
+        Text(text = stringResource(Res.string.detail_action_show_events))
+      }
     }
   }
 }
@@ -413,20 +430,6 @@ internal fun ApplicationEmailsSection(
         }
       }
     }
-  }
-}
-
-@Composable
-internal fun ApplicationTimelineSection(
-  model: JobApplicationDetailUiModel,
-  modifier: Modifier = Modifier,
-) {
-  Column(
-    modifier = modifier.fillMaxWidth(),
-    verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.none),
-  ) {
-    SectionHeader(stringResource(Res.string.detail_section_timeline))
-    EventsTimeline(events = model.timelineEvents)
   }
 }
 

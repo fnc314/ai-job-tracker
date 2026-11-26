@@ -2,6 +2,8 @@ package dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.impl
 
 import dev.fnc314.aijobtracker.frontend.core.data.platform.PlatformDeviceInfoProvider
 import dev.fnc314.aijobtracker.frontend.core.data.platform.PlatformPushTokenProvider
+import dev.fnc314.aijobtracker.frontend.core.data.settings.AppSettingsRepository
+import dev.fnc314.aijobtracker.frontend.core.data.settings.SettingsStorage
 import dev.fnc314.aijobtracker.frontend.core.data.source.NotificationRemoteDataSource
 import dev.fnc314.aijobtracker.frontend.core.logging.AppLogger
 import dev.fnc314.aijobtracker.frontend.features.settings.domain.usecase.RegisterDeviceNotificationsUseCase
@@ -10,6 +12,7 @@ internal class RegisterDeviceNotificationsUseCaseImpl(
     private val notificationRemoteDataSource: NotificationRemoteDataSource,
     private val platformDeviceInfoProvider: PlatformDeviceInfoProvider,
     private val platformPushTokenProvider: PlatformPushTokenProvider,
+    private val settingsStorage: SettingsStorage,
 ) : RegisterDeviceNotificationsUseCase {
     override suspend fun invoke(): Boolean {
         AppLogger.d("RegisterNotifications") { "Fetching push token..." }
@@ -18,6 +21,15 @@ internal class RegisterDeviceNotificationsUseCaseImpl(
             "Push token result: ${if (token.isNullOrBlank()) "NULL/EMPTY" else "OBTAINED (${token.take(10)}...)"}"
         }
         if (token.isNullOrBlank()) return false
+
+        val cachedToken = settingsStorage.getString(AppSettingsRepository.KEY_LAST_REGISTERED_PUSH_TOKEN)
+        if (cachedToken == token) {
+            AppLogger.d("RegisterNotifications") {
+                "Push token ($token) matches cached registration; skipping redundant backend call."
+            }
+            return true
+        }
+
         val deviceInfo = platformDeviceInfoProvider.getDeviceInfo()
         AppLogger.d("RegisterNotifications") {
             "Calling registerDevice with installationId=${deviceInfo.installationId}"
@@ -28,6 +40,9 @@ internal class RegisterDeviceNotificationsUseCaseImpl(
             installationId = deviceInfo.installationId,
         )
         AppLogger.i("RegisterNotifications") { "registerDevice response: $result" }
+        if (result) {
+            settingsStorage.putString(AppSettingsRepository.KEY_LAST_REGISTERED_PUSH_TOKEN, token)
+        }
         return result
     }
 }

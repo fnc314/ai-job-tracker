@@ -45,6 +45,9 @@ dependencies {
   androidMainImplementation(libs.bundles.ktor.client.android)
   androidMainImplementation(libs.kotlinx.coroutinesPlayServices)
   androidMainImplementation(libs.firebase.messaging)
+  androidMainImplementation(libs.androidx.datastore.preferences)
+  androidMainImplementation(libs.androidx.security.crypto)
+  androidMainImplementation(libs.encrypted.datastore.preferences)
   androidMainImplementation(libs.kmp.inspector)
   androidMainImplementation(libs.kmp.inspector.room)
 }

@@ -16,10 +16,10 @@ public val settingsDomainModule: Module = module {
     factory<ObserveSettingsUseCase> { ObserveSettingsUseCaseImpl(get()) }
     factory<UpdateSettingsUseCase> { UpdateSettingsUseCaseImpl(get()) }
     factory<DeregisterDeviceNotificationsUseCase> {
-        DeregisterDeviceNotificationsUseCaseImpl(get(), get())
+        DeregisterDeviceNotificationsUseCaseImpl(get(), get(), get())
     }
     factory<RegisterDeviceNotificationsUseCase> {
-        RegisterDeviceNotificationsUseCaseImpl(get(), get(), get())
+        RegisterDeviceNotificationsUseCaseImpl(get(), get(), get(), get())
     }
 }
 

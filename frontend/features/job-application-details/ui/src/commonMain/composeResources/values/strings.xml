@@ -96,4 +96,6 @@
   <string name="email_status_rejection">Rejection</string>
   <string name="email_status_correspondence">Correspondence</string>
   <string name="email_status_noise">Noise</string>
+  <string name="detail_action_show_events">Show Events</string>
+  <string name="detail_events_timeline_route_title">Timeline Events</string>
 </resources>

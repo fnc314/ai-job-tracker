@@ -9,6 +9,7 @@ import dev.fnc314.aijobtracker.frontend.core.navigation.FeatureEntryRegistry
 import dev.fnc314.aijobtracker.frontend.core.navigation.JobApplicationsTrackerNavKey
 import dev.fnc314.aijobtracker.frontend.core.navigation.TopBarActions
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.Res
+import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.detail_events_timeline_route_title
 import dev.fnc314.aijobtracker.frontend.features_job_application_details_ui.generated.resources.detail_route_title
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -32,6 +33,22 @@ public data class JobApplicationDetailRoute(
 }
 
 /**
+ * Navigation destination route for viewing the full JetLime events timeline of a job application.
+ *
+ * @property applicationId Unique Firestore identifier of the job application.
+ */
+@Serializable
+public data class JobApplicationEventsRoute(
+    public val applicationId: String,
+) : JobApplicationsTrackerNavKey {
+    @Transient
+    override val titleRes: StringResource = Res.string.detail_events_timeline_route_title
+
+    @Transient
+    override val topBarActions: TopBarActions = TopBarActions.None
+}
+
+/**
  * Navigation entry registry providing routes for the job application details feature.
  */
 public class JobApplicationDetailsEntryRegistry : FeatureEntryRegistry {
@@ -43,7 +60,13 @@ public class JobApplicationDetailsEntryRegistry : FeatureEntryRegistry {
             JobApplicationDetailsScreen(
                 applicationId = key.applicationId,
                 onNavigateBack = navigator::popBackStack,
+                onShowEvents = { navigator.navigate(JobApplicationEventsRoute(key.applicationId)) },
                 settings = settings,
+            )
+        }
+        scope.entry<JobApplicationEventsRoute> { key ->
+            JobApplicationEventsScreen(
+                applicationId = key.applicationId,
             )
         }
     }

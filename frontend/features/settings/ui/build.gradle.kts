@@ -18,6 +18,11 @@ kotlin {
             implementation(libs.bundles.androidx.lifecycle.compose)
             implementation(libs.kotlinx.coroutines.core)
         }
+        commonTest.dependencies {
+            implementation(projects.core.auth)
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
+        }
     }
 }
 

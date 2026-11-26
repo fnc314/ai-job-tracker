@@ -11,6 +11,8 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dev.fnc314.aijobtracker.frontend.core.data.model.DevicePlatform
 import dev.fnc314.aijobtracker.frontend.core.data.platform.PlatformDeviceInfoProvider
+import dev.fnc314.aijobtracker.frontend.core.data.settings.AppSettingsRepository
+import dev.fnc314.aijobtracker.frontend.core.data.settings.SettingsStorage
 import dev.fnc314.aijobtracker.frontend.core.data.source.NotificationRemoteDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,25 +28,36 @@ public class JobTrackerFirebaseMessagingService : FirebaseMessagingService() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val notificationRemoteDataSource: NotificationRemoteDataSource by lazy { getKoin().get() }
     private val platformDeviceInfoProvider: PlatformDeviceInfoProvider by lazy { getKoin().get() }
+    private val settingsStorage: SettingsStorage by lazy { getKoin().get() }
 
     override fun onRegistered(installationId: String) {
         super.onRegistered(installationId)
         serviceScope.launch {
+            val cachedToken = settingsStorage.getString(AppSettingsRepository.KEY_LAST_REGISTERED_PUSH_TOKEN)
+            if (cachedToken == installationId) {
+                return@launch
+            }
             val deviceInfo = platformDeviceInfoProvider.getDeviceInfo()
-            notificationRemoteDataSource.registerDevice(
+            val success = notificationRemoteDataSource.registerDevice(
                 token = installationId,
                 platform = DevicePlatform.DEVICE_PLATFORM_ANDROID,
                 installationId = deviceInfo.installationId,
             )
+            if (success) {
+                settingsStorage.putString(AppSettingsRepository.KEY_LAST_REGISTERED_PUSH_TOKEN, installationId)
+            }
         }
     }
 
     override fun onUnregistered(installationId: String) {
         super.onUnregistered(installationId)
         serviceScope.launch {
-            notificationRemoteDataSource.deregisterDevice(
+            val success = notificationRemoteDataSource.deregisterDevice(
                 installationId = installationId,
             )
+            if (success) {
+                settingsStorage.putString(AppSettingsRepository.KEY_LAST_REGISTERED_PUSH_TOKEN, "")
+            }
         }
     }
 

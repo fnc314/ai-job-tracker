@@ -78,8 +78,9 @@ public class AppSettingsRepository(
         } catch (_: Exception) {}
     }
 
-    /** Storage keys for [AppSettingsRepository]. */
+    /** Storage keys for settings and device registrations. */
     public companion object {
-        private const val KEY_SETTINGS: String = "job_tracker_app_settings"
+        public const val KEY_SETTINGS: String = "job_tracker_app_settings"
+        public const val KEY_LAST_REGISTERED_PUSH_TOKEN: String = "last_registered_push_token"
     }
 }
