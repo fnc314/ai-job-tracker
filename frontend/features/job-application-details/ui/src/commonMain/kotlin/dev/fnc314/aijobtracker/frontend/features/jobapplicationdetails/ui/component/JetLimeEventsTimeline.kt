@@ -34,6 +34,7 @@ import com.pushpal.jetlime.JetLimeColumn
 import com.pushpal.jetlime.JetLimeDefaults
 import com.pushpal.jetlime.JetLimeEvent
 import com.pushpal.jetlime.JetLimeEventDefaults
+import com.pushpal.jetlime.PointPlacement
 import dev.fnc314.aijobtracker.frontend.core.data.model.EventActor
 import dev.fnc314.aijobtracker.frontend.core.data.model.TrackerEvent
 import dev.fnc314.aijobtracker.frontend.core.designsystem.componentSizes
@@ -113,10 +114,11 @@ public fun JetLimeEventsTimeline(
         val eventCd: String = stringResource(Res.string.timeline_event_cd, event.type.displayName())
         val eventStyle = JetLimeEventDefaults.eventStyle(
             position = position,
+            pointPlacement = PointPlacement.CENTER,
             pointColor = MaterialTheme.colorScheme.primaryContainer,
             pointStrokeColor = MaterialTheme.colorScheme.primary,
             pointStrokeWidth = MaterialTheme.componentSizes.timelineLineWidth,
-            pointRadius = MaterialTheme.componentSizes.timelineNodeSize / 2,
+            pointRadius = MaterialTheme.iconSizes.small,
             pointType = EventPointType.custom(
                 icon = rememberVectorPainter(event.type.icon),
                 tint = MaterialTheme.colorScheme.onPrimaryContainer,
