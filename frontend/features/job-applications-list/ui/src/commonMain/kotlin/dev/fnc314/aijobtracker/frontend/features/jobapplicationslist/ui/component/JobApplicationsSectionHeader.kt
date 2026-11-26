@@ -37,11 +37,12 @@ import dev.fnc314.aijobtracker.frontend.features_job_applications_list_ui.genera
 import dev.fnc314.aijobtracker.frontend.features_job_applications_list_ui.generated.resources.list_section_drafting
 import dev.fnc314.aijobtracker.frontend.features_job_applications_list_ui.generated.resources.list_section_expand_section
 import dev.fnc314.aijobtracker.frontend.features_job_applications_list_ui.generated.resources.list_section_interviewing
+import dev.fnc314.aijobtracker.frontend.features_job_applications_list_ui.generated.resources.list_section_pulled
 import dev.fnc314.aijobtracker.frontend.features_job_applications_list_ui.generated.resources.list_section_rejected
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * Resolves the localized display title for a section order (1..4).
+ * Resolves the localized display title for a section order (1..5).
  */
 @Composable
 public fun resolveSectionTitle(sectionOrder: Int): String = when (sectionOrder) {
@@ -49,6 +50,7 @@ public fun resolveSectionTitle(sectionOrder: Int): String = when (sectionOrder) 
   2 -> stringResource(Res.string.list_section_drafting)
   3 -> stringResource(Res.string.list_section_applied)
   4 -> stringResource(Res.string.list_section_rejected)
+  5 -> stringResource(Res.string.list_section_pulled)
   else -> stringResource(Res.string.list_section_applied)
 }
 
@@ -60,6 +62,7 @@ public fun resolveSectionIcon(sectionOrder: Int): ImageVector = when (sectionOrd
   2 -> Icons.Default.Edit
   3 -> Icons.Default.CheckCircle
   4 -> Icons.Default.Cancel
+  5 -> Icons.Default.Bookmark
   else -> Icons.Default.Bookmark
 }
 
@@ -69,7 +72,7 @@ public fun resolveSectionIcon(sectionOrder: Int): ImageVector = when (sectionOrd
  * When rendered in a `LazyColumn.stickyHeader`, sticks beneath the `CenterAlignedTopAppBar`
  * and provides a clickable jump action to quickly scroll to any other active section.
  *
- * @param sectionOrder Section index (1=Interviewing, 2=In Draft, 3=Applied, 4=Rejected).
+ * @param sectionOrder Section index (1=Interviewing, 2=In Draft, 3=Applied, 4=Rejected, 5=Pulled).
  * @param count Number of application items contained in this section.
  * @param isExpanded Whether this section's application list is currently expanded.
  * @param onToggleExpand Callback invoked to expand or collapse this section.
@@ -92,6 +95,7 @@ public fun JobApplicationsSectionHeader(
     2 -> MaterialTheme.colorScheme.tertiaryContainer
     3 -> MaterialTheme.colorScheme.surfaceContainerHigh
     4 -> MaterialTheme.colorScheme.surfaceContainerLow
+    5 -> MaterialTheme.colorScheme.surfaceContainerLowest
     else -> MaterialTheme.colorScheme.surfaceContainer
   }
 
@@ -100,6 +104,7 @@ public fun JobApplicationsSectionHeader(
     2 -> MaterialTheme.colorScheme.onTertiaryContainer
     3 -> MaterialTheme.colorScheme.onSurface
     4 -> MaterialTheme.colorScheme.onSurfaceVariant
+    5 -> MaterialTheme.colorScheme.outline
     else -> MaterialTheme.colorScheme.onSurface
   }
 

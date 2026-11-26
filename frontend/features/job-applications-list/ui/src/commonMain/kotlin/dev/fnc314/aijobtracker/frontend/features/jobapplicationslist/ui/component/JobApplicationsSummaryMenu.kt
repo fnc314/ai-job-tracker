@@ -43,7 +43,9 @@ public fun JobApplicationsSummaryMenu(
         it.status == TrackerStatus.Known.SUBMITTED
     }
     val interviewingCount = applications.count {
-        it.status == TrackerStatus.Known.INTERVIEW
+        it.status == TrackerStatus.Known.INTERVIEW ||
+            it.status == TrackerStatus.Known.OFFER_EXPECTED ||
+            it.status == TrackerStatus.Known.HIRED
     }
     val rejectedCount = applications.count {
         it.status == TrackerStatus.Known.REJECTED ||
@@ -56,6 +58,9 @@ public fun JobApplicationsSummaryMenu(
             it.status == TrackerStatus.Known.DRAFTED ||
             it.status == TrackerStatus.Known.RANKED ||
             it.status == TrackerStatus.Known.LEAD
+    }
+    val pulledCount = applications.count {
+        it.status == TrackerStatus.Known.PULLED
     }
 
     Column(
@@ -98,6 +103,12 @@ public fun JobApplicationsSummaryMenu(
             label = "Draft / Saved",
             count = draftCount,
             dotColor = BrandPalette.AmberDraft,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        SummaryRow(
+            label = "Pulled",
+            count = pulledCount,
+            dotColor = BrandPalette.PurplePulled,
         )
     }
 }

@@ -41,6 +41,24 @@ public sealed interface ApplicationChannel : WireContract {
         /** Submitted through SmartRecruiters. */
         SMARTRECRUITERS(displayName = "SmartRecruiters", wireKey = "SMARTRECRUITERS", wireTag = 5),
 
+        /** Sourced or applied through Workable. */
+        WORKABLE(displayName = "Workable", wireKey = "WORKABLE", wireTag = 10),
+
+        /** Sourced through RemoteOK aggregator. */
+        REMOTEOK(displayName = "RemoteOK", wireKey = "REMOTEOK", wireTag = 11),
+
+        /** Sourced through Hacker News "Who is hiring?". */
+        HACKER_NEWS(displayName = "Hacker News", wireKey = "HACKER_NEWS", wireTag = 12),
+
+        /** Sourced through iCIMS enterprise portal. */
+        ICIMS(displayName = "iCIMS", wireKey = "ICIMS", wireTag = 13),
+
+        /** Sourced through Oracle Taleo portal. */
+        TALEO(displayName = "Taleo", wireKey = "TALEO", wireTag = 14),
+
+        /** Sourced through Wellfound (AngelList). */
+        WELLFOUND(displayName = "Wellfound", wireKey = "WELLFOUND", wireTag = 15),
+
         /** Sourced or applied through LinkedIn Jobs / InMail. */
         LINKEDIN(displayName = "LinkedIn", wireKey = "LINKEDIN", wireTag = 6),
 
@@ -78,15 +96,12 @@ public sealed interface ApplicationChannel : WireContract {
         /** Default fallback value for [ApplicationChannel]. */
         public val DEFAULT: ApplicationChannel = Known.UNSPECIFIED
 
-        // Static O(1) multi-key lookup map indexing wireKey, name, and bare channel suffix
+        // Static O(1) lookup map indexing exact enum name and lowercase name
         private val lookup: Map<String, Known> = Known.entries.toWireLookupMap { entry ->
-            val nameLower = entry.name.lowercase()
-            val kebab = nameLower.replace("_", "-")
             listOf(
-                "channel:$kebab",
-                "channel:${kebab.replace("outreach-", "outreach:")}",
-                kebab,
-                nameLower,
+                entry.name,
+                entry.name.lowercase(),
+                entry.name.lowercase().replace("_", "-"),
             )
         }
 
@@ -103,6 +118,18 @@ public sealed interface ApplicationChannel : WireContract {
         public val ASHBY: ApplicationChannel = Known.ASHBY
         /** Submitted through SmartRecruiters. */
         public val SMARTRECRUITERS: ApplicationChannel = Known.SMARTRECRUITERS
+        /** Sourced or applied through Workable. */
+        public val WORKABLE: ApplicationChannel = Known.WORKABLE
+        /** Sourced through RemoteOK aggregator. */
+        public val REMOTEOK: ApplicationChannel = Known.REMOTEOK
+        /** Sourced through Hacker News "Who is hiring?". */
+        public val HACKER_NEWS: ApplicationChannel = Known.HACKER_NEWS
+        /** Sourced through iCIMS enterprise portal. */
+        public val ICIMS: ApplicationChannel = Known.ICIMS
+        /** Sourced through Oracle Taleo portal. */
+        public val TALEO: ApplicationChannel = Known.TALEO
+        /** Sourced through Wellfound (AngelList). */
+        public val WELLFOUND: ApplicationChannel = Known.WELLFOUND
         /** Sourced or applied through LinkedIn Jobs / InMail. */
         public val LINKEDIN: ApplicationChannel = Known.LINKEDIN
         /** Personal or employee referral. */

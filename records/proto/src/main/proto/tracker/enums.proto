@@ -138,6 +138,18 @@ enum ApplicationChannel {
   OUTREACH_EMAIL = 11;
   // channel:outreach:referral
   OUTREACH_REFERRAL = 12;
+  // channel:workable
+  WORKABLE = 13;
+  // channel:remoteok
+  REMOTEOK = 14;
+  // channel:hacker-news
+  HACKER_NEWS = 15;
+  // channel:icims
+  ICIMS = 16;
+  // channel:taleo
+  TALEO = 17;
+  // channel:wellfound
+  WELLFOUND = 18;
 }
 
 // ============================================================================

@@ -59,6 +59,9 @@ public object BrandPalette {
     /** Amber highlight for drafts / saved / AI stars. */
     public val AmberDraft: Color = Color(0xFFF59E0B)
 
+    /** Purple/slate highlight for pulled applications. */
+    public val PurplePulled: Color = Color(0xFF8B5CF6)
+
     /** Supersonic Glider radar arc cyan. */
     public val GliderArcCyan: Color = Color(0xFF38BDF8)
 

@@ -1,0 +1,11 @@
+{
+  "name": "icims-search-cli",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "icims-search": "./src/cli.ts"
+  },
+  "scripts": {
+    "test": "bun test"
+  }
+}

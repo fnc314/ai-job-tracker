@@ -1,0 +1,11 @@
+{
+  "name": "hn-hiring-search-cli",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "hn-hiring-search": "./src/cli.ts"
+  },
+  "scripts": {
+    "test": "bun test"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "workable-search-cli",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "workable-search": "./src/cli.ts"
+  },
+  "scripts": {
+    "test": "bun test"
+  }
+}

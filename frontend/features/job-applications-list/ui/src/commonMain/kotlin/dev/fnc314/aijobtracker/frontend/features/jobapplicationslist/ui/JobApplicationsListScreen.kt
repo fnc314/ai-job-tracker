@@ -365,6 +365,7 @@ internal fun JobApplicationsListContent(
                           2 -> TopLevelCardSurfaceVariant.FilledTonal
                           3 -> TopLevelCardSurfaceVariant.FilledTonal
                           4 -> TopLevelCardSurfaceVariant.Surface
+                          5 -> TopLevelCardSurfaceVariant.Surface
                           else -> TopLevelCardSurfaceVariant.FilledTonal
                         },
                       )
@@ -419,6 +420,7 @@ internal fun JobApplicationsListContent(
                           2 -> TopLevelCardSurfaceVariant.FilledTonal
                           3 -> TopLevelCardSurfaceVariant.FilledTonal
                           4 -> TopLevelCardSurfaceVariant.Surface
+                          5 -> TopLevelCardSurfaceVariant.Surface
                           else -> TopLevelCardSurfaceVariant.FilledTonal
                         },
                       )
@@ -473,6 +475,7 @@ internal fun JobApplicationsListContent(
                           2 -> TopLevelCardSurfaceVariant.FilledTonal
                           3 -> TopLevelCardSurfaceVariant.FilledTonal
                           4 -> TopLevelCardSurfaceVariant.Surface
+                          5 -> TopLevelCardSurfaceVariant.Surface
                           else -> TopLevelCardSurfaceVariant.FilledTonal
                         },
                       )

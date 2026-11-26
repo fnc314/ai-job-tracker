@@ -27,6 +27,7 @@ private const val SECTION_INTERVIEW_OR_OFFER = 1
 private const val SECTION_ACTIVE_PIPELINE = 2
 private const val SECTION_SUBMITTED = 3
 private const val SECTION_CLOSED = 4
+private const val SECTION_PULLED = 5
 
 /**
  * Lifecycle states of a job application tracked within the system.
@@ -155,7 +156,8 @@ public sealed interface TrackerStatus : WireContract {
                 INTERVIEW, OFFER_EXPECTED, HIRED -> SECTION_INTERVIEW_OR_OFFER
                 LEAD, DRAFTING, DRAFTED, RANKED -> SECTION_ACTIVE_PIPELINE
                 SUBMITTED -> SECTION_SUBMITTED
-                REJECTED, NO_RESPONSE, OFFER_DECLINED, APPLICATION_WITHDRAWN, PULLED -> SECTION_CLOSED
+                REJECTED, NO_RESPONSE, OFFER_DECLINED, APPLICATION_WITHDRAWN -> SECTION_CLOSED
+                PULLED -> SECTION_PULLED
                 NONE, UNSPECIFIED -> SECTION_SUBMITTED
             }
 

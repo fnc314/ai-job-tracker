@@ -1,0 +1,11 @@
+{
+  "name": "taleo-search-cli",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "taleo-search": "./src/cli.ts"
+  },
+  "scripts": {
+    "test": "bun test"
+  }
+}

@@ -71,6 +71,7 @@
     <string name="list_section_drafting">In Draft</string>
     <string name="list_section_applied">Applied</string>
     <string name="list_section_rejected">Rejected &amp; Closed</string>
+    <string name="list_section_pulled">Pulled</string>
     <string name="list_section_jump_tooltip">Jump to section</string>
     <string name="list_section_jump_menu_title">Jump to Category</string>
     <string name="list_jump_to_top_tooltip">Jump to top</string>

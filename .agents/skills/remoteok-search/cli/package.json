@@ -1,0 +1,11 @@
+{
+  "name": "remoteok-search-cli",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "remoteok-search": "./src/cli.ts"
+  },
+  "scripts": {
+    "test": "bun test"
+  }
+}
