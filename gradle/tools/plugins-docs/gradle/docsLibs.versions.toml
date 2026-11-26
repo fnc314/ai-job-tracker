@@ -1,0 +1,6 @@
+[versions]
+  dokka = "2.3.0"
+
+[libraries]
+  dokka-core = { module = "org.jetbrains.dokka:dokka-core", version.ref = "dokka" }
+  dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }

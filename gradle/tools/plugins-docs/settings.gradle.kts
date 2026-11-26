@@ -24,5 +24,9 @@ dependencyResolutionManagement {
         create("tools") {
             from(files("../../tools.versions.toml"))
         }
+        create("docsLibs") {
+            from(files("gradle/docsLibs.versions.toml"))
+        }
     }
 }
+

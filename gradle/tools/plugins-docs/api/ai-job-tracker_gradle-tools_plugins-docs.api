@@ -1,0 +1,50 @@
+public abstract class dev/fnc314/aijobtracker/gradletools/docs/DocsConventionPlugin : org/gradle/api/Plugin {
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public final class dev/fnc314/aijobtracker/gradletools/docs/LeafDocsConventionPlugin : dev/fnc314/aijobtracker/gradletools/docs/DocsConventionPlugin {
+	public fun <init> ()V
+}
+
+public final class dev/fnc314/aijobtracker/gradletools/docs/NodeDocsConventionPlugin : dev/fnc314/aijobtracker/gradletools/docs/DocsConventionPlugin {
+	public fun <init> ()V
+}
+
+public final class dev/fnc314/aijobtracker/gradletools/docs/RootDocsConventionPlugin : dev/fnc314/aijobtracker/gradletools/docs/DocsConventionPlugin {
+	public fun <init> ()V
+}
+
+public final class dev/fnc314/aijobtracker/gradletools/docs/catalog/LocalCatalogBundles : java/lang/Enum {
+	public static final field BACKEND Ldev/fnc314/aijobtracker/gradletools/docs/catalog/LocalCatalogBundles;
+	public static final field FRONTEND Ldev/fnc314/aijobtracker/gradletools/docs/catalog/LocalCatalogBundles;
+	public static final field FRONTEND_APPS Ldev/fnc314/aijobtracker/gradletools/docs/catalog/LocalCatalogBundles;
+	public static final field FRONTEND_CORE Ldev/fnc314/aijobtracker/gradletools/docs/catalog/LocalCatalogBundles;
+	public static final field FRONTEND_FEATURES Ldev/fnc314/aijobtracker/gradletools/docs/catalog/LocalCatalogBundles;
+	public static final field INTERNAL Ldev/fnc314/aijobtracker/gradletools/docs/catalog/LocalCatalogBundles;
+	public static final field RECORDS Ldev/fnc314/aijobtracker/gradletools/docs/catalog/LocalCatalogBundles;
+	public static final field TOOLS Ldev/fnc314/aijobtracker/gradletools/docs/catalog/LocalCatalogBundles;
+	public final fun applyToDocs (Lorg/gradle/api/Project;)V
+	public final fun find (Lorg/gradle/api/Project;)Lorg/gradle/api/provider/Provider;
+	public final fun getBundleKey ()Ljava/lang/String;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/fnc314/aijobtracker/gradletools/docs/catalog/LocalCatalogBundles;
+	public static fun values ()[Ldev/fnc314/aijobtracker/gradletools/docs/catalog/LocalCatalogBundles;
+}
+
+public final class dev/fnc314/aijobtracker/gradletools/docs/tree/NavigationTreeGenerator {
+	public static final field INSTANCE Ldev/fnc314/aijobtracker/gradletools/docs/tree/NavigationTreeGenerator;
+	public final fun process (Ljava/io/File;Ljava/util/List;)V
+}
+
+public final class dev/fnc314/aijobtracker/gradletools/docs/tree/NavigationTreePlugin : org/jetbrains/dokka/plugability/DokkaPlugin {
+	public fun <init> ()V
+	public final fun getTreeTransformer ()Lorg/jetbrains/dokka/plugability/Extension;
+}
+
+public final class dev/fnc314/aijobtracker/gradletools/docs/tree/NavigationTreePostAction : org/jetbrains/dokka/renderers/PostAction {
+	public fun <init> (Lorg/jetbrains/dokka/plugability/DokkaContext;)V
+	public synthetic fun invoke ()Ljava/lang/Object;
+	public fun invoke ()V
+}
+

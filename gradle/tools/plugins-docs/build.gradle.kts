@@ -32,6 +32,8 @@ kotlin {
 dependencies {
   compileOnly(gradleApi())
   api(libs.dokka.gradle.plugin)
+  compileOnly(docsLibs.dokka.core)
+  compileOnly(docsLibs.dokka.base)
 }
 
 gradlePlugin {

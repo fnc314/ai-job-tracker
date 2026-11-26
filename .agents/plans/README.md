@@ -27,6 +27,7 @@ Every architecture plan created by any agent must strictly adhere to these parad
 
 | Plan | Status | Scope / Focus Area |
 | :--- | :--- | :--- |
+| [`190109_native-navigation-tree-plugin-and-settings-plugin-modernization.md`](./2026-11-25/190109_native-navigation-tree-plugin-and-settings-plugin-modernization.md) | Completed | Native Dokka NavigationTreePlugin in plugins-docs, settings plugin migration to version-catalogs-builder at 2.0.3, local catalog isolation, and empty directory elimination |
 | [`154148_clean-architecture-layout-and-release-4-1-0.md`](./2026-11-25/154148_clean-architecture-layout-and-release-4-1-0.md) | Completed | Clean architecture layout alignment (UI -> Domain <- Data), repository interface domain relocation, nested Gradle project path preservation, and version 4.1.0 release |
 | [`133000_dokka-plugin-gradle-project-rework.md`](./2026-11-25/133000_dokka-plugin-gradle-project-rework.md) | Completed | Dokka plugin & project structure rework: 3-layer Dokka architecture (Root, Node, Leaf) conforming to Gradle Isolated Projects, 1:1 physical drive mapping, plugins-docs module, tools.versions.toml catalog, and mise migrations |
 | [`013453_fix-docs-site-markdown-rendering.md`](./2026-11-24/013453_fix-docs-site-markdown-rendering.md) | Completed | Fix docs site markdown and asset rendering in scripts/build_docs_site.py: raw HTML support, badge image links, and assets/ copy |
