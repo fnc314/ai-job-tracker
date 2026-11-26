@@ -118,7 +118,7 @@ public fun JetLimeEventsTimeline(
             pointColor = MaterialTheme.colorScheme.primaryContainer,
             pointStrokeColor = MaterialTheme.colorScheme.primary,
             pointStrokeWidth = MaterialTheme.componentSizes.timelineLineWidth,
-            pointRadius = MaterialTheme.iconSizes.small,
+            pointRadius = MaterialTheme.spacing.small,
             pointType = EventPointType.custom(
                 icon = rememberVectorPainter(event.type.icon),
                 tint = MaterialTheme.colorScheme.onPrimaryContainer,
