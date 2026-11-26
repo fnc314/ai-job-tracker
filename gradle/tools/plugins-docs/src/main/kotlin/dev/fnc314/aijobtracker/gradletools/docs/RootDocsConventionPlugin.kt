@@ -1,8 +1,8 @@
 package dev.fnc314.aijobtracker.gradletools.docs
 
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.jetbrains.dokka.gradle.DokkaExtension
-import org.jetbrains.dokka.gradle.tasks.DokkaGeneratePublicationTask
 
 /**
  * Root documentation convention plugin applied to the repository root project.
@@ -23,11 +23,15 @@ public class RootDocsConventionPlugin : DocsConventionPlugin() {
       }
     }
 
-    val pluginJar = layout.projectDirectory.file("gradle/tools/plugins-docs/build/libs/ai-job-tracker_gradle-tools_plugins-docs-4.2.1.jar")
-
-    tasks.withType(DokkaGeneratePublicationTask::class.java).configureEach { task ->
-      task.generator.pluginsClasspath.from(pluginJar)
+    // Conceal the Dokka plugin dependency by resolving it through the version catalog
+    val versionCatalogs = extensions.getByType(VersionCatalogsExtension::class.java)
+    val toolsCatalog = versionCatalogs.find("tools").orElseGet {
+      versionCatalogs.named("local")
     }
+    val docsPlugin = toolsCatalog.findLibrary("tools-plugins-docs").orElseThrow {
+      IllegalStateException("Unable to resolve 'tools-plugins-docs' library from version catalogs")
+    }
+    dependencies.addProvider("dokkaPlugin", docsPlugin)
   }
 }
 
