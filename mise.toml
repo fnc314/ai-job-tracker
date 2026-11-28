@@ -22,7 +22,7 @@
 [tools]
   bun = "1.4.5"
   usage = { version = "7.4.0", workflow = "publish-cli.yml" }
-  gradle = "9.9.2"
+  gradle = "9.9.3"
   java = "26.0.2+101"
   node = "26.13.1"
   ktlint = "1.8.0"

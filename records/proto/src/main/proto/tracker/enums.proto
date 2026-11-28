@@ -341,6 +341,7 @@ enum ScrapedPostingStatus {
   SCRAPED_POSTING_STATUS_REVIEWED = 2;
   SCRAPED_POSTING_STATUS_REJECTED = 3;
   SCRAPED_POSTING_STATUS_APPLIED = 4;
+  SCRAPED_POSTING_STATUS_IGNORED = 5;
 }
 
 // ============================================================================
